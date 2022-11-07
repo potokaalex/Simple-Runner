@@ -11,13 +11,10 @@ public class Character : PhysicalEntity // only data and interfaceS for them //
 
     public event Action IsKilled;
 
-    public bool IsTimeToKill => KillCondition.Invoke();
+    public bool IsTimeToKill
+        => KillCondition == null ? health <= 0 : KillCondition.Invoke();
 
-    private Func<bool> KillCondition
-    {
-        get => KillCondition == null ? () => health <= 0 : KillCondition;
-        set { }
-    }
+    private Func<bool> KillCondition { get; set; }
 
     // Im not sure, is this should be here ? 
     private float score;

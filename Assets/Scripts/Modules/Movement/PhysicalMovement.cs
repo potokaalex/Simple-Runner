@@ -1,41 +1,14 @@
-﻿using System.Collections;
-using UnityEngine;
-using System;
-
+﻿using UnityEngine;
 
 public class PhysicalMovement : MonoBehaviour
 {
-    [SerializeField] PhysicalEntity physicalEntity;
-    [SerializeField] private float directionSpeed;
-    [SerializeField] private float turnSpeed;
+    [SerializeField] private PhysicalEntity movingObject;
 
-    private float accelerationModify;
+    public PhysicalEntity MovingObject => movingObject; //unsafe
 
-    public void Move(Vector3 direction)
-    {
-        //  var _normal = Vector3.zero;//character.LastContact.normal;
-        // var _directionAlongSurface = direction - Vector3.Dot(direction, _normal) * _normal;
-        // var _offset = _directionAlongSurface * (directionSpeed + accelerationModify) * Time.deltaTime;
+    public void Move(Vector3 direction, float speed)
+    => movingObject.GetRigidbody().velocity = direction * speed;
 
-        // character.rigidbody.AddRelativeForce(direction.normalized * directionSpeed, ForceMode.VelocityChange);// =  * Time.deltaTime;
-
-        //character.rigidbody.AddForce(direction * directionSpeed * Time.deltaTime);
-        //character.transform.Translate();
-    }
-
-    public void Rotate(Vector3 axis)
-        => physicalEntity.transform.Rotate(axis, turnSpeed * Time.deltaTime);
-
-    public void ApplySpeedAcceleration(float forse, float time)
-    {
-        accelerationModify = forse;
-
-        StartCoroutine(DelayTask(time, () => accelerationModify = 0));
-    }
-
-    IEnumerator DelayTask(float time, Action task)
-    {
-        yield return new WaitForSeconds(time);
-        task?.Invoke();
-    }
+    public void Rotate(Vector3 angel, float speed)
+        => movingObject.GetRigidbody().MoveRotation(Quaternion.Euler(angel * speed));
 }
