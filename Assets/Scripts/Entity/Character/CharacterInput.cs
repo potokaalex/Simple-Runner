@@ -16,6 +16,11 @@ public class CharacterInput : MonoBehaviour
     [SerializeField] private Vector3 rotateAngle;
     [SerializeField][Range(-100f, 100f)] private float rotateSpeed;
 
+    private void Awake()
+    {
+        physicalMovement = new PhysicalMovement(GetComponent<PhysicalEntity>());
+    }
+
     public Vector3 MovementDirection => movementDirection;
     public float DirectionSpeed => directionSpeed;
     public Vector3 RotateAngle => rotateAngle;

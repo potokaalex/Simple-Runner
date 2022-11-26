@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
 
-public class PhysicalMovement : MonoBehaviour
+public class PhysicalMovement
 {
-    [SerializeField] private PhysicalEntity movingObject;
+    public PhysicalMovement(PhysicalEntity movableObject)
+        => MovableObject = movableObject;
 
-    public PhysicalEntity MovingObject => movingObject; //unsafe
+    public PhysicalEntity MovableObject;
 
     public void Move(Vector3 direction, float speed)
-    => movingObject.GetRigidbody().velocity = direction * speed;
+        => MovableObject.GetRigidbody().velocity = direction * speed;
 
     public void Rotate(Vector3 angel, float speed)
-        => movingObject.GetRigidbody().MoveRotation(Quaternion.Euler(angel * speed));
+        => MovableObject.GetRigidbody().MoveRotation(Quaternion.Euler(angel * speed));
 }
