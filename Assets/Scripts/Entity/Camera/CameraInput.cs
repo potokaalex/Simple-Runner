@@ -27,7 +27,7 @@ public class CameraInput : MonoBehaviour
     {
         var _distance = Quaternion.Euler(relativeRotation.y, relativeRotation.x, 0) * Vector3.forward * distanceToCharacter;
 
-        trackingMovement.SmoothMove(_distance, smoothTime);
+        trackingMovement.SmoothMove(_distance, smoothTime, float.MaxValue, Time.fixedDeltaTime);
         trackingMovement.LookAtTracked();
     }
 }

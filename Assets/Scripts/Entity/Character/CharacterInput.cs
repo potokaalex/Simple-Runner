@@ -13,29 +13,41 @@ public class CharacterInput : MonoBehaviour
     [SerializeField][Range(-100f, 100f)] private float directionSpeed;
 
     [Header("Rotate")]
-    [SerializeField] private Vector3 rotateAngle;
     [SerializeField][Range(-100f, 100f)] private float rotateSpeed;
 
     private void Awake()
     {
-        physicalMovement = new PhysicalMovement(GetComponent<PhysicalEntity>());
+        physicalMovement = new PhysicalMovement(character);
     }
-
-    public Vector3 MovementDirection => movementDirection;
-    public float DirectionSpeed => directionSpeed;
-    public Vector3 RotateAngle => rotateAngle;
-    public float RotateSpeed => rotateSpeed;
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.A))
+        var _direction = character.transform.rotation * Vector3.forward;
+
+        if (Input.GetKeyDown(KeyCode.A))
             physicalMovement.Rotate(Vector3.down, rotateSpeed);
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D))
             physicalMovement.Rotate(Vector3.up, rotateSpeed);
 
-        physicalMovement.Move(Vector3.forward, directionSpeed);
+        physicalMovement.MovePosition(_direction, directionSpeed);
+
+        //ToNorm();
     }
 
+    public float T = 0.6f;
+
+    private void ToNorm()
+    {
+        //Debug.Log();
+        var _step = Vector3.zero - transform.rotation.eulerAngles;
+
+        var _board = transform.rotation.eulerAngles.y < 180 ? Vector3.zero : Vector3.up * 180;
+        //Quaternion
+
+        Debug.Log(transform.localEulerAngles);
+
+        transform.Rotate(Vector3.Lerp(_board, _step, T)); //= Quaternion.Euler();
+    }
 
     // relic
     IEnumerator DelayTask(float time, Action task)
