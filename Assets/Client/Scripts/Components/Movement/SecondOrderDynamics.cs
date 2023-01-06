@@ -33,24 +33,26 @@ public class SecondOrderDynamics
     // current, Vector3 target, ref Vector3 currentVelocity, float smoothTime, float maxSpeed;
 
     //its simse to been fucking FUNCTION !
-    public Vector3 Update(Vector3 targetPoint, float deltaTime, Vector3 velocity = default)
+    public Vector3 Update(Vector3 target, float deltaTime, Vector3 velocity = default)//Vector3 current, 
     {
         if (velocity == default)
         {
-            velocity = (targetPoint - previousPosition) / deltaTime;
-            previousPosition = targetPoint;
+            velocity = (target - previousPosition) / deltaTime;
+            previousPosition = target;
         }
 
-        float k2_stable;
+        // float k2_stable;
 
-        k2_stable = GetMaxValue(k2, deltaTime * deltaTime / 2 + deltaTime * k1 / 2, deltaTime * k1);
+        var _stableK2 = GetMaxValue(k2, deltaTime * deltaTime / 2 + deltaTime * k1 / 2, deltaTime * k1);
 
-        position += deltaTime * acceleration;
+        var _step = deltaTime * acceleration;
+
+        position += _step;
 
 
-        acceleration20 += deltaTime * (targetPoint + k3 * velocity - position - k1 * acceleration) / k2_stable;
+        //acceleration20 += deltaTime * (targetPoint + k3 * velocity - position - k1 * acceleration) / k2_stable;
 
-        acceleration += deltaTime * (targetPoint + k3 * velocity - position - k1 * acceleration) / k2_stable;
+        acceleration += deltaTime * (target + k3 * velocity - position - k1 * acceleration) / _stableK2;
 
         return position;
     }

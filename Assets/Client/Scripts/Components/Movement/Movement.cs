@@ -7,43 +7,22 @@ using UnityEngine;
 using CustomInspectorGraph;
 using UnityEngine.UIElements;
 
-public class Movement : MonoBehaviour, IFunction
+public class Movement
 {
-    public SecondOrderDynamics secondOrderDynamics = new();
-    public SecondOrderDynamics graphSOD = new();
+    private PositionMovement positionMovement;
 
-    [Range(-1f, 15f)] public float f = 1f;
-    [Range(-1f, 5f)] public float d = 1f;
-    [Range(-3f, 5f)] public float r = 0;
-    //public Vector3 XVector;
-
-    public Transform X;
-    //public Vector3 speed;
-    //public bool isInfinintySpeed;
-
-    [SerializeField] private float heightShift;
-    [SerializeField] private Graph graph;
-
-    private void Awake()
+    public Movement(Transform movable)
     {
-        secondOrderDynamics.ChangeCoefficients(f, d, r);
-    }
-    private void Update()
-    {
-        secondOrderDynamics.ChangeCoefficients(f, d, r);
-        transform.position = secondOrderDynamics.Update(X.position, Time.deltaTime);
+        positionMovement = new(movable);
     }
 
-
-    public float GetFunctionValue(float argument)
+    public void SetVelocity(float velocity, AnimationCurve curve = null)
     {
-        var _deltaTime = 1f / graph.DisplayData.GraphAccuracy;
+        positionMovement.SetVelocity(velocity, curve);
+    }
 
-        if (argument == 0)
-            graphSOD = new();
-
-        graphSOD.ChangeCoefficients(f, d, r);
-
-        return graphSOD.Update(Vector3.one, _deltaTime).y + heightShift;
+    public void MovePosition(Vector3 direction, float deltaTime)
+    {
+        positionMovement.MovePosition(direction, deltaTime);
     }
 }
