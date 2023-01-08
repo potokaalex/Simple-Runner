@@ -16,31 +16,24 @@ public class CharacterMovementInput : MonoBehaviour
     [Header("Rotate")]
     [SerializeField][Range(-100f, 100f)] private float rotateSpeed;
 
-    private void Awake()
+    private ChangeableSingle forwardVelocity;
+
+    private void Start()
     {
-        character.movement.SetVelocity(velocity, velocityCurve);
+        forwardVelocity = new(velocity, velocityCurve);
     }
 
     void FixedUpdate()
     {
-        //velocity
+        MoveForward(Time.fixedDeltaTime);
 
-        var deltaTime = Time.fixedTime;
-
-        var step = direction.normalized * velocity * deltaTime;
-
-        character.movement.SetPosition(character.transform.position + step);
-
-        //Vector3.SmoothDamp();
-
-        //smooth shift
-
-        // movement.SetVelocity(velocity);
-        // movement.MovePosition(direction, Time.fixedDeltaTime);
+        Debug.Log(character.movement.ForwardVelocity);
     }
 
-
-
+    private void MoveForward(float deltaTime)
+    {
+        character.movement.MoveForward(forwardVelocity.MoveNext(deltaTime), deltaTime);
+    }
 
 
     // relic

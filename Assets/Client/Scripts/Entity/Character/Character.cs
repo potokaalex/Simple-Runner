@@ -4,11 +4,16 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 using System;
+using System.Linq;
 
 public class Character : MonoBehaviour
 {
     public CharacterMovement movement;
 
+    private void Awake()
+    {
+        movement = new(this);
+    }
 
     //[SerializeField] CharacterMovementInput movement;
 
@@ -40,33 +45,4 @@ public class Character : MonoBehaviour
 
     public void ChangeKillCondition(Func<bool> newCondition) => KillCondition = newCondition;
     public void Kill() => IsKilled?.Invoke();
-}
-
-
-public class CharacterMovement
-{
-    public readonly float velocity;
-
-    private Transform transform;
-
-    public CharacterMovement(Character character)
-    {
-        transform = character.transform;
-    }
-
-
-    public void SetVelocity(float velocity, AnimationCurve curve = null) //кривая описывающая изменение скорости. Null - мнгновенное изменение.
-    {
-
-    }
-
-    public void SetPosition(Vector3 position)
-    {
-        // transform.position = position;
-    }
-
-    public void SetRotation()
-    {
-
-    }
 }
