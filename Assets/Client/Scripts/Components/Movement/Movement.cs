@@ -11,10 +11,9 @@ public class Movement
 {
     private PositionMovement positionMovement;
 
-    public Movement(Transform movable)
-    {
-        positionMovement = new(movable);
-    }
+    [SerializeField] private Vector3 direction;
+    [SerializeField] private AnimationCurve velocityCurve;
+    [SerializeField] private float velocity;
 
     public void SetVelocity(float velocity, AnimationCurve curve = null)
     {

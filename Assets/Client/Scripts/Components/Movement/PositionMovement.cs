@@ -3,18 +3,13 @@ using System.Linq;
 
 public class PositionMovement
 {
-    private Transform movable;
+    //private Transform movable;
     private AnimationCurve velocityCurve;
     private float previousMaxVelocity;
     private float maxCorrelation;
     private float correlation;
     private float maxVelocity;
     private float velocity;
-
-    public PositionMovement(Transform movable)
-    {
-        this.movable = movable;
-    }
 
     public void SetVelocity(float velocity, AnimationCurve curve = null)
     {
@@ -32,10 +27,10 @@ public class PositionMovement
         maxVelocity = velocity;
     }
 
-    public void MovePosition(Vector3 direction, float deltaTime)
+    public Vector3 MovePosition(Vector3 direction, float deltaTime)
     {
         velocity = GetPositionVelocity(deltaTime);
-        movable.position += GetPositionStep(direction, velocity, deltaTime);
+        return GetPositionStep(direction, velocity, deltaTime);
 
         //Debug.Log(velocity);
     }
@@ -52,4 +47,12 @@ public class PositionMovement
 
         return previousMaxVelocity + _step;
     }
+}
+
+
+public class SmoothCurve
+{
+
+
+
 }
