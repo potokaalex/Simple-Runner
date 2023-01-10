@@ -2,40 +2,46 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 
 public class CharacterMovementInput : MonoBehaviour
 {
     [SerializeField] private Character character;
 
     [Header("Move")]
-    [SerializeField] private Vector3 direction;
-    [SerializeField] private AnimationCurve velocityCurve;
-    [SerializeField] private float velocity;
-    //private Movement movement;
+    [SerializeField] private float maxRunVelocity;
+    [SerializeField] private AnimationCurve runVelocityCurve;
 
-    [Header("Rotate")]
-    [SerializeField][Range(-100f, 100f)] private float rotateSpeed;
-
-    private ChangeableSingle forwardVelocity;
+    private ChangeableSingle runVelocity;
+    private float previousForwardVelocity;
 
     private void Start()
     {
-        forwardVelocity = new(velocity, velocityCurve);
+        runVelocity = new(maxRunVelocity, runVelocityCurve);
+        previousForwardVelocity = maxRunVelocity;
     }
 
     void FixedUpdate()
     {
-        MoveForward(Time.fixedDeltaTime);
+        var _deltaTime = Time.fixedDeltaTime;
 
-        Debug.Log(character.movement.ForwardVelocity);
+        if (previousForwardVelocity != maxRunVelocity)
+            UpdateForwardVelocity();
+
+        character.movement.Run(runVelocity.GetValue(), _deltaTime);
+        runVelocity.Move(_deltaTime);
+
+        //Debug.Log(character.movement.RunVelocity);
     }
 
-    private void MoveForward(float deltaTime)
+    private void UpdateForwardVelocity()
     {
-        character.movement.MoveForward(forwardVelocity.MoveNext(deltaTime), deltaTime);
+        runVelocity.SetValue(maxRunVelocity, runVelocityCurve);
+        previousForwardVelocity = maxRunVelocity;
     }
+}
 
-
+/*
     // relic
     IEnumerator DelayTask(float time, Action task)
     {
@@ -43,6 +49,4 @@ public class CharacterMovementInput : MonoBehaviour
         task?.Invoke();
     }
     //
-}
-
-
+*/

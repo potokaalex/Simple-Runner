@@ -5,10 +5,13 @@ using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 using System;
 using System.Linq;
+using UnityEngine.TextCore.Text;
 
 public class CharacterMovement
 {
-    //public SC velocity; // 100 %
+    public float RunVelocity { get; private set; }
+
+    //public List<float> RunVelocityModifiers = new();
 
     private Transform transform;
 
@@ -17,24 +20,34 @@ public class CharacterMovement
         transform = character.transform;
     }
 
+    //set the speed modifier
 
-    public float ForwardVelocity { get; private set; }
-    private ChangeableSingle forwardVelocityModifier = new(0);
-
-    public void SetForwardVelocityModifier(float velocity, AnimationCurve curve = null) //кривая описывающая изменение скорости. Null - мнгновенное изменение.
+    public void Run(float velocity, float deltaTime)
     {
-        forwardVelocityModifier.SetValue(velocity, curve);
-    }
+        RunVelocity = velocity;
 
-    public void MoveForward(float velocity, float deltaTime)
-    {
-        ForwardVelocity = velocity;
+        //float _modifierValue = 0;
+       // if (RunVelocityModifiers != null)
+        //    foreach (var modifier in RunVelocityModifiers)
+         //       _modifierValue += modifier;
 
-        transform.position += (velocity + forwardVelocityModifier.MoveNext(deltaTime)) * deltaTime * Vector3.forward;
+        transform.position += (velocity) * deltaTime * Vector3.forward;
     }
 
     public void SetRotation()
     {
 
     }
+}
+
+public class Modifier<T>
+{
+    private float time;
+
+    IEnumerator DelayTask(float time, Action task)
+    {
+        yield return new WaitForSeconds(time);
+        task?.Invoke();
+    }
+
 }

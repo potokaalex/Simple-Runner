@@ -3109,15 +3109,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 1961119964}
-  direction: {x: 0, y: 0, z: 0}
-  velocityCurve:
+  maxRunVelocity: 10
+  runVelocityCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 2
-      outSlope: 2
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
@@ -3134,8 +3134,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  velocity: 10
-  rotateSpeed: 0
 --- !u!114 &1166854664
 MonoBehaviour:
   m_ObjectHideFlags: 0
