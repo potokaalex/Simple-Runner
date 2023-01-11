@@ -10,8 +10,9 @@ using UnityEngine.TextCore.Text;
 public class CharacterMovement
 {
     public float RunVelocity { get; private set; }
-
-    //public List<float> RunVelocityModifiers = new();
+    public float RunVelocityModifiers;
+    public float JumpVelocity { get; private set; }
+    public float JumpVelocityModifiers;
 
     private Transform transform;
 
@@ -20,34 +21,32 @@ public class CharacterMovement
         transform = character.transform;
     }
 
-    //set the speed modifier
-
     public void Run(float velocity, float deltaTime)
     {
         RunVelocity = velocity;
 
-        //float _modifierValue = 0;
-       // if (RunVelocityModifiers != null)
-        //    foreach (var modifier in RunVelocityModifiers)
-         //       _modifierValue += modifier;
-
-        transform.position += (velocity) * deltaTime * Vector3.forward;
+        SetPosition(transform.position + (velocity + RunVelocityModifiers) * deltaTime * Vector3.forward);
     }
+
+    public void Jump(Vector3 step)
+    {
+        SetPosition(transform.position + step);
+    }
+
+    public void Slip()
+    {
+
+    }
+
+    public void SetPosition(Vector3 position)
+    {
+        transform.position = position;
+    }
+
+
 
     public void SetRotation()
     {
 
     }
-}
-
-public class Modifier<T>
-{
-    private float time;
-
-    IEnumerator DelayTask(float time, Action task)
-    {
-        yield return new WaitForSeconds(time);
-        task?.Invoke();
-    }
-
 }

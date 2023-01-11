@@ -9,35 +9,81 @@ public class CharacterMovementInput : MonoBehaviour
     [SerializeField] private Character character;
 
     [Header("Move")]
-    [SerializeField] private float maxRunVelocity;
-    [SerializeField] private AnimationCurve runVelocityCurve;
+    [SerializeField] private AnimationCurve runVelocity;
+    [SerializeField] private AnimationCurve jumpVelocity;
+    [SerializeField] private AnimationCurve changeRoadVelocity;
 
-    private ChangeableSingle runVelocity;
-    private float previousForwardVelocity;
+    private CurveReader run;
+    private CurveReader jump;
+    private CurveReader changeRoad;
+    private Vector3 changeRoadDirection;
 
     private void Start()
     {
-        runVelocity = new(maxRunVelocity, runVelocityCurve);
-        previousForwardVelocity = maxRunVelocity;
+        run = new(runVelocity);
+        jump = new(jumpVelocity);
+        changeRoad = new(changeRoadVelocity);
+
+        jump.Move(float.MaxValue);
+        changeRoad.Move(float.MaxValue);
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+            ChangeRoad(Vector3.left);
+        else if (Input.GetKeyDown(KeyCode.D))
+            ChangeRoad(Vector3.right);
+        else if (Input.GetKeyDown(KeyCode.W))
+            Jump();
     }
 
     void FixedUpdate()
     {
         var _deltaTime = Time.fixedDeltaTime;
 
-        if (previousForwardVelocity != maxRunVelocity)
-            UpdateForwardVelocity();
-
-        character.movement.Run(runVelocity.GetValue(), _deltaTime);
-        runVelocity.Move(_deltaTime);
-
-        //Debug.Log(character.movement.RunVelocity);
+        RunUpdate(_deltaTime);
+        JumpUpdate(_deltaTime);
+        ChangeRoadUpdate(_deltaTime);
     }
 
-    private void UpdateForwardVelocity()
+    private void RunUpdate(float deltaTime)
     {
-        runVelocity.SetValue(maxRunVelocity, runVelocityCurve);
-        previousForwardVelocity = maxRunVelocity;
+        character.movement.Run(run.GetValue(), deltaTime);
+
+        run.Move(deltaTime);
+    }
+
+    private void JumpUpdate(float deltaTime)
+    {
+        character.movement.Jump(Vector3.up * jump.GetIncrement());
+
+        jump.Move(deltaTime);
+    }
+
+    private void ChangeRoadUpdate(float deltaTime)
+    {
+        character.movement.Jump(changeRoadDirection * changeRoad.GetIncrement());
+
+        changeRoad.Move(deltaTime);
+    }
+
+    private void ChangeRoad(Vector3 direction)
+    {
+        if (changeRoad.Time <= changeRoad.LastKeyTime)
+            return;
+
+        changeRoadDirection = direction;
+
+        changeRoad.Reset();
+    }
+
+    public void Jump()
+    {
+        if (jump.Time <= jump.LastKeyTime)
+            return;
+
+        jump.Reset();
     }
 }
 
