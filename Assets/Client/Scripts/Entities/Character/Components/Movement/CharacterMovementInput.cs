@@ -28,7 +28,7 @@ public class CharacterMovementInput : MonoBehaviour
         changeRoad.Move(float.MaxValue);
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.A))
             ChangeRoad(Vector3.left);
@@ -36,9 +36,11 @@ public class CharacterMovementInput : MonoBehaviour
             ChangeRoad(Vector3.right);
         else if (Input.GetKeyDown(KeyCode.W))
             Jump();
+        else if (Input.GetKeyDown(KeyCode.S))
+            Slip();
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         var _deltaTime = Time.fixedDeltaTime;
 
@@ -78,12 +80,17 @@ public class CharacterMovementInput : MonoBehaviour
         changeRoad.Reset();
     }
 
-    public void Jump()
+    private void Jump()
     {
         if (jump.Time <= jump.LastKeyTime)
             return;
 
         jump.Reset();
+    }
+
+    public void Slip()
+    {
+
     }
 }
 
