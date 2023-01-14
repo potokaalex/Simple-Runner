@@ -12,11 +12,13 @@ public class CharacterMovementInput : MonoBehaviour
     [SerializeField] private AnimationCurve runVelocity;
     [SerializeField] private AnimationCurve jumpVelocity;
     [SerializeField] private AnimationCurve changeRoadVelocity;
+    [SerializeField] private float gravityVelocity;
 
     private CurveReader run;
     private CurveReader jump;
     private CurveReader changeRoad;
     private Vector3 changeRoadDirection;
+    private Vector3 jumpDirection;
 
     private void Start()
     {
@@ -44,10 +46,20 @@ public class CharacterMovementInput : MonoBehaviour
     {
         var _deltaTime = Time.fixedDeltaTime;
 
-        RunUpdate(_deltaTime);
+        //RunUpdate(_deltaTime);
         JumpUpdate(_deltaTime);
         ChangeRoadUpdate(_deltaTime);
+        //GravityUpdate(_deltaTime);
     }
+    /*
+    private void GravityUpdate(float deltaTime)
+    {
+        if (jump.Time > jump.LastKeyTime)
+            return;
+
+        character.movement.Jump(Vector3.down * gravityVelocity * deltaTime);
+    }
+    */
 
     private void RunUpdate(float deltaTime)
     {
@@ -58,7 +70,9 @@ public class CharacterMovementInput : MonoBehaviour
 
     private void JumpUpdate(float deltaTime)
     {
-        character.movement.Jump(Vector3.up * jump.GetIncrement());
+        //gravityVelocity * jump.LastKeyTime
+
+        character.movement.Jump(jumpDirection * jump.GetIncrement());
 
         jump.Move(deltaTime);
     }
@@ -85,10 +99,15 @@ public class CharacterMovementInput : MonoBehaviour
         if (jump.Time <= jump.LastKeyTime)
             return;
 
+        if (!character.movement.IsTimeToJump())
+            return;
+
+        jumpDirection = Vector3.up;
+
         jump.Reset();
     }
 
-    public void Slip()
+    private void Slip()
     {
 
     }

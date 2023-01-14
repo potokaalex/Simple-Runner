@@ -8,6 +8,7 @@ using System.Linq;
 
 public class Character : MonoBehaviour
 {
+    public Collider Collider;
     public CharacterMovement movement;
 
     private void Awake()
@@ -45,4 +46,12 @@ public class Character : MonoBehaviour
 
     public void ChangeKillCondition(Func<bool> newCondition) => KillCondition = newCondition;
     public void Kill() => IsKilled?.Invoke();
+
+    private void OnDrawGizmos()
+    {
+        if (movement != null)
+            movement.DrawCheckBox();
+    }
+
+
 }
