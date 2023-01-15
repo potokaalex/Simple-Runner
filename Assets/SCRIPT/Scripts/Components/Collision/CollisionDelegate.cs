@@ -1,3 +1,3 @@
 ﻿using UnityEngine;
 
-public delegate void CollisionVoidDelegate(Collision collision);
+public delegate void CollisionVoidDelegate(UnityEngine.Collision collision);

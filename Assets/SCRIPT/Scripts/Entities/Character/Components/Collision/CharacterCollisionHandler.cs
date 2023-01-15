@@ -11,7 +11,7 @@ public class CharacterCollisionHandler : MonoBehaviour
     private void OnDisable()
     => collisionDetection.IsCollisionEnter -= Collide;
 
-    private void Collide(Collision collision)
+    private void Collide(UnityEngine.Collision collision)
     {
         if (collision.gameObject.TryGetComponent(out ICollidingWith<Character> collided))
             collided.Collide(character);
