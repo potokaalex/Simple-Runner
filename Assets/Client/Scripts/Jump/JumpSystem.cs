@@ -39,7 +39,7 @@ public class JumpSystem : IUpdateSystem, IFixedUpdateSystem
         foreach (var component in _jump.Components)
         {
             if (component.AnimationVelocity == null)
-                return;
+                continue;
 
             component.transform.position += Vector3.up * component.AnimationVelocity.GetIncrement();
             component.AnimationVelocity.Move(deltaTime);

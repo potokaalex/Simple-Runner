@@ -15,6 +15,7 @@ namespace Ecs
             _systems = new();
 
             _systems.Add(new JumpSystem(_world));
+            _systems.Add(new GravitySystem(_world));
         }
 
         private void Update()
