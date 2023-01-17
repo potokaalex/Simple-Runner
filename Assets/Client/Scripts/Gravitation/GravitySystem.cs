@@ -18,66 +18,32 @@ public class GravitySystem : IFixedUpdateSystem
     {
         foreach (var component in _gravity.Components)
         {
-            component.Velocity += GravityForce * deltaTime;
-
-            /*
             if (component.Feet != null)
             {
                 var ignoreLayer = 1 << component.Feet.gameObject.layer;
 
-                if (BoxCast(component.Feet, ~ignoreLayer, GravityForce * deltaTime, out RaycastHit hit))
-                {
-                    AplyGravity(component.transform, (component.Feet.transform.position.y + component.Feet.transform.localScale.y / 2 - hit.point.y) * deltaTime);
+                if (IsStanding(component.Feet, ~ignoreLayer))
+                    return;
 
-                    Debug.Log(component.Feet.transform.position.y - hit.point.y);
+                if (IsLanding(component.Feet, ~ignoreLayer, component.Velocity * deltaTime, out RaycastHit hit))
+                {
+                    component.transform.position -= Vector3.up * (component.Feet.transform.position.y - hit.point.y);
+                    component.Velocity = 0;
 
                     continue;
                 }
             }
-            */
 
-
-            AplyGravity(component.transform, component.Velocity);
+            component.transform.position -= Vector3.up * component.Velocity * deltaTime;
+            component.Velocity += GravityForce * deltaTime;
         }
 
-        bool BoxCast(Transform checkBox, LayerMask layerMask, float distance, out RaycastHit hit)
-            => Physics.BoxCast(checkBox.position, checkBox.lossyScale / 2, Vector3.down, out hit, checkBox.rotation, distance, layerMask);
+
     }
 
-    public void Update(float deltaTime)
-    {
-        foreach (var component in _gravity.Components)
-        {
-            // Debug.Log("Component call");
+    private bool IsStanding(Transform checkBox, LayerMask layerMask)
+            => Physics.CheckBox(checkBox.transform.position, checkBox.transform.lossyScale, checkBox.transform.rotation, layerMask);
 
-            if (component.Feet != null)
-            {
-                // Debug.Log("Pre casting");
-
-
-                var ignoreLayer = 1 << component.Feet.gameObject.layer;
-
-                if (BoxCast(component.Feet, ~ignoreLayer, GravityForce * deltaTime, out RaycastHit hit))
-                {
-                    AplyGravity(component.transform, (component.Feet.transform.position.y - hit.point.y) * deltaTime);
-
-                    Debug.Log(component.Feet.transform.position.y - hit.point.y);
-                }
-                //else
-                //{
-                //   AplyGravity(component.transform, GravityForce * deltaTime);
-                //}
-            }
-            else
-            {
-                AplyGravity(component.transform, GravityForce * deltaTime);
-            }
-        }
-
-        bool BoxCast(Transform checkBox, LayerMask layerMask, float distance, out RaycastHit hit)
-            => Physics.BoxCast(checkBox.position, checkBox.lossyScale / 2, Vector3.down, out hit, checkBox.rotation, distance, layerMask);
-    }
-
-    private void AplyGravity(Transform transform, float offset)
-        => transform.position -= Vector3.up * offset;
+    private bool IsLanding(Transform checkBox, LayerMask layerMask, float distance, out RaycastHit hit)
+        => Physics.BoxCast(checkBox.position, checkBox.lossyScale / 2, Vector3.down, out hit, checkBox.rotation, distance, layerMask);
 }

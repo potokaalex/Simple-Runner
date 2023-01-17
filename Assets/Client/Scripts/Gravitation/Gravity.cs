@@ -6,8 +6,8 @@ public class Gravity : EcsComponent
 {
     public Transform Feet;
     public float Velocity;
-    /*
-    public Transform LowerPoint;
-    public Vector2 dimensions;
-    */
+    
+    //public Transform LowerPoint;
+    //public Vector2 dimensions;
+    
 }
