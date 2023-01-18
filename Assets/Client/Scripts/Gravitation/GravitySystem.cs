@@ -40,7 +40,7 @@ public class GravitySystem : IFixedUpdateSystem
     }
 
     private bool IsStanding(Transform checkBox, LayerMask layerMask)
-            => Physics.CheckBox(checkBox.transform.position, checkBox.transform.lossyScale, checkBox.transform.rotation, layerMask);
+            => Physics.CheckBox(checkBox.transform.position, checkBox.transform.lossyScale / 2, checkBox.transform.rotation, layerMask);
 
     private bool IsLanding(Transform checkBox, LayerMask layerMask, float distance, out RaycastHit hit)
         => Physics.BoxCast(checkBox.position, checkBox.lossyScale / 2, Vector3.down, out hit, checkBox.rotation, distance, layerMask);
