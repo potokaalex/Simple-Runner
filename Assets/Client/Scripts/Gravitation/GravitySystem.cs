@@ -37,8 +37,6 @@ public class GravitySystem : IFixedUpdateSystem
             component.transform.position -= Vector3.up * component.Velocity * deltaTime;
             component.Velocity += GravityForce * deltaTime;
         }
-
-
     }
 
     private bool IsStanding(Transform checkBox, LayerMask layerMask)
