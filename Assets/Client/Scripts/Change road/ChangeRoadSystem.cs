@@ -25,10 +25,13 @@ public class ChangeRoadSystem : IFixedUpdateSystem, IUpdateSystem
 
         foreach (var component in _changeRoad.Components)
         {
-            component.Direction = direction;
-
             component.AnimationVelocity ??= new(component.VelocityCurve);
+
+            if (component.AnimationVelocity.LastKeyTime > component.AnimationVelocity.Time)
+                return; //fuzzy control
+
             component.AnimationVelocity.Reset();
+            component.Direction = direction;
         }
     }
 
