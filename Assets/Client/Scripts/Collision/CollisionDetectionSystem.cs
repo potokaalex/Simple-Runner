@@ -3,11 +3,15 @@ using Ecs.Core;
 
 namespace Ecs.Systems
 {
-    public class CollisionDetectionSystem : IUpdateSystem
+    public class CollisionDetectionSystem : IFixedUpdateSystem
     {
         private ComponentFilter<CollisionDetector> _detectors = new();
+        private EventSystem _eventSystem;
 
-        public void Update(float deltaTime)
+        public CollisionDetectionSystem(EventSystem eventSystem)
+            => _eventSystem = eventSystem;
+
+        public void FixedUpdate(float deltaTime)
         {
             foreach (var detector in _detectors)
             {
@@ -23,9 +27,12 @@ namespace Ecs.Systems
             var detectorShape = detector.Box.transform;
 
             var colliders = Physics.OverlapBox(detectorShape.position, detectorShape.lossyScale / 2, detectorShape.rotation, ~detector.IgnoreMask);
+            //Physics.OverlapBox works with delay
 
             foreach (var collider in colliders)
-                EcsWorld.TryAddEvent(new CollisionStayEvent(detector.gameObject, collider));
+            {
+                _eventSystem.TryAddEvent(new CollisionStayEvent(detector, collider));
+            }
         }
     }
 }

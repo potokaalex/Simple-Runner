@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
 public class HealthModifier: MonoBehaviour, ICollidingWith<Character>
 {
     [SerializeField] private float value;
@@ -17,3 +18,4 @@ public class HealthModifier: MonoBehaviour, ICollidingWith<Character>
             character.Kill();
     }
 }
+*/
