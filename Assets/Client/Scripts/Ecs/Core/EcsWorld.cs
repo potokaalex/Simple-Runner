@@ -8,7 +8,6 @@ namespace Ecs.Core
     public static class EcsWorld
     {
         public static HashSet<EcsComponent> _components = new();
-        private static HashSet<IEvent> _events = new();
 
         public static event ComponentTransfer ComponentAdded;
         public static event ComponentTransfer ComponentRemoved;
@@ -34,9 +33,5 @@ namespace Ecs.Core
 
             return true;
         }
-
-        public static bool TryAddEvent(IEvent eventEntity) => _events.Add(eventEntity);
-
-        public static void ClearEvents() => _events.Clear();
     }
 }

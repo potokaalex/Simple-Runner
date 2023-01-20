@@ -6,6 +6,7 @@ namespace Ecs.Core
     {
         public HashSet<IUpdateSystem> UpdateSystems = new();
 		public HashSet<IFixedUpdateSystem> FixedUpdateSystems = new();
+		public HashSet<ILateUpdateSystem> LateUpdateSystems = new();
 
 		public EcsSystems Add(EcsSystems systems)
 		{
@@ -14,6 +15,9 @@ namespace Ecs.Core
 
 			foreach (var system in systems.FixedUpdateSystems)
 				FixedUpdateSystems.Add(system);
+
+			foreach (var system in systems.LateUpdateSystems)
+				LateUpdateSystems.Add(system);
 
 			return this;
 		}
@@ -25,6 +29,9 @@ namespace Ecs.Core
 
             if (system is IFixedUpdateSystem fixedUpdateSystem)
                 FixedUpdateSystems.Add(fixedUpdateSystem);
+
+			if (system is ILateUpdateSystem lateUpdateSystem)
+				LateUpdateSystems.Add(lateUpdateSystem);
 
 			return this;
         }
