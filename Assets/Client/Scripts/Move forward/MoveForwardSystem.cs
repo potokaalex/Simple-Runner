@@ -1,26 +1,24 @@
 using UnityEngine;
 using Ecs;
 
-public class MoveForwardSystem : IFixedUpdateSystem
+namespace Ecs.Systems
 {
-    private EcsComponentFilter<MoveForward> _moveForward;
-
-    public MoveForwardSystem(EcsWorld world)
+    public class MoveForwardSystem : IFixedUpdateSystem
     {
-        _moveForward = new(world);
-    }
+        private ComponentFilter<MoveForward> _moveForward = new();
 
-    public void FixedUpdate(float deltaTime)
-    {
-        foreach (var component in _moveForward.Components)
+        public void FixedUpdate(float deltaTime)
         {
-            if (component.AnimationVelocity == null)
-                component.AnimationVelocity = new(component.VelocityCurve);
+            foreach (var component in _moveForward)
+            {
+                if (component.AnimationVelocity == null)
+                    component.AnimationVelocity = new(component.VelocityCurve);
 
-            var velocity = component.AnimationVelocity.GetValue() + component.AdditionalVelocity;
+                var velocity = component.AnimationVelocity.GetValue() + component.AdditionalVelocity;
 
-            component.transform.position += Vector3.forward * velocity * deltaTime;
-            component.AnimationVelocity.Move(deltaTime);
+                component.transform.position += Vector3.forward * velocity * deltaTime;
+                component.AnimationVelocity.Move(deltaTime);
+            }
         }
     }
 }

@@ -1,33 +1,45 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Ecs.Core;
+using Ecs.Systems;
+
 
 namespace Ecs
 {
     public class EcsStartup : MonoBehaviour
     {
-        [SerializeField] private EcsWorld _world;
-        private EcsSystems _systems;
+        private EcsSystems _systems = new();
 
         private void Awake()
         {
-            _world = new();
-            _systems = new();
-
-            _systems.Add(new JumpSystem(_world));
-            _systems.Add(new GravitySystem(_world));
-            //_systems.Add(new MoveForwardSystem(_world));
-            _systems.Add(new ChangeRoadSystem(_world));
+            _systems.Add(new CollisionDetectionSystem())
+                .Add(new DeadByCollisionSystem())
+                .Add(new GravitySystem())
+                .Add(MovementSystems());
         }
 
         private void Update()
         {
-            _systems.Update(Time.deltaTime);
+            foreach (var system in _systems.UpdateSystems)
+                system.Update(Time.deltaTime);
         }
 
         private void FixedUpdate()
         {
-            _systems.FixedUpdate(Time.fixedDeltaTime);
+            foreach (var system in _systems.FixedUpdateSystems)
+                system.FixedUpdate(Time.fixedDeltaTime);
         }
+
+        private void LateUpdate()
+        {
+            //EcsEvents.Clear();
+        }
+
+        private EcsSystems MovementSystems()
+            => new EcsSystems()
+            .Add(new JumpSystem())
+            .Add(new MoveForwardSystem())
+            .Add(new ChangeRoadSystem());
     }
 }

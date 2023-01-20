@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Ecs;
+using Ecs.Core;
 
 public struct CollisionStayEvent : IEvent
 {

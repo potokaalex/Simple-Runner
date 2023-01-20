@@ -1,48 +1,46 @@
 using UnityEngine;
 using Ecs;
 
-public class JumpSystem : IUpdateSystem, IFixedUpdateSystem
+namespace Ecs.Systems
 {
-    private EcsComponentFilter<Jump> _jump;
-
-    private bool IsJumpKeyDown => Input.GetKeyDown(KeyCode.W);
-
-    public JumpSystem(EcsWorld world)
+    public class JumpSystem : IUpdateSystem, IFixedUpdateSystem
     {
-        _jump = new(world);
-    }
+        private ComponentFilter<Jump> _jumping = new();
 
-    public void Update(float deltaTime)
-    {
-        if (!IsJumpKeyDown)
+        private bool IsJumpKeyDown => Input.GetKeyDown(KeyCode.W);
+
+        public void Update(float deltaTime)
         {
-            return;
-        }
-
-        foreach (var component in _jump.Components)
-        {
-            var ignoreLayer = 1 << component.CheckBox.gameObject.layer;
-
-            if (IsCheckBoxOverlap(component.CheckBox, ~ignoreLayer))
+            if (!IsJumpKeyDown)
             {
-                component.AnimationVelocity ??= new(component.VelocityCurve);
-                component.AnimationVelocity.Reset();
+                return;
             }
+
+            foreach (var component in _jumping)
+            {
+                var ignoreLayer = 1 << component.CheckBox.gameObject.layer;
+
+                if (IsCheckBoxOverlap(component.CheckBox, ~ignoreLayer))
+                {
+                    component.AnimationVelocity ??= new(component.VelocityCurve);
+                    component.AnimationVelocity.Reset();
+                }
+            }
+
+            bool IsCheckBoxOverlap(Transform checkBox, LayerMask layerMask)
+                => Physics.CheckBox(checkBox.position, checkBox.lossyScale / 2, checkBox.rotation, layerMask);
         }
 
-        bool IsCheckBoxOverlap(Transform checkBox, LayerMask layerMask)
-            => Physics.CheckBox(checkBox.position, checkBox.lossyScale / 2, checkBox.rotation, layerMask);
-    }
-
-    public void FixedUpdate(float deltaTime)
-    {
-        foreach (var component in _jump.Components)
+        public void FixedUpdate(float deltaTime)
         {
-            if (component.AnimationVelocity == null)
-                continue;
+            foreach (var component in _jumping)
+            {
+                if (component.AnimationVelocity == null)
+                    continue;
 
-            component.transform.position += Vector3.up * component.AnimationVelocity.GetIncrement();
-            component.AnimationVelocity.Move(deltaTime);
+                component.transform.position += Vector3.up * component.AnimationVelocity.GetIncrement();
+                component.AnimationVelocity.Move(deltaTime);
+            }
         }
     }
 }

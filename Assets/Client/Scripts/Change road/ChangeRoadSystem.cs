@@ -3,47 +3,45 @@ using System.Collections.Generic;
 using UnityEngine;
 using Ecs;
 
-public class ChangeRoadSystem : IFixedUpdateSystem, IUpdateSystem
+namespace Ecs.Systems
 {
-    private EcsComponentFilter<ChangeRoad> _changeRoad;
-
-    public ChangeRoadSystem(EcsWorld world)
+    public class ChangeRoadSystem : IFixedUpdateSystem, IUpdateSystem
     {
-        _changeRoad = new(world);
-    }
+        private ComponentFilter<ChangeRoad> _changeRoad = new();
 
-    public void Update(float deltaTime)
-    {
-        Vector3 direction;
-
-        if (Input.GetKeyDown(KeyCode.A))
-            direction = Vector3.left;
-        else if (Input.GetKeyDown(KeyCode.D))
-            direction = Vector3.right;
-        else
-            return;
-
-        foreach (var component in _changeRoad.Components)
+        public void Update(float deltaTime)
         {
-            component.AnimationVelocity ??= new(component.VelocityCurve);
+            Vector3 direction;
 
-            if (component.AnimationVelocity.LastKeyTime > component.AnimationVelocity.Time)
-                return; //fuzzy control
-
-            component.AnimationVelocity.Reset();
-            component.Direction = direction;
-        }
-    }
-
-    public void FixedUpdate(float deltaTime)
-    {
-        foreach (var component in _changeRoad.Components)
-        {
-            if (component.AnimationVelocity == null)
+            if (Input.GetKeyDown(KeyCode.A))
+                direction = Vector3.left;
+            else if (Input.GetKeyDown(KeyCode.D))
+                direction = Vector3.right;
+            else
                 return;
 
-            component.transform.position += component.Direction * component.AnimationVelocity.GetIncrement();
-            component.AnimationVelocity.Move(deltaTime);
+            foreach (var component in _changeRoad)
+            {
+                component.AnimationVelocity ??= new(component.VelocityCurve);
+
+                if (component.AnimationVelocity.LastKeyTime > component.AnimationVelocity.Time)
+                    return; //fuzzy control
+
+                component.AnimationVelocity.Reset();
+                component.Direction = direction;
+            }
+        }
+
+        public void FixedUpdate(float deltaTime)
+        {
+            foreach (var component in _changeRoad)
+            {
+                if (component.AnimationVelocity == null)
+                    return;
+
+                component.transform.position += component.Direction * component.AnimationVelocity.GetIncrement();
+                component.AnimationVelocity.Move(deltaTime);
+            }
         }
     }
 }
