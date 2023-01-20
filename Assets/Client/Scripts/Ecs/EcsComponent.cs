@@ -1,16 +1,14 @@
 ﻿using UnityEngine;
 using Ecs.Core;
-using System.Collections.Generic;
 
 public abstract class EcsComponent : MonoBehaviour
 {
-
-    public void OnEnable()
+    public virtual void OnEnable()
     {
         EcsWorld.TryAddComponent(this);
     }
 
-    public void OnDisable()
+    public virtual void OnDisable()
     {
         EcsWorld.TryRemoveComponent(this);
     }
