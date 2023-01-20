@@ -4,7 +4,6 @@ using UnityEngine;
 using Ecs.Core;
 using Ecs.Systems;
 
-
 namespace Ecs
 {
     public class EcsStartup : MonoBehaviour
@@ -13,10 +12,14 @@ namespace Ecs
 
         private void Awake()
         {
-            _systems.Add(new CollisionDetectionSystem())
-                .Add(new DeadByCollisionSystem())
+            var eventSystem = new EventSystem();
+
+            _systems
+                .Add(new CollisionDetectionSystem(eventSystem))
+                .Add(new DeadByCollisionSystem(eventSystem))
                 .Add(new GravitySystem())
-                .Add(MovementSystems());
+                .Add(MovementSystems(eventSystem))
+                .Add(eventSystem);
         }
 
         private void Update()
@@ -33,12 +36,13 @@ namespace Ecs
 
         private void LateUpdate()
         {
-            //EcsEvents.Clear();
+            foreach (var system in _systems.LateUpdateSystems)
+                system.LateUpdate(Time.fixedDeltaTime);
         }
 
-        private EcsSystems MovementSystems()
+        private EcsSystems MovementSystems(EventSystem eventSystem)
             => new EcsSystems()
-            .Add(new JumpSystem())
+            .Add(new JumpSystem(eventSystem))
             .Add(new MoveForwardSystem())
             .Add(new ChangeRoadSystem());
     }

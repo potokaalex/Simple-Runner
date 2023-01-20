@@ -3,7 +3,7 @@ using Ecs.Core;
 
 namespace Ecs.Systems
 {
-    public class CollisionDetectionSystem : IFixedUpdateSystem
+    public class CollisionDetectionSystem : IUpdateSystem
     {
         private ComponentFilter<CollisionDetector> _detectors = new();
         private EventSystem _eventSystem;
@@ -11,7 +11,7 @@ namespace Ecs.Systems
         public CollisionDetectionSystem(EventSystem eventSystem)
             => _eventSystem = eventSystem;
 
-        public void FixedUpdate(float deltaTime)
+        public void Update(float deltaTime)
         {
             foreach (var detector in _detectors)
             {

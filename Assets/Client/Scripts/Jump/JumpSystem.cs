@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Ecs;
 
@@ -6,29 +8,32 @@ namespace Ecs.Systems
     public class JumpSystem : IUpdateSystem, IFixedUpdateSystem
     {
         private ComponentFilter<Jump> _jumping = new();
+        private HashSet<IEvent> _events;
+
+        public JumpSystem(EventSystem eventSystem)
+            => _events = eventSystem.GetEvents();
 
         private bool IsJumpKeyDown => Input.GetKeyDown(KeyCode.W);
 
         public void Update(float deltaTime)
         {
             if (!IsJumpKeyDown)
-            {
                 return;
-            }
 
-            foreach (var component in _jumping)
+            foreach (var eventEntity in _events)
             {
-                var ignoreLayer = 1 << component.CheckBox.gameObject.layer;
+                if (eventEntity is not CollisionStayEvent stayEvent)
+                    continue;
 
-                if (IsCheckBoxOverlap(component.CheckBox, ~ignoreLayer))
+                foreach (var component in _jumping)
                 {
+                    if (component.Detector != stayEvent.Sender)
+                        continue;
+
                     component.AnimationVelocity ??= new(component.VelocityCurve);
                     component.AnimationVelocity.Reset();
                 }
             }
-
-            bool IsCheckBoxOverlap(Transform checkBox, LayerMask layerMask)
-                => Physics.CheckBox(checkBox.position, checkBox.lossyScale / 2, checkBox.rotation, layerMask);
         }
 
         public void FixedUpdate(float deltaTime)

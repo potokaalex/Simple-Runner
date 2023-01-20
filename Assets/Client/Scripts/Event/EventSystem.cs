@@ -7,15 +7,15 @@ using UnityEngine;
 
 namespace Ecs.Systems
 {
-    public class EventSystem : IFixedUpdateSystem
+    public class EventSystem : ILateUpdateSystem
     {
         private HashSet<IEvent> _events = new();
 
-        public void FixedUpdate(float deltaTime) //after a little analysis, I decided to clean up in LateUpdate
+        public void LateUpdate(float deltaTime) //after a little analysis, I decided to clean up in LateUpdate
         {
             if (_events.Count < 1)
                 return;
-            Debug.Log("Clear");
+
             _events.Clear();
         }
 

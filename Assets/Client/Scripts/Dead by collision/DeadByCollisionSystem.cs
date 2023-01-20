@@ -1,28 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Ecs;
 
 namespace Ecs.Systems
 {
-    public class DeadByCollisionSystem : IUpdateSystem
+    public class DeadByCollisionSystem : IFixedUpdateSystem
     {
-        private ComponentFilter<DeadByCollision> _deadByCollision = new();
+        private ComponentFilter<DeadByCollision> _deadMarkers = new();
+        private HashSet<IEvent> _events;
 
-        public void Update(float deltaTime)
+        public DeadByCollisionSystem(EventSystem eventSystem)
+            => _events = eventSystem.GetEvents();
+
+        public void FixedUpdate(float deltaTime)
         {
-            foreach (var component in _deadByCollision)
+            foreach (var eventEntity in _events)
             {
-                var ignoreLayer = 1 << component.CheckBox.gameObject.layer;
+                if (eventEntity is not CollisionStayEvent stayEvent)
+                    continue;
 
-                if (IsCollision(component.CheckBox, ~ignoreLayer))
+                foreach (var _deadMarker in _deadMarkers)
                 {
-                    Debug.Log("Dead!");
+                    if (_deadMarker.Detector == stayEvent.Sender)
+                        Debug.Log("Dead!");
                 }
             }
         }
-
-        private bool IsCollision(Transform checkBox, LayerMask layerMask)
-            => Physics.CheckBox(checkBox.transform.position, checkBox.transform.lossyScale / 2, checkBox.transform.rotation, layerMask);
     }
 }
+

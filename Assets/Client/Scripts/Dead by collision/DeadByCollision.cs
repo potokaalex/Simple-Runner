@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class DeadByCollision : EcsComponent
 {
-    public Transform CheckBox;
+    public CollisionDetector Detector;
 }
