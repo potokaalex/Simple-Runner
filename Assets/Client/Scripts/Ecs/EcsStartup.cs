@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Ecs.Core;
 using Ecs.Systems;
+using Movement;
 
 namespace Ecs
 {
@@ -12,14 +13,13 @@ namespace Ecs
 
         private void Awake()
         {
-            var eventSystem = new EventSystem();
+            //var eventSystem = new EventSystem();
 
             _systems
-                .Add(new CollisionDetectionSystem(eventSystem))
-                .Add(new DeadByCollisionSystem(eventSystem))
+                .Add(new CollisionDetectionSystem())
+                .Add(new DeadByCollisionSystem())
                 .Add(new GravitySystem())
-                .Add(MovementSystems(eventSystem))
-                .Add(eventSystem);
+                .Add(MovementSystems());
         }
 
         private void Update()
@@ -38,12 +38,14 @@ namespace Ecs
         {
             foreach (var system in _systems.LateUpdateSystems)
                 system.LateUpdate(Time.fixedDeltaTime);
+
+            EcsWorld.ClearEvents();
         }
 
-        private EcsSystems MovementSystems(EventSystem eventSystem)
-            => new EcsSystems()
-            .Add(new JumpSystem(eventSystem))
-            .Add(new MoveForwardSystem())
-            .Add(new ChangeRoadSystem());
+        private EcsSystems MovementSystems()
+            => new EcsSystems();
+            //.Add(new MovementSystem());
+            //.Add(new MoveForwardSystem())
+            //.Add(new ChangeRoadSystem());
     }
 }

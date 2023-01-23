@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace Ecs.Systems
 {
+    /*
     public class EventSystem : ILateUpdateSystem
     {
         private HashSet<IEvent> _events = new();
@@ -21,6 +22,12 @@ namespace Ecs.Systems
 
         public HashSet<IEvent> GetEvents() => _events;
 
-        public bool TryAddEvent(IEvent eventEntity) => _events.Add(eventEntity);
+        public bool TryAddEvent<EventType>()
+        {
+
+            _events.Add(eventEntity);
+
+        }
     }
+    */
 }

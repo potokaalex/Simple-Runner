@@ -7,18 +7,12 @@ namespace Ecs.Systems
     public class DeadByCollisionSystem : IFixedUpdateSystem
     {
         private ComponentFilter<DeadByCollision> _deadMarkers = new();
-        private HashSet<IEvent> _events;
-
-        public DeadByCollisionSystem(EventSystem eventSystem)
-            => _events = eventSystem.GetEvents();
+        private EventFilter<CollisionStayEvent> _stayEvents = new();
 
         public void FixedUpdate(float deltaTime)
         {
-            foreach (var eventEntity in _events)
+            foreach (var stayEvent in _stayEvents)
             {
-                if (eventEntity is not CollisionStayEvent stayEvent)
-                    continue;
-
                 foreach (var _deadMarker in _deadMarkers)
                 {
                     if (_deadMarker.Detector == stayEvent.Sender)

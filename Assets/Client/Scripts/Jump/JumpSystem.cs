@@ -8,10 +8,7 @@ namespace Ecs.Systems
     public class JumpSystem : IUpdateSystem, IFixedUpdateSystem
     {
         private ComponentFilter<Jump> _jumping = new();
-        private HashSet<IEvent> _events;
-
-        public JumpSystem(EventSystem eventSystem)
-            => _events = eventSystem.GetEvents();
+        private EventFilter<CollisionStayEvent> _stayEvents;
 
         private bool IsJumpKeyDown => Input.GetKeyDown(KeyCode.W);
 
@@ -20,11 +17,8 @@ namespace Ecs.Systems
             if (!IsJumpKeyDown)
                 return;
 
-            foreach (var eventEntity in _events)
+            foreach (var stayEvent in _stayEvents)
             {
-                if (eventEntity is not CollisionStayEvent stayEvent)
-                    continue;
-
                 foreach (var component in _jumping)
                 {
                     if (component.Detector != stayEvent.Sender)

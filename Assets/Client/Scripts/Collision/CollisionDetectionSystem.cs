@@ -5,15 +5,11 @@ namespace Ecs.Systems
 {
     public class CollisionDetectionSystem : IUpdateSystem
     {
-        private ComponentFilter<CollisionDetector> _detectors = new();
-        private EventSystem _eventSystem;
-
-        public CollisionDetectionSystem(EventSystem eventSystem)
-            => _eventSystem = eventSystem;
+        private ComponentFilter<CollisionDetector> _detectorComponents = new();
 
         public void Update(float deltaTime)
         {
-            foreach (var detector in _detectors)
+            foreach (var detector in _detectorComponents)
             {
                 if (detector == null)
                     continue;
@@ -26,12 +22,12 @@ namespace Ecs.Systems
         {
             var detectorShape = detector.Box.transform;
 
-            var colliders = Physics.OverlapBox(detectorShape.position, detectorShape.lossyScale / 2, detectorShape.rotation, ~detector.IgnoreMask);
             //Physics.OverlapBox works with delay
+            var colliders = Physics.OverlapBox(detectorShape.position, detectorShape.lossyScale / 2, detectorShape.rotation, ~detector.IgnoreMask); 
 
             foreach (var collider in colliders)
             {
-                _eventSystem.TryAddEvent(new CollisionStayEvent(detector, collider));
+                EcsWorld.AddEvent(new CollisionStayEvent(detector,collider));
             }
         }
     }

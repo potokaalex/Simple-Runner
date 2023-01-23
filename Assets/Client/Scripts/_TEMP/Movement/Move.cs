@@ -9,8 +9,9 @@ namespace Movement
 {
     public class Move : EcsComponent
     {
-        public AnimationCurve VelocityCurve;
-        public CurveReader Velocity;
-        public Vector3 Direction;
+        public AnimationCurve AnimationAcceleration;
+        public CurveReader AccelerationReader;
+        public Vector3 NormalizedDirection;
+        public float Velocity;
     }
 }

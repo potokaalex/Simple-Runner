@@ -6,15 +6,11 @@ namespace Ecs
 {
     public class ComponentFilter<ComponentType> where ComponentType : EcsComponent
     {
-        private HashSet<ComponentType> _components = new();
+        private HashSet<ComponentType> _components;
 
         public ComponentFilter()
         {
-            var components = EcsWorld.GetComponents();
-
-            foreach (var component in components)
-                if (component is ComponentType)
-                    _components.Add(component as ComponentType);
+            _components = new(EcsWorld.GetComponentsByType<ComponentType>());
 
             EcsWorld.ComponentAdded += AddComponent;
             EcsWorld.ComponentRemoved += RemoveComponent;
@@ -30,7 +26,6 @@ namespace Ecs
 
         private void AddComponent(EcsComponent component)
         {
-
             if (component is not ComponentType)
                 return;
 
