@@ -6,32 +6,61 @@ using Ecs;
 
 public class Slide : EcsComponent //Slide(r)
 {
-    public Transform BOX;
+    public LayerMask IgnoreMask;
+
+   private Collision _collision;
+
+    //public StayCollisionDetector _stayDetector;
+    //public Transform BOX;
+
+    private List<Vector3> _normals = new();
+
+    private Vector3 _normal;
+
+    private List<Collision> _collisions = new();
 
     private void FixedUpdate()
     {
-        var ignoreLayer = 1 << BOX.gameObject.layer;
-
-        var hits = Physics.BoxCastAll(BOX.position, BOX.lossyScale / 2, Vector3.down, BOX.rotation, 0f, ~ignoreLayer);
-
-        //Physics.Box
-
-        var normals = Vector3.zero;
-
-        foreach (var hit in hits)
-            normals += hit.normal;
-
-        if (hits.Length < 1)
-            return;
-
-        Debug.Log(hits.Length);
-
-        normals /= hits.Length;
-
-        Debug.Log(normals);
-
-        Debug.DrawRay(BOX.position, normals,Color.cyan);
+        Debug.DrawRay(transform.position, _normal, Color.cyan);
     }
 
-    //private void 
+    private void OnCollisionEnter(Collision collision)
+    {
+        TryAddNormal(collision);
+        RecalculateAverageNormal();
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        TryRemoveNormal(collision);
+        RecalculateAverageNormal();
+    }
+
+    private void TryAddNormal(Collision normal)
+    {
+        if (_collisions.Contains(normal))
+            return;
+
+        _collisions.Add(normal);
+    }
+
+    private void TryRemoveNormal(Collision normal)
+    {
+        _collisions.Remove(normal);
+    }
+
+    private void RecalculateAverageNormal()
+    {
+        var count = _collisions.Count;
+
+        if (count < 1)
+            return;
+
+        _normal = Vector3.zero;
+
+        foreach (var n in _collisions)
+            _normal += n.contacts[0].normal;
+
+        _normal /= count;
+    }
 }
