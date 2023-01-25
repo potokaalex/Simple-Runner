@@ -3,12 +3,13 @@ using System.Linq;
 using UnityEngine;
 using System;
 using Ecs;
+using Slider;
 
 public class Slide : EcsComponent //Slide(r)
 {
     public LayerMask IgnoreMask;
 
-   private Collision _collision;
+    private ContactPoint _collision;
 
     //public StayCollisionDetector _stayDetector;
     //public Transform BOX;
@@ -64,3 +65,44 @@ public class Slide : EcsComponent //Slide(r)
         _normal /= count;
     }
 }
+
+public class SliderUpdateSystem : IUpdateSystem
+{
+    EventFilter<EnterCollisionEvent> _enterCollisionEvents = new();
+    EventFilter<ExitCollisionEvent> _exitCollisionEvents = new();
+
+    public void Update(float deltaTime)
+    {
+        foreach (var enterEvent in _enterCollisionEvents)
+        {
+            enterEvent.Sender.TryGetComponent(out Slider.Slider sliderComponent);
+
+            sliderComponent.TryAddContactPoint(enterEvent.Contact.contacts[0]);
+            sliderComponent.RecalculateAverageNormal();
+
+            //Debug.Log($"Enter-object name: {enterEvent.Contact.collider.name}");
+        }
+
+        foreach (var exitEvent in _exitCollisionEvents)
+        {
+            Debug.Log("Event read");
+
+            exitEvent.Sender.TryGetComponent(out Slider.Slider sliderComponent);
+
+            //if (exitEvent.Contact.collider == null)
+            //    continue;
+
+            //if (sliderComponent == null)
+            //    continue;
+
+           // if (exitEvent.Contact == null)
+            //    continue;
+
+            sliderComponent.TryRemoveContactPoint(exitEvent.Contact.collider);
+            sliderComponent.RecalculateAverageNormal();
+
+            //Debug.Log($"Exit-object name: {exitEvent.Contact.collider.name}");
+        }
+    }
+}
+

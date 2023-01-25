@@ -4,9 +4,9 @@ namespace Ecs.Core
 {
     public class EcsSystems
     {
-        public HashSet<IUpdateSystem> UpdateSystems = new();
-		public HashSet<IFixedUpdateSystem> FixedUpdateSystems = new();
-		public HashSet<ILateUpdateSystem> LateUpdateSystems = new();
+        public List<IUpdateSystem> UpdateSystems = new();
+		public List<IFixedUpdateSystem> FixedUpdateSystems = new();
+		public List<ILateUpdateSystem> LateUpdateSystems = new();
 
 		public EcsSystems Add(EcsSystems systems)
 		{

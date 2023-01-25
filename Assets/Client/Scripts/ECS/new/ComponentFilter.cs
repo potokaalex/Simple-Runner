@@ -10,7 +10,9 @@ namespace Ecs
 
         public ComponentFilter()
         {
-            _components = new(EcsWorld.GetComponentsByType<ComponentType>());
+            var world = EcsWorld.FindWorld();
+
+            _components = new(world.GetComponentsByType<ComponentType>());
 
             EcsWorld.ComponentAdded += AddComponent;
             EcsWorld.ComponentRemoved += RemoveComponent;
@@ -39,5 +41,11 @@ namespace Ecs
 
             _components.Remove(component as ComponentType);
         }
+    }
+
+    public class FilterUpdateSystem
+    {
+
+
     }
 }

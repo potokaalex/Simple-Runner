@@ -16,10 +16,15 @@ namespace Ecs
             //var eventSystem = new EventSystem();
 
             _systems
-                .Add(new CollisionDetectionSystem())
-                .Add(new DeadByCollisionSystem())
-                .Add(new GravitySystem())
-                .Add(MovementSystems());
+                //event loading system
+
+                .Add(new SliderUpdateSystem());
+                //.Add(new CollisionDetectionSystem())
+                //.Add(new DeadByCollisionSystem())
+                //.Add(new GravitySystem())
+                //.Add(MovementSystems());
+
+                //event cleaning system
         }
 
         private void Update()
@@ -36,6 +41,8 @@ namespace Ecs
 
         private void LateUpdate()
         {
+            Debug.Log("Event CLEAR");
+
             foreach (var system in _systems.LateUpdateSystems)
                 system.LateUpdate(Time.fixedDeltaTime);
 
@@ -44,8 +51,8 @@ namespace Ecs
 
         private EcsSystems MovementSystems()
             => new EcsSystems();
-            //.Add(new MovementSystem());
-            //.Add(new MoveForwardSystem())
-            //.Add(new ChangeRoadSystem());
+        //.Add(new MovementSystem());
+        //.Add(new MoveForwardSystem())
+        //.Add(new ChangeRoadSystem());
     }
 }

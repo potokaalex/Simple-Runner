@@ -3,27 +3,30 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using Ecs.Core;
 
-namespace Ecs.Core
+namespace Ecs
 {
-    public static class EcsWorld
+    public class EcsWorld : MonoBehaviour
     {
-        private static HashSet<EcsComponent> _components = new();
-        private static List<IEvent> _events = new();
+        private HashSet<EcsComponent> _components = new();
+        private List<IEvent> _events = new();
 
-        public static event ComponentTransfer ComponentAdded;
-        public static event ComponentTransfer ComponentRemoved;
+        //public event ComponentTransfer ComponentAdded;
+        //public event ComponentTransfer ComponentRemoved;
 
         //public static event EventTransfer EventAdded;
         //public static event EventTransfer EventRemoved;
 
-        public static IEnumerable<ComponentType> GetComponentsByType<ComponentType>() where ComponentType : EcsComponent
+        public static EcsWorld FindWorld() => FindObjectOfType<EcsWorld>();
+
+        public IEnumerable<ComponentType> GetComponentsByType<ComponentType>() where ComponentType : EcsComponent
             => _components.Where(component => component is ComponentType).Select(component => component as ComponentType);
 
-        public static IEnumerable<EventType> GetEventsByType<EventType>()
+        public IEnumerable<EventType> GetEventsByType<EventType>()
             => _events.Where(@event => @event is EventType).Select(@event => (EventType)@event);
 
-        public static bool TryAddComponent(EcsComponent component)
+        public bool TryAddComponent(EcsComponent component)
         {
             if (!_components.Add(component))
                 return false;
@@ -33,7 +36,7 @@ namespace Ecs.Core
             return true;
         }
 
-        public static bool TryRemoveComponent(EcsComponent component)
+        public bool TryRemoveComponent(EcsComponent component)
         {
             if (!_components.Remove(component))
                 return false;
@@ -43,12 +46,12 @@ namespace Ecs.Core
             return true;
         }
 
-        public static void AddEvent(IEvent @event)
+        public void AddEvent(IEvent @event)
         {
             _events.Add(@event);
         }
 
-        public static void ClearEvents()
+        public void ClearEvents()
         {
             _events.Clear();
         }
