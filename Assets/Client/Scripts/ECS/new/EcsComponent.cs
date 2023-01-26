@@ -4,11 +4,8 @@ using Ecs;
 
 public abstract class EcsComponent : MonoBehaviour
 {
-    public EcsWorld EcsWorld
-    {
-        get => EcsWorld != null ? EcsWorld : EcsWorld = EcsWorld.FindWorld();
-        private set { }
-    }
+    private EcsWorld _world;
+    public EcsWorld EcsWorld => _world == null ? EcsWorld.FindWorld() : _world;
 
     public virtual void OnEnable()
     {
@@ -17,6 +14,9 @@ public abstract class EcsComponent : MonoBehaviour
 
     public virtual void OnDisable()
     {
+        if (EcsWorld == null)
+            return;
+
         EcsWorld.RemoveComponent(this);
     }
 }

@@ -15,8 +15,8 @@ namespace Ecs.Systems
             {
                 foreach (var _deadMarker in _deadMarkers)
                 {
-                    if (_deadMarker.Detector == stayEvent.Sender)
-                        Debug.Log("Dead!");
+                    //if (_deadMarker.Detector == stayEvent.Sender)
+                      //  Debug.Log("Dead!");
                 }
             }
         }

@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using Ecs;
 
+
 public struct CollisionStayEvent : IEvent
 {
+    /*
     public CollisionDetector Sender;
     public Collider Contact;
 
@@ -11,4 +13,5 @@ public struct CollisionStayEvent : IEvent
         Sender = sender;
         Contact = contact;
     }
+    */
 }

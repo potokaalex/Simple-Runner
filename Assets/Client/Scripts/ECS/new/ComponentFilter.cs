@@ -51,20 +51,4 @@ namespace Ecs
         }
     }
     */
-
-    public class ComponentUpdate : IFixedUpdateSystem
-    {
-        private EcsWorld _world = EcsWorld.FindWorld();
-
-        public void FixedUpdate(float deltaTime)
-            => _world.UpdateComponents();
-    }
-
-    public class EventUpdate : IFixedUpdateSystem
-    {
-        private EcsWorld _world = EcsWorld.FindWorld();
-
-        public void FixedUpdate(float deltaTime)
-            => _world.UpdateEvents();
-    }
 }

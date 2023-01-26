@@ -81,12 +81,18 @@ namespace Ecs
 
         public void AddEvent(IEvent @event)
         {
+            //Debug.Log("Event ADDED");
+
             _newEvents.Add(@event);
         }
 
         public void UpdateEvents()
         {
-            _currentEvents = _newEvents;
+            _currentEvents.Clear();
+
+            foreach (var @event in _newEvents)
+                _currentEvents.Add(@event);
+
             _newEvents.Clear();
         }
     }

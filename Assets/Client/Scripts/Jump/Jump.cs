@@ -6,5 +6,5 @@ public class Jump : EcsComponent
 {
     public CurveReader AnimationVelocity;
     public AnimationCurve VelocityCurve;
-    public CollisionDetector Detector;
+    //public CollisionDetector Detector;
 }

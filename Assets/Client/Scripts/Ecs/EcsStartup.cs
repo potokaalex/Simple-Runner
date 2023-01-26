@@ -13,21 +13,20 @@ namespace Ecs
 
         private void Awake()
         {
-            //var eventSystem = new EventSystem();
-
             _systems
                 .Add(new ComponentUpdate())
                 .Add(new InputUpdate())
                 .Add(new EventUpdate())
 
+                .Add(Movement())
 
                 .Add(new SliderUpdateSystem());
-                //.Add(new CollisionDetectionSystem())
-                //.Add(new DeadByCollisionSystem())
-                //.Add(new GravitySystem())
-                //.Add(MovementSystems());
+            //.Add(new CollisionDetectionSystem())
+            //.Add(new DeadByCollisionSystem())
+            //.Add(new GravitySystem())
+            //.Add(MovementSystems());
 
-                //component removed system
+            //component removed system
         }
 
         private void Update()
@@ -44,18 +43,41 @@ namespace Ecs
 
         private void LateUpdate()
         {
-            Debug.Log("Event CLEAR");
-
             foreach (var system in _systems.LateUpdateSystems)
                 system.LateUpdate(Time.fixedDeltaTime);
-
-            //EcsWorld.ClearEvents();
         }
 
-        private EcsSystems MovementSystems()
-            => new EcsSystems();
+        private EcsSystems Movement()
+            => new EcsSystems()
+            .Add(new MoveUpdate())
+            .Add(new JumpUpdate());
         //.Add(new MovementSystem());
         //.Add(new MoveForwardSystem())
         //.Add(new ChangeRoadSystem());
+    }
+
+    public class JumpUpdate : IFixedUpdateSystem
+    {
+        public void FixedUpdate(float deltaTime)
+        {
+            //throw new System.NotImplementedException();
+        }
+    }
+    
+
+
+
+    public class MoveRight : EcsComponent
+    {
+        public CurveReader AccelerationReader;
+        public AnimationCurve Acceleration;
+        public float Velocity;
+    }
+
+    public class MoveLeft : EcsComponent
+    {
+        public CurveReader AccelerationReader;
+        public AnimationCurve Acceleration;
+        public float Velocity;
     }
 }

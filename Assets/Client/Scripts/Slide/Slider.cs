@@ -8,6 +8,8 @@ namespace Slider
 {
     public class Slider : EcsComponent
     {
+        public Vector3 Direction;
+
         private List<ContactPoint> _contacPoints = new();
         private Vector3 _normal;
 
@@ -16,7 +18,9 @@ namespace Slider
 
         private void FixedUpdate()
         {
-            Debug.DrawRay(transform.position, _normal, Color.cyan);
+            var projection = Direction - Vector3.Dot(Direction, _normal) * _normal;
+
+            Debug.DrawRay(transform.position, projection, Color.cyan);
         }
 
         public void TryAddContactPoint(ContactPoint point)

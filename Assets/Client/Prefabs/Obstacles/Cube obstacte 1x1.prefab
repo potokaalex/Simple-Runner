@@ -56,7 +56,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4953981606892376402}
-  - component: {fileID: 990771463548127634}
   - component: {fileID: 7715153598044096814}
   m_Layer: 0
   m_Name: Obstacle collider
@@ -80,18 +79,6 @@ Transform:
   m_Father: {fileID: 225796451694282545}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &990771463548127634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7304159251087124023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac977ff93c0ac4248bab97085735c1c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &7715153598044096814
 BoxCollider:
   m_ObjectHideFlags: 0

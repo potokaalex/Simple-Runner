@@ -66,18 +66,32 @@ public class Slide : EcsComponent //Slide(r)
     }
 }
 
-public class SliderUpdateSystem : IUpdateSystem
+public class SliderUpdateSystem : IFixedUpdateSystem
 {
-    EventFilter<EnterCollisionEvent> _enterCollisionEvents = new();
-    EventFilter<ExitCollisionEvent> _exitCollisionEvents = new();
+    //EventFilter<EnterCollisionEvent> _enterCollisionEvents = new();
+    //EventFilter<ExitCollisionEvent> _exitCollisionEvents = new();
 
     ComponentFilter<Slider.Slider> _slider = new();
 
-    public void Update(float deltaTime)
+    private EcsWorld _world = EcsWorld.FindWorld();
+
+    public void FixedUpdate(float deltaTime)
     {
-        foreach (var enterEvent in _enterCollisionEvents)
+        var enterCollisionEvents = _world.GetEventsByType<EnterCollisionEvent>();
+
+        //Debug.Log("Event loading:");
+        //Debug.Log($"EnterCollisionEventsCount : {enterCollisionEvents.Count()}");
+
+        foreach (var enterEvent in enterCollisionEvents)
         {
+            //Debug.Log("Enter event");
+
             enterEvent.Sender.TryGetComponent(out Slider.Slider sliderComponent);
+
+           //Debug.Log(sliderComponent);
+
+            if (enterEvent.Contact.contacts.Length < 1)
+                continue;
 
             sliderComponent.TryAddContactPoint(enterEvent.Contact.contacts[0]);
             sliderComponent.RecalculateAverageNormal();
@@ -85,9 +99,10 @@ public class SliderUpdateSystem : IUpdateSystem
             //Debug.Log($"Enter-object name: {enterEvent.Contact.collider.name}");
         }
 
-        foreach (var exitEvent in _exitCollisionEvents)
+        var exitCollisionEvents = _world.GetEventsByType<ExitCollisionEvent>();
+        foreach (var exitEvent in exitCollisionEvents)
         {
-            Debug.Log("Event read");
+            //Debug.Log("Exit event");
 
             exitEvent.Sender.TryGetComponent(out Slider.Slider sliderComponent);
 
@@ -97,7 +112,7 @@ public class SliderUpdateSystem : IUpdateSystem
             //if (sliderComponent == null)
             //    continue;
 
-           // if (exitEvent.Contact == null)
+            // if (exitEvent.Contact == null)
             //    continue;
 
             sliderComponent.TryRemoveContactPoint(exitEvent.Contact.collider);
@@ -108,29 +123,9 @@ public class SliderUpdateSystem : IUpdateSystem
     }
 }
 
-public class InputUpdate : IUpdateSystem
-{
-    private EcsWorld _world = EcsWorld.FindWorld();
 
-    public void Update(float deltaTime)
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-            _world.AddEvent(new KeyDown(KeyCode.A));
 
-    }
-}
 
-public struct KeyDown : IEvent
-{
-    public KeyCode KeyCode;
-
-    public KeyDown(KeyCode keyCode)
-    {
-        KeyCode = keyCode;
-    }
-}
-
-//InputUpdate (+)
 
 //Movement ?
 //{

@@ -21,8 +21,8 @@ namespace Ecs.Systems
             {
                 foreach (var component in _jumping)
                 {
-                    if (component.Detector != stayEvent.Sender)
-                        continue;
+                    //if (component.Detector != stayEvent.Sender)
+                     //   continue;
 
                     component.AnimationVelocity ??= new(component.VelocityCurve);
                     component.AnimationVelocity.Reset();
