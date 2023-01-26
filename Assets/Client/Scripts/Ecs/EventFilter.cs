@@ -9,6 +9,6 @@ namespace Ecs
 {
     public class EventFilter<EventType> where EventType : IEvent
     {
-        public IEnumerator<EventType> GetEnumerator() => EcsWorld.GetEventsByType<EventType>().GetEnumerator();
+        public IEnumerator<EventType> GetEnumerator() => null;//EcsWorld.GetEventsByType<EventType>().GetEnumerator();
     }
 }

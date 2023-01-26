@@ -4,27 +4,22 @@ using UnityEngine;
 
 namespace Ecs
 {
-    public class ComponentFilter<ComponentType> where ComponentType : EcsComponent
+    public class ComponentFilter<ComponentType> where ComponentType : EcsComponent //old concept
     {
         private HashSet<ComponentType> _components;
+        private EcsWorld _world;
 
         public ComponentFilter()
         {
-            var world = EcsWorld.FindWorld();
+            _world = EcsWorld.FindWorld();
 
-            _components = new(world.GetComponentsByType<ComponentType>());
+            _components = new(_world.GetComponentsByType<ComponentType>());
 
-            EcsWorld.ComponentAdded += AddComponent;
-            EcsWorld.ComponentRemoved += RemoveComponent;
+            //EcsWorld.ComponentAdded += AddComponent;
+            //EcsWorld.ComponentRemoved += RemoveComponent;
         }
 
-        public IEnumerator<ComponentType> GetEnumerator() => _components.GetEnumerator();
-
-        public void Destroy()
-        {
-            EcsWorld.ComponentAdded -= AddComponent;
-            EcsWorld.ComponentRemoved -= RemoveComponent;
-        }
+        public IEnumerator<ComponentType> GetEnumerator() => _world.GetComponentsByType<ComponentType>().GetEnumerator();
 
         private void AddComponent(EcsComponent component)
         {
@@ -43,9 +38,33 @@ namespace Ecs
         }
     }
 
-    public class FilterUpdateSystem
+    /*
+    public class ComponentFilterUpdate // служит для обнавления информации в фильтрах
     {
+        private HashSet<ComponentFilter<EcsComponent>> _filters;
 
+        public ComponentFilter<ComponentType> GetFilter<ComponentType>() where ComponentType : EcsComponent
+        {
+            var filter = new ComponentFilter<ComponentType>();
 
+            _filters.Add(filter);
+        }
+    }
+    */
+
+    public class ComponentUpdate : IFixedUpdateSystem
+    {
+        private EcsWorld _world = EcsWorld.FindWorld();
+
+        public void FixedUpdate(float deltaTime)
+            => _world.UpdateComponents();
+    }
+
+    public class EventUpdate : IFixedUpdateSystem
+    {
+        private EcsWorld _world = EcsWorld.FindWorld();
+
+        public void FixedUpdate(float deltaTime)
+            => _world.UpdateEvents();
     }
 }

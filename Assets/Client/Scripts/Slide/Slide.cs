@@ -71,6 +71,8 @@ public class SliderUpdateSystem : IUpdateSystem
     EventFilter<EnterCollisionEvent> _enterCollisionEvents = new();
     EventFilter<ExitCollisionEvent> _exitCollisionEvents = new();
 
+    ComponentFilter<Slider.Slider> _slider = new();
+
     public void Update(float deltaTime)
     {
         foreach (var enterEvent in _enterCollisionEvents)
@@ -106,3 +108,35 @@ public class SliderUpdateSystem : IUpdateSystem
     }
 }
 
+public class InputUpdate : IUpdateSystem
+{
+    private EcsWorld _world = EcsWorld.FindWorld();
+
+    public void Update(float deltaTime)
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+            _world.AddEvent(new KeyDown(KeyCode.A));
+
+    }
+}
+
+public struct KeyDown : IEvent
+{
+    public KeyCode KeyCode;
+
+    public KeyDown(KeyCode keyCode)
+    {
+        KeyCode = keyCode;
+    }
+}
+
+//InputUpdate (+)
+
+//Movement ?
+//{
+//MoveForward ?
+//ChangeRoad ? 
+//}
+
+//positions update
+//Move()

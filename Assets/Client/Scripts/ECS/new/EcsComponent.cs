@@ -12,11 +12,11 @@ public abstract class EcsComponent : MonoBehaviour
 
     public virtual void OnEnable()
     {
-        EcsWorld.TryAddComponent(this);
+        EcsWorld.AddComponent(this);
     }
 
     public virtual void OnDisable()
     {
-        EcsWorld.TryRemoveComponent(this);
+        EcsWorld.RemoveComponent(this);
     }
 }

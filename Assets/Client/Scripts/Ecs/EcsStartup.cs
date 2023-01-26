@@ -16,7 +16,10 @@ namespace Ecs
             //var eventSystem = new EventSystem();
 
             _systems
-                //event loading system
+                .Add(new ComponentUpdate())
+                .Add(new InputUpdate())
+                .Add(new EventUpdate())
+
 
                 .Add(new SliderUpdateSystem());
                 //.Add(new CollisionDetectionSystem())
@@ -24,7 +27,7 @@ namespace Ecs
                 //.Add(new GravitySystem())
                 //.Add(MovementSystems());
 
-                //event cleaning system
+                //component removed system
         }
 
         private void Update()
@@ -46,7 +49,7 @@ namespace Ecs
             foreach (var system in _systems.LateUpdateSystems)
                 system.LateUpdate(Time.fixedDeltaTime);
 
-            EcsWorld.ClearEvents();
+            //EcsWorld.ClearEvents();
         }
 
         private EcsSystems MovementSystems()

@@ -27,7 +27,7 @@ namespace Ecs.Systems
 
             foreach (var collider in colliders)
             {
-                EcsWorld.AddEvent(new CollisionStayEvent(detector,collider));
+                //EcsWorld.AddEvent(new CollisionStayEvent(detector,collider));
             }
         }
     }
