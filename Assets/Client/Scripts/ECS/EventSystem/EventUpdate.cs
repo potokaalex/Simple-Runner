@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Ecs
 {
@@ -16,9 +17,13 @@ namespace Ecs
 
         public static void AddFilter(IEventFilter filter)
         {
+            //Debug.Log("Add-request");
+
             foreach (var savedFilter in _filters)
                 if (savedFilter.GetEventType() == filter.GetEventType())
                     return;
+
+            //Debug.Log("Added");
 
             _filters.Add(filter);
         }
@@ -38,6 +43,8 @@ namespace Ecs
                 _worldEvents.Remove(currentEvent);
 
             _currentEvents.Clear();
+
+            //Debug.Log($"events count: {_currentEvents.Count}");
 
             foreach (var @event in _worldEvents)
                 _currentEvents.Add(@event);

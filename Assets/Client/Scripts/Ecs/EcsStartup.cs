@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Ecs.Systems;
-using Movement;
+using MovementSystem;
+using InputSystem;
 
 namespace Ecs
 {
@@ -66,17 +67,7 @@ namespace Ecs
         }
     }
 
-    public class MoveRight : EcsComponent
-    {
-        public CurveReader AccelerationReader;
-        public AnimationCurve Acceleration;
-        public float Velocity;
-    }
 
-    public class MoveLeft : EcsComponent
-    {
-        public CurveReader AccelerationReader;
-        public AnimationCurve Acceleration;
-        public float Velocity;
-    }
+
+
 }

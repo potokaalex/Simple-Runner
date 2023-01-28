@@ -73,11 +73,11 @@ public class SliderUpdateSystem : IFixedUpdateSystem
 
     ComponentFilter<Slider.Slider> _slider = new();
 
-    private EcsWorld _world = EcsWorld.FindWorld();
+    //private EcsWorld _world = EcsWorld.FindWorld();
 
     public void FixedUpdate(float deltaTime)
     {
-        var enterCollisionEvents = _world.GetEventsByType<EnterCollisionEvent>();
+        var enterCollisionEvents = new List<EnterCollisionEvent>();// _world.GetEventsByType<EnterCollisionEvent>();
 
         //Debug.Log("Event loading:");
         //Debug.Log($"EnterCollisionEventsCount : {enterCollisionEvents.Count()}");
@@ -99,7 +99,7 @@ public class SliderUpdateSystem : IFixedUpdateSystem
             //Debug.Log($"Enter-object name: {enterEvent.Contact.collider.name}");
         }
 
-        var exitCollisionEvents = _world.GetEventsByType<ExitCollisionEvent>();
+        var exitCollisionEvents = new List<ExitCollisionEvent>();
         foreach (var exitEvent in exitCollisionEvents)
         {
             //Debug.Log("Exit event");

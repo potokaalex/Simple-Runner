@@ -1,4 +1,4 @@
 ﻿namespace Ecs
 {
-    public interface IEvent : IComponent { }
+    public interface IEvent { }
 }

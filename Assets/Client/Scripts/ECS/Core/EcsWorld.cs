@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Ecs
 {
     public class EcsWorld
     {
-        private static List<EcsComponent> _components;
-        private static List<IEvent> _events;
+        private static List<EcsComponent> _components = new();
+        private static List<IEvent> _events = new();
 
         public List<EcsComponent> Components => _components;
 
@@ -16,6 +17,8 @@ namespace Ecs
             if (_components.Contains(component))
                 return;
 
+            Debug.Log("Component Added");
+
             _components.Add(component);
 
             AddEvent(new ComponentAdded(component));
@@ -23,7 +26,7 @@ namespace Ecs
 
         public static void RemoveComponent(EcsComponent component)
         {
-            if(_components.Remove(component))
+            if (_components.Remove(component))
                 AddEvent(new ComponentRemoved(component));
         }
 
