@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Ecs.Core
+namespace Ecs
 {
     public class EcsSystems
     {

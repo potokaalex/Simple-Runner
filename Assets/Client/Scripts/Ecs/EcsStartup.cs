@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Ecs.Core;
 using Ecs.Systems;
 using Movement;
 
@@ -9,14 +8,16 @@ namespace Ecs
 {
     public class EcsStartup : MonoBehaviour
     {
+        private EcsWorld _world = new();
         private EcsSystems _systems = new();
 
         private void Awake()
         {
             _systems
+                .Add(new EventUpdate(_world))
                 .Add(new ComponentUpdate())
+
                 .Add(new InputUpdate())
-                .Add(new EventUpdate())
 
                 .Add(Movement())
 
@@ -54,6 +55,7 @@ namespace Ecs
         //.Add(new MovementSystem());
         //.Add(new MoveForwardSystem())
         //.Add(new ChangeRoadSystem());
+
     }
 
     public class JumpUpdate : IFixedUpdateSystem
@@ -63,9 +65,6 @@ namespace Ecs
             //throw new System.NotImplementedException();
         }
     }
-    
-
-
 
     public class MoveRight : EcsComponent
     {
