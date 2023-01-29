@@ -52,7 +52,8 @@ namespace Ecs
         private EcsSystems Movement()
             => new EcsSystems()
             .Add(new MoveUpdate())
-            .Add(new JumpUpdate());
+            .Add(new JumpUpdate())
+        .Add(new MoveRightUpdate());
         //.Add(new MovementSystem());
         //.Add(new MoveForwardSystem())
         //.Add(new ChangeRoadSystem());

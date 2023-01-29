@@ -5,11 +5,13 @@ using Ecs.Systems;
 using MovementSystem;
 using InputSystem;
 
+
 namespace MovementSystem
 {
-    public class MoveLeft : EcsComponent
+    public struct MoveDirection
     {
         public CurveReader AccelerationReader;
         public AnimationCurve Acceleration;
+        public float Velocity;
     }
 }

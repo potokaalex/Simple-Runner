@@ -17,8 +17,6 @@ namespace Ecs
             if (_components.Contains(component))
                 return;
 
-            Debug.Log("Component Added");
-
             _components.Add(component);
 
             AddEvent(new ComponentAdded(component));

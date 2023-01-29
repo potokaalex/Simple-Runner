@@ -4,9 +4,12 @@ using UnityEngine;
 using System;
 using Ecs;
 
-public class MoveForward : EcsComponent
+namespace MovementSystem
 {
-    public CurveReader AccelerationReader;
-    public AnimationCurve Acceleration;
-    public float Velocity;
+    public class MoveForward : EcsComponent
+    {
+        public CurveReader AccelerationReader;
+        public AnimationCurve Acceleration;
+        public float Velocity;
+    }
 }

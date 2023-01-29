@@ -11,6 +11,5 @@ namespace MovementSystem
     {
         public CurveReader AccelerationReader;
         public AnimationCurve Acceleration;
-        public float Velocity; //[HideInInspector]
     }
 }

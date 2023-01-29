@@ -12,17 +12,31 @@ namespace MovementSystem
         private ComponentFilter<MoveForward> _moveForwardComponents = new();
         private ComponentFilter<MoveRight> _moveRightComponents = new();
         private ComponentFilter<MoveLeft> _moveLeftComponents = new();
-
-        private EventFilter<KeyDown> _keys;
+        private Filter<KeyDown> _keys = Filter.Create<KeyDown>();
 
         public void FixedUpdate(float deltaTime)
         {
             foreach (var component in _moveForwardComponents)
                 MoveForward(component, deltaTime);
+
             foreach (var component in _moveRightComponents)
-                MoveRight(component, deltaTime);
+                if (IsKeysContains(KeyCode.D))
+                    MoveRight(component, deltaTime);
+
             foreach (var component in _moveLeftComponents)
-                MoveLeft(component, deltaTime);
+                if (IsKeysContains(KeyCode.A))
+                    MoveLeft(component, deltaTime);
+
+            UpdateMovement();
+        }
+
+        private bool IsKeysContains(KeyCode keyCode)
+        {
+            foreach (var key in _keys)
+                if (key.KeyCode == keyCode)
+                    return true;
+
+            return false;
         }
 
         private void MoveForward(MoveForward component, float deltaTime)
@@ -30,9 +44,12 @@ namespace MovementSystem
             if (component.AccelerationReader == null)
                 component.AccelerationReader = new(component.Acceleration);
 
-            component.transform.position += Vector3.forward * component.Velocity * deltaTime;
+            var direction = Vector3.forward;
+            var velocity = component.AccelerationReader.GetValue() * deltaTime;
 
-            component.Velocity += component.AccelerationReader.GetValue() * deltaTime;
+            component.transform.position += direction * velocity;
+
+            component.Velocity += velocity;
             component.AccelerationReader.Move(deltaTime);
         }
 
@@ -41,48 +58,59 @@ namespace MovementSystem
             if (component.AccelerationReader == null)
                 component.AccelerationReader = new(component.Acceleration);
 
-            component.transform.position += Vector3.right * component.Velocity * deltaTime;
+            //if (component.AccelerationReader.GetIncrement() != 0)
+            //    return;
 
-            component.Velocity += component.AccelerationReader.GetValue() * deltaTime;
+            var direction = Vector3.right;
+            var velocity = component.AccelerationReader.GetIncrement();
+
+            component.transform.position += direction * velocity;
             component.AccelerationReader.Move(deltaTime);
-
         }
+
         private void MoveLeft(MoveLeft component, float deltaTime)
         {
             if (component.AccelerationReader == null)
                 component.AccelerationReader = new(component.Acceleration);
 
-            component.transform.position += Vector3.left * component.Velocity * deltaTime;
+            if (component.AccelerationReader.GetIncrement() != 0)
+                return;
 
-            component.Velocity += component.AccelerationReader.GetValue() * deltaTime;
+            var direction = Vector3.left;
+            var velocity = component.AccelerationReader.GetIncrement();
+
+            component.transform.position += direction * velocity;
             component.AccelerationReader.Move(deltaTime);
-
         }
 
-        private void Move(MoveForward component, float deltaTime)
+        private void UpdateMovement()
         {
-            if (component.AccelerationReader == null)
-                component.AccelerationReader = new(component.Acceleration);
-
-            component.transform.position += Vector3.forward * component.Velocity * deltaTime;
-
-            component.Velocity += component.AccelerationReader.GetValue() * deltaTime;
-            component.AccelerationReader.Move(deltaTime);
+            //MoveForward();
+            //MoveRight();
+            // MoveLeft();
         }
+    }
 
-        /*
-        private void Move(Move component, float deltaTime)
+    public class MoveRightUpdate : IFixedUpdateSystem
+    {
+        private ComponentFilter<MoveRight> _moveRightComponents = new();
+        private Filter<KeyDown> _keys = Filter.Create<KeyDown>();
+
+        public void FixedUpdate(float deltaTime)
         {
-            if (component.AccelerationReader == null)
-                component.AccelerationReader = new(component.AnimationAcceleration);
+            foreach (var key in _keys)
+                Debug.Log(key.KeyCode);
 
-            var velocity = component.Velocity * deltaTime;
-
-            component.transform.position += component.NormalizedDirection.normalized * velocity;
-
-            component.Velocity += component.AccelerationReader.GetValue() * deltaTime;
-            component.AccelerationReader.Move(deltaTime);
+           // throw new NotImplementedException();
         }
-        */
+
+        private void StartMove() { }
+        private void UpdateMove() { }
+
+    }
+
+    public class MoveDirection2
+    {
+
     }
 }

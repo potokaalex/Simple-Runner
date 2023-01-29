@@ -8,8 +8,8 @@ namespace Ecs
         private static List<IComponentFilter> _filters = new();
         private static List<EcsComponent> _currentComponents = new();
 
-        private EventFilter<ComponentAdded> _addeds = new();
-        private EventFilter<ComponentRemoved> _removeds = new();
+        private Filter<ComponentAdded> _addeds =  Filter.Create<ComponentAdded>();
+        private Filter<ComponentRemoved> _removeds = Filter.Create<ComponentRemoved>();
 
         public static void AddFilter(IComponentFilter filter)
         {
@@ -40,13 +40,7 @@ namespace Ecs
             _currentComponents.Add(component);
 
             foreach (var filter in _filters)
-            {
-                if (filter.GetComponentType() != component.GetType())
-                    continue;
-
                 filter.AddComponent(component);
-                return;
-            }
         }
 
         private void RemoveComponent(EcsComponent component)
@@ -54,13 +48,7 @@ namespace Ecs
             _currentComponents.Remove(component);
 
             foreach (var filter in _filters)
-            {
-                if (filter.GetComponentType() != component.GetType())
-                    continue;
-
                 filter.RemoveComponent(component);
-                return;
-            }
         }
     }
 }
