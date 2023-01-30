@@ -6,32 +6,30 @@ namespace Ecs
 {
     public class EventUpdate : IFixedUpdateSystem
     {
-        private static List<IFilter> _filters = new(); //IEventFilter - массив событий по ти
+        private static List<IEvent> _currentEvents = new();
+        private static List<Filter> _filters = new();
 
-        private List<IEvent> _currentEvents = new();
         private List<IEvent> _worldEvents;
 
-        public EventUpdate(EcsWorld world)
-        {
-            _worldEvents = world.Events;
-        }
+        public EventUpdate(EcsWorld world) => _worldEvents = world.Events;
 
         public static Filter<FilterType> GetFilter<FilterType>()
         {
-            var filterType = typeof(FilterType);
-
             foreach (var savedFilter in _filters)
-                if (savedFilter.GetFilterType() == filterType)
+                if (savedFilter.GetFilterType() == typeof(FilterType))
                     return savedFilter as Filter<FilterType>;
 
             var newFilter = new Filter<FilterType>();
+
+            foreach (var @event in _currentEvents)
+                newFilter.Add(@event);
 
             _filters.Add(newFilter);
 
             return newFilter;
         }
 
-        public static void RemoveFilter(IFilter filter)
+        public static void RemoveFilter(Filter filter)
             => _filters.Remove(filter);
 
         public void FixedUpdate(float deltaTime)

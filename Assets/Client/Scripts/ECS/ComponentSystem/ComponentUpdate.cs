@@ -5,25 +5,29 @@ namespace Ecs
 {
     public class ComponentUpdate : IFixedUpdateSystem
     {
-        private static List<IComponentFilter> _filters = new();
         private static List<EcsComponent> _currentComponents = new();
+        private static List<Filter> _filters = new();
 
-        private Filter<ComponentAdded> _addeds =  Filter.Create<ComponentAdded>();
+        private Filter<ComponentAdded> _addeds = Filter.Create<ComponentAdded>();
         private Filter<ComponentRemoved> _removeds = Filter.Create<ComponentRemoved>();
 
-        public static void AddFilter(IComponentFilter filter)
+        public static Filter<FilterType> GetFilter<FilterType>()
         {
             foreach (var savedFilter in _filters)
-                if (savedFilter.GetComponentType() == filter.GetComponentType())
-                    return;
+                if (savedFilter.GetFilterType() == typeof(FilterType))
+                    return savedFilter as Filter<FilterType>;
 
-            foreach (var component in _currentComponents)
-                filter.AddComponent(component);
+            var newFilter = new Filter<FilterType>();
 
-            _filters.Add(filter);
+            foreach (var @event in _currentComponents)
+                newFilter.Add(@event);
+
+            _filters.Add(newFilter);
+
+            return newFilter;
         }
 
-        public static void RemoveFilter(IComponentFilter filter)
+        public static void RemoveFilter(Filter filter)
             => _filters.Remove(filter);
 
         public void FixedUpdate(float deltaTime)
@@ -40,7 +44,7 @@ namespace Ecs
             _currentComponents.Add(component);
 
             foreach (var filter in _filters)
-                filter.AddComponent(component);
+                filter.Add(component);
         }
 
         private void RemoveComponent(EcsComponent component)
@@ -48,7 +52,7 @@ namespace Ecs
             _currentComponents.Remove(component);
 
             foreach (var filter in _filters)
-                filter.RemoveComponent(component);
+                filter.Remove(component);
         }
     }
 }

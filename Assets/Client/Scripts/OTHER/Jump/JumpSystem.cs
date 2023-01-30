@@ -7,8 +7,8 @@ namespace Ecs.Systems
 {
     public class JumpSystem : IUpdateSystem, IFixedUpdateSystem
     {
-        private ComponentFilter<Jump> _jumping = new();
-        private EventFilter<CollisionStayEvent> _stayEvents;
+        private Filter<Jump> _jumping = Filter.Create<Jump>();
+        private Filter<CollisionStayEvent> _stayEvents = Filter.Create<CollisionStayEvent>();
 
         private bool IsJumpKeyDown => Input.GetKeyDown(KeyCode.W);
 

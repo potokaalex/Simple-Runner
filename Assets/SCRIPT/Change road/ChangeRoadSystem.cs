@@ -7,7 +7,7 @@ namespace Ecs.Systems
 {
     public class ChangeRoadSystem : IFixedUpdateSystem, IUpdateSystem
     {
-        private ComponentFilter<ChangeRoad> _changeRoad = new();
+        private Filter<ChangeRoad> _changeRoad = Filter.Create<ChangeRoad>();
 
         public void Update(float deltaTime)
         {

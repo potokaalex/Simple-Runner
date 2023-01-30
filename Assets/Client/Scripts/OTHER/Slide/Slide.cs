@@ -71,7 +71,7 @@ public class SliderUpdateSystem : IFixedUpdateSystem
     //EventFilter<EnterCollisionEvent> _enterCollisionEvents = new();
     //EventFilter<ExitCollisionEvent> _exitCollisionEvents = new();
 
-    ComponentFilter<Slider.Slider> _slider = new();
+    //ComponentFilter<Slider.Slider> _slider = new();
 
     //private EcsWorld _world = EcsWorld.FindWorld();
 

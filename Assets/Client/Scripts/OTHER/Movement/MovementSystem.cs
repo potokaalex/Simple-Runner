@@ -8,8 +8,8 @@ namespace Movement
 {
     public class MovementSystem : IFixedUpdateSystem
     {
-        private ComponentFilter<Move> _moveComponents = new();
-        private ComponentFilter<Slide> _slideComponents = new();
+        private Filter<Move> _moveComponents = Filter.Create<Move>();
+        private Filter<Slide> _slideComponents = Filter.Create<Slide>();
 
         public void FixedUpdate(float deltaTime)
         {

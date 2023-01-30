@@ -9,9 +9,9 @@ namespace MovementSystem
 {
     public class MoveUpdate : IFixedUpdateSystem
     {
-        private ComponentFilter<MoveForward> _moveForwardComponents = new();
-        private ComponentFilter<MoveRight> _moveRightComponents = new();
-        private ComponentFilter<MoveLeft> _moveLeftComponents = new();
+        private Filter<MoveForward> _moveForwardComponents = Filter.Create<MoveForward>();
+        private Filter<MoveRight> _moveRightComponents = Filter.Create<MoveRight>();
+        private Filter<MoveLeft> _moveLeftComponents = Filter.Create<MoveLeft>();
         private Filter<KeyDown> _keys = Filter.Create<KeyDown>();
 
         public void FixedUpdate(float deltaTime)
@@ -93,15 +93,18 @@ namespace MovementSystem
 
     public class MoveRightUpdate : IFixedUpdateSystem
     {
-        private ComponentFilter<MoveRight> _moveRightComponents = new();
+        private Filter<MoveRight> _moveRightComponents = Filter.Create<MoveRight>();
         private Filter<KeyDown> _keys = Filter.Create<KeyDown>();
 
         public void FixedUpdate(float deltaTime)
         {
             foreach (var key in _keys)
-                Debug.Log(key.KeyCode);
+            {
+                _moveRightComponents = Filter.Create<MoveRight>();
+            }
 
-           // throw new NotImplementedException();
+
+            // throw new NotImplementedException();
         }
 
         private void StartMove() { }

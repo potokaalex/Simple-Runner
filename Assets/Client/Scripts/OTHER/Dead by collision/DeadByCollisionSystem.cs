@@ -6,8 +6,8 @@ namespace Ecs.Systems
 {
     public class DeadByCollisionSystem : IFixedUpdateSystem
     {
-        private ComponentFilter<DeadByCollision> _deadMarkers = new();
-        private EventFilter<CollisionStayEvent> _stayEvents = new();
+        private Filter<DeadByCollision> _deadMarkers = Filter.Create<DeadByCollision>();
+        private Filter<CollisionStayEvent> _stayEvents = Filter.Create<CollisionStayEvent>();
 
         public void FixedUpdate(float deltaTime)
         {
