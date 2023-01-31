@@ -17,18 +17,15 @@ namespace Ecs
             _systems
                 .Add(new EventUpdate(_world))
                 .Add(new ComponentUpdate())
-
                 .Add(new InputUpdate())
 
-                .Add(Movement())
+                .Add(Movement());
 
-                .Add(new SliderUpdateSystem());
-            //.Add(new CollisionDetectionSystem())
-            //.Add(new DeadByCollisionSystem())
-            //.Add(new GravitySystem())
-            //.Add(MovementSystems());
-
-            //component removed system
+                //.Add(new SliderUpdateSystem());
+                //.Add(new CollisionDetectionSystem())
+                //.Add(new DeadByCollisionSystem())
+                //.Add(new GravitySystem())
+                //.Add(MovementSystems());
         }
 
         private void Update()
@@ -46,17 +43,16 @@ namespace Ecs
         private void LateUpdate()
         {
             foreach (var system in _systems.LateUpdateSystems)
-                system.LateUpdate(Time.fixedDeltaTime);
+                system.LateUpdate(Time.fixedDeltaTime); //fixed time ?!?!
         }
 
         private EcsSystems Movement()
             => new EcsSystems()
-            .Add(new MoveUpdate())
-            .Add(new JumpUpdate())
-        .Add(new MoveRightUpdate());
-        //.Add(new MovementSystem());
-        //.Add(new MoveForwardSystem())
-        //.Add(new ChangeRoadSystem());
+            .Add(new SurfaceHandlersUpdate())
+            .Add(new MoveRightUpdate())
+            .Add(new MoveLeftUpdate())
+            .Add(new RunUpdate())
+            .Add(new JumpUpdate());
 
     }
 
@@ -67,8 +63,4 @@ namespace Ecs
             //throw new System.NotImplementedException();
         }
     }
-
-
-
-
 }

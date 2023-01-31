@@ -10,11 +10,13 @@ using Ecs;
 
 public class EnterCollisionDetector : EcsComponent
 {
-    //public Collision Collision;
+    public Collision Collision;
 
     private void OnCollisionEnter(Collision collision)
     {
-        //Debug.Log($"Enter");
+        Collision = collision;
+
+        Debug.Log($"Enter");
 
         EcsWorld.AddEvent(new EnterCollisionEvent(this, collision));
     }

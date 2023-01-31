@@ -6,8 +6,9 @@ using Ecs;
 
 namespace MovementSystem
 {
-    public class MoveForward : EcsComponent
+    public class Run : EcsComponent
     {
+        //public SurfaceHandler SurfaceHandler;
         public CurveReader AccelerationReader;
         public AnimationCurve Acceleration;
         public float Velocity;

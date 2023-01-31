@@ -10,11 +10,12 @@ using Ecs;
 
 public class ExitCollisionDetector : EcsComponent
 {
-    //public Collision Collision;
+    public Collision Collision;
 
     private void OnCollisionExit(Collision collision)
     {
-        //Debug.Log($"Exit");
+        Debug.Log($"Exit");
+        Collision = collision;
 
         EcsWorld.AddEvent(new ExitCollisionEvent(this, collision));
     }
