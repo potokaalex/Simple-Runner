@@ -11,7 +11,7 @@ using Ecs;
 public class EnterCollisionDetector : EcsComponent
 {
     public Collision Collision;
-
+    /*
     private void OnCollisionEnter(Collision collision)
     {
         Collision = collision;
@@ -20,4 +20,5 @@ public class EnterCollisionDetector : EcsComponent
 
         EcsWorld.AddEvent(new EnterCollisionEvent(this, collision));
     }
+    */
 }

@@ -35,7 +35,7 @@ namespace MovementSystem
 
                     }
 
-                    handler.SurfaceNormal = enter.Contact.contacts[0].normal;
+                    //handler.SurfaceNormal = enter.Contact.contacts[0].normal;
 
                     //sTryAddContactPoint(handler, );
                     //RecalculateAverageNormal(handler);

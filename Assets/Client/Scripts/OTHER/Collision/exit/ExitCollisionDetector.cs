@@ -11,7 +11,7 @@ using Ecs;
 public class ExitCollisionDetector : EcsComponent
 {
     public Collision Collision;
-
+    /*
     private void OnCollisionExit(Collision collision)
     {
         Debug.Log($"Exit");
@@ -19,4 +19,5 @@ public class ExitCollisionDetector : EcsComponent
 
         EcsWorld.AddEvent(new ExitCollisionEvent(this, collision));
     }
+    */
 }

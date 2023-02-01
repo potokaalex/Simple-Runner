@@ -4,6 +4,7 @@ using UnityEngine;
 using Ecs.Systems;
 using MovementSystem;
 using InputSystem;
+using CollisionSystem;
 
 namespace Ecs
 {
@@ -19,13 +20,16 @@ namespace Ecs
                 .Add(new ComponentUpdate())
                 .Add(new InputUpdate())
 
-                .Add(Movement());
+                .Add(new CollisionDetectorsUpdate())
 
-                //.Add(new SliderUpdateSystem());
-                //.Add(new CollisionDetectionSystem())
-                //.Add(new DeadByCollisionSystem())
-                //.Add(new GravitySystem())
-                //.Add(MovementSystems());
+                .Add(Movement())
+
+            //.Add(new SliderUpdateSystem());
+            //.Add(new CollisionDetectionSystem())
+            //.Add(new DeadByCollisionSystem())
+            //.Add(new GravitySystem())
+            //.Add(MovementSystems());
+            .Add(new Test());
         }
 
         private void Update()
@@ -53,6 +57,10 @@ namespace Ecs
             .Add(new MoveLeftUpdate())
             .Add(new RunUpdate())
             .Add(new JumpUpdate());
+
+        private EcsSystems Collision() //?!?!
+            => new EcsSystems()
+            .Add(new CollisionDetectorsUpdate());
 
     }
 

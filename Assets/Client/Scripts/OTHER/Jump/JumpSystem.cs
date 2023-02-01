@@ -8,7 +8,7 @@ namespace Ecs.Systems
     public class JumpSystem : IUpdateSystem, IFixedUpdateSystem
     {
         private Filter<Jump> _jumping = Filter.Create<Jump>();
-        private Filter<CollisionStayEvent> _stayEvents = Filter.Create<CollisionStayEvent>();
+        private Filter<StayCollisionEvent> _stayEvents = Filter.Create<StayCollisionEvent>();
 
         private bool IsJumpKeyDown => Input.GetKeyDown(KeyCode.W);
 
@@ -22,7 +22,7 @@ namespace Ecs.Systems
                 foreach (var component in _jumping)
                 {
                     //if (component.Detector != stayEvent.Sender)
-                     //   continue;
+                    //   continue;
 
                     component.AnimationVelocity ??= new(component.VelocityCurve);
                     component.AnimationVelocity.Reset();

@@ -6,8 +6,9 @@ namespace Ecs.Systems
 {
     public class DeadByCollisionSystem : IFixedUpdateSystem
     {
+
         private Filter<DeadByCollision> _deadMarkers = Filter.Create<DeadByCollision>();
-        private Filter<CollisionStayEvent> _stayEvents = Filter.Create<CollisionStayEvent>();
+        private Filter<StayCollisionEvent> _stayEvents = Filter.Create<StayCollisionEvent>();
 
         public void FixedUpdate(float deltaTime)
         {
@@ -16,10 +17,11 @@ namespace Ecs.Systems
                 foreach (var _deadMarker in _deadMarkers)
                 {
                     //if (_deadMarker.Detector == stayEvent.Sender)
-                      //  Debug.Log("Dead!");
+                    //  Debug.Log("Dead!");
                 }
             }
         }
+
     }
 }
 
