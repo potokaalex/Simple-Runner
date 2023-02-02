@@ -12,6 +12,7 @@ public class Test : IFixedUpdateSystem
 
     public void FixedUpdate(float deltaTime)
     {
+        /*
         foreach (var enter in _enterCollisionEvents)
         {
             Debug.Log($"-ENTER- Name: {enter.CollisionInfo.HitInfo.collider}, Side: {enter.CollisionInfo.CollisionSide}");
@@ -34,5 +35,6 @@ public class Test : IFixedUpdateSystem
 
             Debug.DrawRay(stay.Sender.transform.position, stay.CollisionInfo.HitInfo.normal, Color.red);
         }
+        */
     }
 }

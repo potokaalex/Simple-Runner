@@ -7,10 +7,13 @@ namespace CollisionSystem
     public struct CollisionInfo : IEquatable<CollisionInfo>
     {
         public Collider BodyCollider;
-        public RaycastHit HitInfo;
+        public Collider SurfaceCollider;
+        public Vector3 SurfaceNormal;
+        public Vector3 CollisionPoint;
         public Side CollisionSide;
+        
 
         public bool Equals(CollisionInfo other)
-            => other.CollisionSide == CollisionSide && other.BodyCollider == BodyCollider && other.HitInfo.collider == HitInfo.collider && other.HitInfo.normal == HitInfo.normal;
+            => other.CollisionSide == CollisionSide && other.BodyCollider == BodyCollider && other.SurfaceCollider == SurfaceCollider && other.SurfaceNormal == SurfaceNormal;
     }
 }

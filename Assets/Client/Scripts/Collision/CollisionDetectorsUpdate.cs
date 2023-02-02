@@ -53,7 +53,7 @@ namespace CollisionSystem
         {
             Physics.Raycast(origin, direction, out RaycastHit hit, maxDistance, ~ignoreMask);
 
-            Debug.DrawRay(origin, direction * maxDistance, Color.magenta);
+            //Debug.DrawRay(origin, direction * maxDistance, Color.magenta);
 
             return hit;
         }
@@ -112,7 +112,7 @@ namespace CollisionSystem
             var collisionInfo = new CollisionInfo()
             {
                 BodyCollider = detector.Body,
-                HitInfo = hit,
+                //HitInfo = hit,
                 CollisionSide = collisionSide,
             };
 

@@ -22,14 +22,14 @@ namespace Ecs
 
                 .Add(new CollisionDetectorsUpdate())
 
-                .Add(Movement())
+                .Add(Movement());
 
             //.Add(new SliderUpdateSystem());
             //.Add(new CollisionDetectionSystem())
             //.Add(new DeadByCollisionSystem())
             //.Add(new GravitySystem())
             //.Add(MovementSystems());
-            .Add(new Test());
+            //.Add(new Test());
         }
 
         private void Update()
