@@ -4,6 +4,7 @@ using CollisionSystem;
 
 public class ExitCollisionEvent : IEvent
 {
+    /*
     public EcsComponent Sender;
     public CollisionInfo CollisionInfo;
 
@@ -12,4 +13,5 @@ public class ExitCollisionEvent : IEvent
         Sender = sender;
         CollisionInfo = collisionInfo;
     }
+    */
 }

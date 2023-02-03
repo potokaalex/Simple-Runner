@@ -9,6 +9,7 @@ namespace MovementSystem
 {
     public class SurfaceHandlersUpdate : IFixedUpdateSystem
     {
+        /*
         private Filter<SurfaceHandler> _handlers = Filter.Create<SurfaceHandler>();
         private Filter<EnterCollisionEvent> _enterEvents = Filter.Create<EnterCollisionEvent>();
         private Filter<ExitCollisionEvent> _exitEvents = Filter.Create<ExitCollisionEvent>();
@@ -27,13 +28,13 @@ namespace MovementSystem
                     }
 
 
-                    if (handler.EnterCollisionDetector.Collision.contacts.Length < 1)
-                    {
+                    //if (handler.EnterCollisionDetector.Collision.contacts.Length < 1)
+                    //{
                         //Debug.Log("Second");
 
-                        continue;
+                     //   continue;
 
-                    }
+                    //}
 
                     //handler.SurfaceNormal = enter.Contact.contacts[0].normal;
 
@@ -44,8 +45,8 @@ namespace MovementSystem
 
                 foreach (var exit in _exitEvents)
                 {
-                    if (exit.Sender != handler.ExitCollisionDetector)
-                        continue;
+                    //if (exit.Sender != handler.ExitCollisionDetector)
+                     //   continue;
 
                     
 
@@ -96,6 +97,11 @@ namespace MovementSystem
                 handlers.SurfaceNormal += n.normal;
 
             handlers.SurfaceNormal /= count;
+        }
+        */
+        public void FixedUpdate(float deltaTime)
+        {
+
         }
     }
 }

@@ -6,6 +6,7 @@ using Ecs;
 
 namespace CollisionSystem
 {
+    /*
     public class BoxCollisionDetector : EcsComponent
     {
         [HideInInspector] public List<CollisionInfo> Collisions = new();
@@ -37,4 +38,5 @@ namespace CollisionSystem
             public bool Stay;
         }
     }
+    */
 }

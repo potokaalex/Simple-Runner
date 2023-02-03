@@ -5,11 +5,11 @@ using CollisionSystem;
 public class EnterCollisionEvent : IEvent
 {
     public EcsComponent Sender;
-    public CollisionInfo CollisionInfo;
+    public Collision CollisionInfo;
 
-    public EnterCollisionEvent(EcsComponent sender, CollisionInfo collisionInfo)
+    public EnterCollisionEvent(EcsComponent sender, Collision collision)
     {
         Sender = sender;
-        CollisionInfo = collisionInfo;
+        CollisionInfo = collision;
     }
 }

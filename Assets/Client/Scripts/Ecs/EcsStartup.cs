@@ -20,7 +20,7 @@ namespace Ecs
                 .Add(new ComponentUpdate())
                 .Add(new InputUpdate())
 
-                .Add(new CollisionDetectorsUpdate())
+                .Add(new CollisionDetectors())
 
                 .Add(Movement());
 
@@ -52,7 +52,7 @@ namespace Ecs
 
         private EcsSystems Movement()
             => new EcsSystems()
-            .Add(new SurfaceHandlersUpdate())
+            //.Add(new SurfaceHandlersUpdate())
             .Add(new MoveRightUpdate())
             .Add(new MoveLeftUpdate())
             .Add(new RunUpdate())
@@ -60,7 +60,7 @@ namespace Ecs
 
         private EcsSystems Collision() //?!?!
             => new EcsSystems()
-            .Add(new CollisionDetectorsUpdate());
+            .Add(new CollisionDetectors());
 
     }
 

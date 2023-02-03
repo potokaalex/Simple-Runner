@@ -5,11 +5,12 @@ using CollisionSystem;
 public class StayCollisionEvent : IEvent
 {
     public EcsComponent Sender;
-    public CollisionInfo CollisionInfo;
+    public Collision CollisionInfo;
 
-    public StayCollisionEvent(EcsComponent sender, CollisionInfo collisionInfo)
+    public StayCollisionEvent(EcsComponent sender, Collision collision)
     {
         Sender = sender;
-        CollisionInfo = collisionInfo;
+        CollisionInfo = collision;
     }
 }
+
