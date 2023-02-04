@@ -18,7 +18,7 @@ namespace MovementSystem
             {
                 UpdateMove(component, deltaTime);
 
-                Debug.DrawRay(component.transform.position, component.transform.rotation * Vector3.forward, Color.green);
+                //Debug.DrawRay(component.transform.position, component.transform.rotation * Vector3.forward, Color.green);
 
 
                 //Debug.DrawRay(component.transform.position, component.SurfaceHandler.SurfaceNormal, Color.red);
