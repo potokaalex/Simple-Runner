@@ -5,11 +5,14 @@ using Ecs.Systems;
 using MovementSystem;
 using InputSystem;
 using CollisionSystem;
+using WorldGeneration;
 
 namespace Ecs
 {
     public class EcsStartup : MonoBehaviour
     {
+        //[SerializeField] private InfiniteRoad _infiniteRoad;
+
         private EcsWorld _world = new();
         private EcsSystems _systems = new();
 
@@ -19,6 +22,8 @@ namespace Ecs
                 .Add(new EventUpdate(_world))
                 .Add(new ComponentUpdate())
                 .Add(new InputUpdate())
+
+                //.Add(_infiniteRoad)
 
                 .Add(new CollisionDetectors())
 
