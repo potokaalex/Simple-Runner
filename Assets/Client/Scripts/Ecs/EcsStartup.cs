@@ -5,7 +5,7 @@ using Ecs.Systems;
 using MovementSystem;
 using InputSystem;
 using CollisionSystem;
-using WorldGeneration;
+using Map;
 
 namespace Ecs
 {
@@ -23,7 +23,9 @@ namespace Ecs
                 .Add(new ComponentUpdate())
                 .Add(new InputUpdate())
 
-                //.Add(_infiniteRoad)
+                //.Add(new Spawner())
+
+                .Add(new ChunksGeneration())
 
                 .Add(new CollisionDetectors())
 

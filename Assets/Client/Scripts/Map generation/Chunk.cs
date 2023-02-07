@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Ecs;
 
-public class RoadTile : EcsComponent
+public class Chunk : EcsComponent
 {
     public float Length;
 }

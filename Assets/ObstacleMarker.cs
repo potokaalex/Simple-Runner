@@ -2,12 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class T : ScriptableObject
+public class ObstacleMarker : MonoBehaviour
 {
-    [SerializeField] private List<RoadTile> _allTiles;
-
-    public float A;
-
     // Start is called before the first frame update
     void Start()
     {

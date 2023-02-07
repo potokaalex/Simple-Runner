@@ -3,7 +3,6 @@ using System.Linq;
 using UnityEngine;
 using System;
 using Ecs;
-using Slider;
 
 namespace MovementSystem
 {
