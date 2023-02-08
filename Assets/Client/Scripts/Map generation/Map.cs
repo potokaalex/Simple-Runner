@@ -8,7 +8,7 @@ using Singleton;
 
 namespace MapGeneration
 {
-    public class Map : MonoBehaviour
+    public class Map : MonoBehaviour // why not ecs ??
     {
         [SerializeField] private Chunk[] _presetChunks;
         [SerializeField] private List<Chunk> _activeChunks;
@@ -20,7 +20,7 @@ namespace MapGeneration
         private Transform _character;
 
         private void Start()
-            => _character = CharacterMarker.Instance.transform;
+            => _character = Singleton<CharacterMarker>.Instance.transform;
 
         private void FixedUpdate()
         {

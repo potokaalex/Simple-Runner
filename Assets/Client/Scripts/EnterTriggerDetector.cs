@@ -4,13 +4,13 @@ using Ecs;
 [RequireComponent(typeof(Collider))]
 public class EnterTriggerDetector : EcsComponent
 {
-    public LayerMask IgnoreMask;
+    [SerializeField] private LayerMask _ignoreMask;
 
     private EnterTriggerEvent _previousEvent;
 
     private void OnTriggerEnter(Collider collider)
     {
-        if ((IgnoreMask.value & (1 << collider.gameObject.layer)) != 0)
+        if ((_ignoreMask.value & (1 << collider.gameObject.layer)) != 0)
             return;
 
         SendEvent(collider);

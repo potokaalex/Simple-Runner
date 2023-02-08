@@ -2,27 +2,31 @@
 
 namespace Singleton
 {
-    public abstract class Singleton<T> where T : MonoBehaviour
+    public static class Singleton<T> where T : MonoBehaviour, IAloneInScene
     {
-        public static T TryGetInstance()
+        private static T _instance;
+        private static GameObject _singletonObject;
+
+        public static T Instance
         {
-            var componentType = typeof(T);
-            var components = Object.FindObjectsOfType(componentType, true);
-
-            if (components == null || components.Length < 1)
+            get
             {
-                Debug.LogError($"You are trying to access an uncreated {componentType}");
-                return null;
+                var componentType = typeof(T);
+                var components = Object.FindObjectsOfType(componentType, true);
+
+                if (_singletonObject == null)
+                    _singletonObject = new GameObject("Singletons");
+
+                if (components == null || components.Length < 1)
+                    return _instance = _singletonObject.AddComponent<T>();
+
+                if (components.Length == 1)
+                    return _instance;
+
+                Debug.LogError($"An object of {componentType} type should be the only one in the scene!");
+
+                return _instance;
             }
-
-            var component = components[0] as T;
-
-            if (components.Length < 2)
-                return component;
-
-            Debug.LogError($"An object of {componentType} type should be the only one in the scene!");
-
-            return component;
         }
     }
 }

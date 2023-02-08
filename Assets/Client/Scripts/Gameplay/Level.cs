@@ -1,13 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using MapGeneration;
-using Singleton;
+using Ecs;
 
-public class Level : MonoBehaviour
+public class Level : MonoBehaviour, IAloneInScene
 {
-    public static Level Instance => Singleton<Level>.TryGetInstance();
+    public bool IsPaused { get; private set; }
 
-    public Transform Character;
-    public Map Map;
+    public void Defeat()
+    {
+
+    }
+
+    public void Pause(bool isPaused)
+    {
+
+    }
 }

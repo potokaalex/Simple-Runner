@@ -26,8 +26,10 @@ namespace Ecs
                 //.Add(new Spawner())
 
                 //.Add(new ChunksGeneration())
-
+                .Add(new CharacterDeathDetector())
                 .Add(new CollisionDetectors())
+
+                //.Add(new SingletonChecker())
 
                 .Add(Movement());
 

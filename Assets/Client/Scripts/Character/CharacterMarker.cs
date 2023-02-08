@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Singleton;
 
-public class CharacterMarker : MonoBehaviour
+public class CharacterMarker : MonoBehaviour, IAloneInScene
 {
-    public static CharacterMarker Instance => Singleton<CharacterMarker>.TryGetInstance();
+    //public static CharacterMarker Instance => Singleton<CharacterMarker>.TryGetInstance();
 }
