@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ecs
 {
@@ -16,7 +12,7 @@ namespace Ecs
                 return EventUpdate.GetFilter<FilterType>();
 
             if (typeof(EcsComponent).IsAssignableFrom(filterType))
-            return ComponentUpdate.GetFilter<FilterType>();
+                return ComponentUpdate.GetFilter<FilterType>();
 
             return null;
         }

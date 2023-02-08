@@ -5,7 +5,7 @@ using Ecs.Systems;
 using MovementSystem;
 using InputSystem;
 using CollisionSystem;
-using Map;
+using MapGeneration;
 
 namespace Ecs
 {
@@ -25,7 +25,7 @@ namespace Ecs
 
                 //.Add(new Spawner())
 
-                .Add(new ChunksGeneration())
+                //.Add(new ChunksGeneration())
 
                 .Add(new CollisionDetectors())
 
