@@ -24,7 +24,6 @@ public class CharacterDeathDetector : IFixedUpdateSystem
             // открытие меню паузы/replay`я, остановка игры на паузу.
 
             Singleton<Level>.Instance.Defeat();
-            //Object.Destroy(character.gameObject);
         }
     }
 }
