@@ -19,26 +19,20 @@ namespace Ecs
         private void Awake()
         {
             _systems
-                .Add(new EventUpdate(_world))
-                .Add(new ComponentUpdate())
-                .Add(new InputUpdate())
-
-                //.Add(new Spawner())
-
-                //.Add(new ChunksGeneration())
+                //senders:
+                .Add(new InputUpdate()) //[Core]
                 .Add(new CharacterDeathDetector())
                 .Add(new CollisionDetectors())
 
+                //handlers:
+                .Add(new EventUpdate(_world)) //[Core]
+                .Add(new ComponentUpdate()) //[Core]
+
+                //.Add(new Spawner())
+                //.Add(new ChunksGeneration())
                 //.Add(new SingletonChecker())
 
                 .Add(Movement());
-
-            //.Add(new SliderUpdateSystem());
-            //.Add(new CollisionDetectionSystem())
-            //.Add(new DeadByCollisionSystem())
-            //.Add(new GravitySystem())
-            //.Add(MovementSystems());
-            //.Add(new Test());
         }
 
         private void Update()
@@ -71,13 +65,18 @@ namespace Ecs
             => new EcsSystems()
             .Add(new CollisionDetectors());
 
+        /*
+        private void OnDisable()
+        {
+            _world.Components.Clear();
+            _world.Events.Clear();
+        }
+        */
+
     }
 
-    public class JumpUpdate : IFixedUpdateSystem
+    public class JumpUpdate : IFixedUpdateSystem // its shuldn`t exist !
     {
-        public void FixedUpdate(float deltaTime)
-        {
-            //throw new System.NotImplementedException();
-        }
+        public void FixedUpdate(float deltaTime) { }
     }
 }

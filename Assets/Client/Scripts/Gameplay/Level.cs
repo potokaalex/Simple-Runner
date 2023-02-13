@@ -3,21 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using Ecs;
 
+//нужен компонент 
 public class Level : MonoBehaviour, IAloneInScene
 {
     [SerializeField] private DefeatMenu _defeatMenu;
 
-
     public bool IsPaused { get; private set; }
-
 
     public void Defeat()
     {
-        //при поражении игра отправляется на "паузу".
-
-        //тоесть: происходит time-scale = 0, вызывается меню поражения.
-
         Pause(true);
+
+        _defeatMenu.Active(true);
     }
 
     public void Pause(bool isPaused)
@@ -28,8 +25,5 @@ public class Level : MonoBehaviour, IAloneInScene
     }
 }
 
-public class DefeatMenu // медиатор 
-{
-
-
-}
+public interface IDontDestroyedOnLoad
+{ }

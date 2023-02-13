@@ -16,5 +16,5 @@ MonoBehaviour:
     _json: '{"dictionary":{"aotSafeMode":{"$content":true,"$type":"System.Boolean"},"favoriteMembers":{"$content":[],"$type":"System.Collections.Generic.HashSet`1[[Unity.VisualScripting.Member,
       Unity.VisualScripting.Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"},"assemblyOptions":{"$content":["Unity.VisualScripting.Core","Unity.VisualScripting.State","Unity.VisualScripting.Flow"],"$type":"System.Collections.Generic.List`1[[Unity.VisualScripting.LooseAssemblyName,
       Unity.VisualScripting.Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"},"typeOptions":{"$content":[],"$type":"System.Collections.Generic.List`1[[System.Type,
-      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"projectSetupCompleted":{"$content":false,"$type":"System.Boolean"},"savedVersion":{"major":1,"minor":7,"patch":8,"label":null,"increment":0,"$type":"Unity.VisualScripting.SemanticVersion"}}}'
+      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"projectSetupCompleted":{"$content":false,"$type":"System.Boolean"},"savedVersion":{"major":1,"minor":8,"patch":0,"label":null,"increment":0,"$type":"Unity.VisualScripting.SemanticVersion"}}}'
     _objectReferences: []
