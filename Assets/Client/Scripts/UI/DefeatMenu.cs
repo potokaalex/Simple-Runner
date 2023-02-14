@@ -9,13 +9,15 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class DefeatMenu : MonoBehaviour
+public class DefeatMenu : MonoBehaviour //mediator
 {
     [SerializeField] private Image _background;
     [SerializeField] private TextMeshProUGUI _score;
     [SerializeField] private Image _replay;
     [SerializeField] private Image _home;
     [SerializeField] private Image _share;
+
+    public static DefeatMenu Instance => FindObjectOfType<DefeatMenu>();
 
     public void Active(bool isActive)
     {
@@ -26,11 +28,15 @@ public class DefeatMenu : MonoBehaviour
         _share.enabled = isActive;
     }
 
-    public void Replay() //перезагрузка сцены
+    public void Replay() //=> Game.Replay 
     {
+        //перезагрузка сцены
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
-        Singleton<Level>.Instance.Pause(false);
+        PauseManager.IsPaused = false;
+
+        //Singleton<Level>.Instance.Pause(false);
     }
 
     private void Update()

@@ -37,18 +37,27 @@ namespace Ecs
 
         private void Update()
         {
+            if (PauseManager.IsPaused)
+                return;
+
             foreach (var system in _systems.UpdateSystems)
                 system.Update(Time.deltaTime);
         }
 
         private void FixedUpdate()
         {
+            if (PauseManager.IsPaused)
+                return;
+
             foreach (var system in _systems.FixedUpdateSystems)
                 system.FixedUpdate(Time.fixedDeltaTime);
         }
 
         private void LateUpdate()
         {
+            if (PauseManager.IsPaused)
+                return;
+
             foreach (var system in _systems.LateUpdateSystems)
                 system.LateUpdate(Time.fixedDeltaTime); //fixed time ?!?!
         }

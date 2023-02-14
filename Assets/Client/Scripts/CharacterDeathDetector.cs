@@ -21,9 +21,12 @@ public class CharacterDeathDetector : IFixedUpdateSystem
             if (!enterEvent.Sender.TryGetComponent(out CharacterMarker character))
                 continue;
 
-            // открытие меню паузы/replay`я, остановка игры на паузу.
+            PauseManager.IsPaused = true;
 
-            Singleton<Level>.Instance.Defeat();
+            DefeatMenu.Instance.Active(true);
+
+            // открытие меню паузы/replay`я, остановка игры на паузу.
+            //Singleton<Level>.Instance.Defeat();
         }
     }
 }
@@ -43,7 +46,7 @@ public class EnterTriggerEvent : IEvent
 
 public interface IAloneInScene { }
 
-public interface IAloneInScene<ComponentType> : IAloneInScene 
+public interface IAloneInScene<ComponentType> : IAloneInScene
 {
     public static void GetInstance() { }
 
