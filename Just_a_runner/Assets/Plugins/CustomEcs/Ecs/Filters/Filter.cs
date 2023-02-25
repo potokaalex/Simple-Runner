@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System.Runtime.CompilerServices;
+using System.Collections.Generic;
 
 namespace Ecs
 {
@@ -15,14 +15,15 @@ namespace Ecs
         where ComponentType2 : IComponent
         where ComponentType3 : IComponent
     {
-        private List<Entity> _entities;
+        private List<Entity> _entities = new();
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Filter()
         {
             foreach (var entity in World.Entities)
                 Add(entity);
 
-            World.Filters.AddFilter(this);
+            World.Filters.Add(this);
         }
 
         public int Count
@@ -31,9 +32,11 @@ namespace Ecs
         public Entity this[int index]
             => _entities[index];
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public IEnumerator<Entity> GetEnumerator()
             => _entities.GetEnumerator();
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override void Add(Entity entity)
         {
             if (_entities.Contains(entity))
@@ -45,8 +48,12 @@ namespace Ecs
                 _entities.Add(entity);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override void Remove(Entity entity)
         {
+            if (!_entities.Contains(entity))
+                return;
+
             if (entity.Contains<ComponentType1>()
                 && entity.Contains<ComponentType2>()
                 && entity.Contains<ComponentType3>())

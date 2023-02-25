@@ -23,6 +23,6 @@ public class EnterTriggerDetector : EcsComponent
 
         _previousEvent.Collider = collider;
 
-        World.Events.Add(_previousEvent);
+        //World.Events.Add(_previousEvent);
     }
 }

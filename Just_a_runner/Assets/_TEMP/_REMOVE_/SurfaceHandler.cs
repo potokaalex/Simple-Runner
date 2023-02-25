@@ -14,7 +14,7 @@ namespace MovementSystem
         public Transform parent;
 
         public EnterCollisionDetector EnterCollisionDetector;
-        public ExitCollisionDetector ExitCollisionDetector;
+        //public ExitCollisionDetector ExitCollisionDetector;
 
         public List<Vector3> Normals = new();
         public List<Vector3> CurrentNormals = new();

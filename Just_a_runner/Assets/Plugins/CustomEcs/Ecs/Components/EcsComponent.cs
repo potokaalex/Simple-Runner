@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Runtime.CompilerServices;
+using UnityEngine;
 
 namespace Ecs
 {
@@ -9,16 +10,15 @@ namespace Ecs
         public Entity Entity
             => _entity;
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual void OnEnable()
-        {
-            _entity = GetEntity();
+            => _entity = GetEntity();
 
-            _entity.Add(this);
-        }
-
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual void OnDisable()
             => _entity.Remove(this);
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private Entity GetEntity()
         {
             foreach (var entity in World.Entities)
@@ -26,8 +26,6 @@ namespace Ecs
                     return entity;
 
             var newEntity = new Entity(this, gameObject);
-
-            World.Entities.Add(newEntity);
 
             return newEntity;
         }

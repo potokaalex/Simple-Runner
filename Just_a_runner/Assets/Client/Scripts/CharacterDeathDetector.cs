@@ -6,7 +6,7 @@ using Ecs;
 using System.Collections;
 using UnityEngine;
 
-public class CharacterDeathDetector : ITickable
+public class CharacterDeathDetector : Ecs.ITickable
 {
     private Filter<EnterTriggerEvent> _enterEvents = new();
 

@@ -4,18 +4,20 @@ namespace Ecs
 {
     public static class World
     {
-        public static List<Entity> Entities;
-        public static Entity Events;
-        private static Filters _filters;
+        private static List<Entity> _entities = new();
+        private static List<Filter> _filters = new();
+        private static Entity _events = new();
 
         static World()
-        {
-            Entities = new();
-            _filters = new();
-            Entities.Add(Events = new());
-        }
+            => _entities.Add(_events);
 
-        internal static Filters Filters 
+        public static List<Entity> Entities
+            => _entities;
+
+        public static Entity Events
+            => _events;
+
+        internal static List<Filter> Filters
             => _filters;
     }
 }

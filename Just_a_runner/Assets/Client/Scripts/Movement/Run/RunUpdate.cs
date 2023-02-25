@@ -1,28 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using UnityEngine;
 using Ecs;
-using UnityEngine;
 
 namespace MovementSystem
 {
-    public class RunUpdate : IFixedUpdateSystem
+    public class RunUpdate : ITickable
     {
-        private Filter<Run> _runComponents = new();
+        private Filter<Run> _running = new();
 
-        public void FixedUpdate(float deltaTime)
+        public void Tick(float deltaTime)
         {
-            foreach (var component in _runComponents)
-            {
-                //UpdateMove(component, deltaTime);
+            //Debug.Log(_running.Count);
 
-                //Debug.DrawRay(component.transform.position, component.transform.rotation * Vector3.forward, Color.green);
-
-
-                //Debug.DrawRay(component.transform.position, component.SurfaceHandler.SurfaceNormal, Color.red);
-            }
+            for (var i = 0; i < _running.Count; i++)
+                UpdateMove(_running[i].Get<Run>(), deltaTime);
         }
 
         private void UpdateMove(Run component, float deltaTime)
@@ -31,12 +21,8 @@ namespace MovementSystem
 
             component.transform.position += component.Velocity * deltaTime * (component.transform.rotation * Vector3.forward);
 
-            //component.transform.rotation = Quaternion.AngleAxis(Vector3.Angle(Vector3.forward, GetProjection(component)), Vector3.left);
-
             component.Velocity += component.AccelerationReader.GetIncrement();
             component.AccelerationReader.Move(deltaTime);
         }
-
-        private Vector3 GetProjection(Vector3 normal) => Vector3.forward - Vector3.Dot(Vector3.forward, normal) * normal;
     }
 }

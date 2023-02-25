@@ -4,12 +4,12 @@ using Ecs;
 
 namespace MovementSystem
 {
-    public class MoveRightUpdate : MoveSideUpdate, IFixedUpdateSystem
+    public class MoveRightUpdate : MoveSideUpdate, ITickable
     {
         private Filter<MoveRight> _moveRightComponents = new();
         private Filter<KeyDown> _keys = new();
 
-        public void FixedUpdate(float deltaTime)
+        public void Tick(float deltaTime)
         {
             foreach (var component in _moveRightComponents)
             {

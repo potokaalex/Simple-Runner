@@ -4,29 +4,23 @@ using Ecs;
 
 namespace MovementSystem
 {
-    public class MoveLeftUpdate : MoveSideUpdate, IFixedUpdateSystem
+    public class MoveLeftUpdate : MoveSideUpdate, ITickable
     {
-        private Filter<MoveLeft> _moveLeftComponents = new();
-        private Filter<KeyDown> _keys = new();
+        private Filter<MoveLeft> _movable = new();
+        private Filter<KeyDown_A> _keys = new();
 
-        public void FixedUpdate(float deltaTime)
+        public void Tick(float deltaTime)
         {
-            foreach (var component in _moveLeftComponents)
-            {
-                //if (IsInputCondition())
-                  //  StartMove(component);
-
-                //UpdateMove(component,Vector3.left, deltaTime);
-            }
+            for (var i = 0; i < _movable.Count; i++)
+                Move(_movable[i].Get<MoveLeft>(), deltaTime);
         }
 
-        private bool IsInputCondition()
+        private void Move(MoveLeft component, float deltaTime)
         {
-            //foreach (var key in _keys)
-              //  if (key.KeyCode == KeyCode.A)
-                //    return true;
+            if (_keys.Count > 0)
+                StartMove(component);
 
-            return false;
+            UpdateMove(component, Vector3.left, deltaTime);
         }
     }
 }

@@ -6,7 +6,7 @@ using Ecs;
 
 namespace MovementSystem
 {
-    public class SurfaceHandlersUpdate : IFixedUpdateSystem
+    public class SurfaceHandlersUpdate : ITickable
     {
         /*
         private Filter<SurfaceHandler> _handlers = Filter.Create<SurfaceHandler>();
@@ -98,9 +98,8 @@ namespace MovementSystem
             handlers.SurfaceNormal /= count;
         }
         */
-        public void FixedUpdate(float deltaTime)
+        public void Tick(float deltaTime)
         {
-
         }
     }
 }

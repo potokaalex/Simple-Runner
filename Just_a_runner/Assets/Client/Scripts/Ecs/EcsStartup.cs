@@ -2,38 +2,55 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 //using Ecs.Systems;
-//using MovementSystem;
+using MovementSystem;
+using InputSystem;
 //using InputSystem;
 //using CollisionSystem;
 //using MapGeneration;
 
 namespace Ecs
 {
-    /*
     public class EcsStartup : MonoBehaviour
     {
         //[SerializeField] private InfiniteRoad _infiniteRoad;
 
-        private EcsWorld _world = new();
-        private EcsSystems _systems = new();
+        private Systems _updateSystems = new();
+        private Systems _fixedUpdateSystems = new();
 
         private void Awake()
         {
-            _systems
-                //senders:
-                .Add(new InputUpdate()) //[Core]
-                .Add(new CharacterDeathDetector())
-                .Add(new CollisionDetectors())
-
-                //handlers:
-                .Add(new EventUpdate(_world)) //[Core]
-                .Add(new ComponentUpdate()) //[Core]
-
-                //.Add(new Spawner())
-                //.Add(new ChunksGeneration())
-                //.Add(new SingletonChecker())
+            _fixedUpdateSystems
+                .Add(new ComponentsUpdate())
+                .Add(new EventsRemove())
 
                 .Add(Movement());
+
+                
+                //.Add(new RemoveComponentsInFilters());
+
+
+
+            _updateSystems
+                .Add(new InputUpdate());
+
+            /*
+        _systems
+            //senders:
+            .Add(new FiltersUpdate())
+            //.Add(new InputUpdate()) //[Core]
+            .Add(new CharacterDeathDetector())
+            //.Add(new CollisionDetectors())
+
+            //handlers:
+            //.Add(new EventUpdate(_world)) //[Core]
+            //.Add(new ComponentUpdate()) //[Core]
+
+            //.Add(new Spawner())
+            //.Add(new ChunksGeneration())
+            //.Add(new SingletonChecker())
+
+            .Add(Movement());
+            */
         }
 
         private void Update()
@@ -41,8 +58,7 @@ namespace Ecs
             //if (PauseManager.IsPaused)
             //    return;
 
-            foreach (var system in _systems.UpdateSystems)
-                system.Update(Time.deltaTime);
+            _updateSystems.Update(Time.deltaTime);
         }
 
         private void FixedUpdate()
@@ -50,44 +66,24 @@ namespace Ecs
             //if (PauseManager.IsPaused)
             //    return;
 
-            foreach (var system in _systems.FixedUpdateSystems)
-                system.FixedUpdate(Time.fixedDeltaTime);
+            _fixedUpdateSystems.Update(Time.fixedDeltaTime);
         }
 
-        private void LateUpdate()
-        {
-            // if (PauseManager.IsPaused)
-            //    return;
-
-            foreach (var system in _systems.LateUpdateSystems)
-                system.LateUpdate(Time.fixedDeltaTime); //fixed time ?!?!
-        }
-
-        private EcsSystems Movement()
-            => new EcsSystems()
-            //.Add(new SurfaceHandlersUpdate())
-            .Add(new MoveRightUpdate())
+        private Systems Movement()
+            => new Systems()
+            //.Add(new MoveRightUpdate())
             .Add(new MoveLeftUpdate())
-            .Add(new RunUpdate())
-            .Add(new JumpUpdate());
+            .Add(new RunUpdate());
 
-        private EcsSystems Collision() //?!?!
-            => new EcsSystems()
-            .Add(new CollisionDetectors());
+        //private Systems Collision() //?!?!
+        //   => new Systems()
+        //   .Add(new CollisionDetectors());
 
-        
-        private void OnDisable()
-        {
-            _world.Components.Clear();
-            _world.Events.Clear();
-        }
-        
 
+        //private void OnDisable()
+        //{
+        //    _world.Components.Clear();
+        //    _world.Events.Clear();
+        //}
     }
-
-    public class JumpUpdate : IFixedUpdateSystem // its shuldn`t exist !
-    {
-        public void FixedUpdate(float deltaTime) { }
-    }
-    */
 }

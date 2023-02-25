@@ -2,7 +2,7 @@
 using Ecs;
 using CollisionSystem;
 
-public class StayCollisionEvent : IEvent, IComponent
+public class StayCollisionEvent :  IComponent
 {
     public EcsComponent Sender;
     public Collision CollisionInfo;
