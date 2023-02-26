@@ -64,7 +64,6 @@ namespace Ecs
             return default;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Get<ComponentType>(out List<IComponent> components) where ComponentType : IComponent
         {
             _getComponentsBuffer.Clear();
@@ -88,7 +87,6 @@ namespace Ecs
         public void Remove(IComponent component)
             => _removedComponents.Add(component);
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void ComponentsUpdate()
         {
             UpdateAdditions();

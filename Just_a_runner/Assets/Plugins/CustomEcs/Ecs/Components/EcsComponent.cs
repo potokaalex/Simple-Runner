@@ -10,24 +10,32 @@ namespace Ecs
         public Entity Entity
             => _entity;
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual void OnEnable()
-            => _entity = GetEntity();
+        {
+            if (TryGetEntity(out _entity))
+                _entity.Add(this);
+            else
+                World.Entities.Add(_entity = new(this, gameObject));
+        }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual void OnDisable()
             => _entity.Remove(this);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private Entity GetEntity()
+        private bool TryGetEntity(out Entity entity)
         {
-            foreach (var entity in World.Entities)
-                if (entity.GameObject == this)
-                    return entity;
+            foreach (var savedEntity in World.Entities)
+            {
+                if (savedEntity.GameObject == gameObject)
+                {
+                    entity = savedEntity;
+                    return true;
+                }
+            }
 
-            var newEntity = new Entity(this, gameObject);
+            entity = null;
 
-            return newEntity;
+            return false;
         }
     }
 }

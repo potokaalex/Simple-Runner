@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using System;
+﻿using UnityEngine;
 using Ecs;
 
 namespace InputSystem

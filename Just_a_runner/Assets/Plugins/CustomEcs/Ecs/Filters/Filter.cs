@@ -36,7 +36,6 @@ namespace Ecs
         public IEnumerator<Entity> GetEnumerator()
             => _entities.GetEnumerator();
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override void Add(Entity entity)
         {
             if (_entities.Contains(entity))
@@ -48,7 +47,6 @@ namespace Ecs
                 _entities.Add(entity);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override void Remove(Entity entity)
         {
             if (!_entities.Contains(entity))

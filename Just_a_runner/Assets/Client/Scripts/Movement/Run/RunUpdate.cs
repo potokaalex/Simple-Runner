@@ -9,10 +9,8 @@ namespace MovementSystem
 
         public void Tick(float deltaTime)
         {
-            //Debug.Log(_running.Count);
-
-            for (var i = 0; i < _running.Count; i++)
-                UpdateMove(_running[i].Get<Run>(), deltaTime);
+            foreach (var entity in _running)
+                UpdateMove(entity.Get<Run>(), deltaTime);
         }
 
         private void UpdateMove(Run component, float deltaTime)

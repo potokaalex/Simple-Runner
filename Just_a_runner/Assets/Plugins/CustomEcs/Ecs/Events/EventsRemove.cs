@@ -4,7 +4,6 @@ namespace Ecs
 {
     public class EventsRemove : ITickable
     {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Tick(float deltaTime)
             => Update();
 

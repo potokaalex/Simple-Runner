@@ -1,14 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using MovementSystem;
-using InputSystem;
+﻿using UnityEngine;
 
 namespace MovementSystem
 {
-    public class MoveLeft : MoveSide
+    public class MoveRight : MoveSide
     {
         [SerializeField] private AnimationCurve _position;
+        [SerializeField] private bool _isWallCheck;
 
         public override AnimationCurve Position
         {
@@ -17,5 +14,11 @@ namespace MovementSystem
         }
 
         public override CurveReader PositionReader { get; set; }
+
+        public override Vector3 Direction
+            => Vector3.right;
+
+        public override bool IsWallCheck
+            => _isWallCheck;
     }
 }

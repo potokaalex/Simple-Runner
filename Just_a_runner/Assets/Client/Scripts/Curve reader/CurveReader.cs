@@ -2,38 +2,41 @@
 
 public class CurveReader
 {
-    private AnimationCurve curve;
-    private float previousValue;
-    private float value;
+    private AnimationCurve _curve;
+    private float _previousValue;
+    private float _value;
 
     public float LastKeyTime { get; private set; }
 
     public float Time { get; private set; }
 
     public CurveReader(AnimationCurve curve)
-        => this.curve = curve;
+        => _curve = curve;
 
     public float GetValue()
-        => value;
+        => _value;
+
+    public float GetValue(float time)
+        => _curve.Evaluate(time);
 
     public float GetIncrement()
-        => value - previousValue;
+        => _value - _previousValue;
 
     public void Move(float deltaTime)
     {
-        previousValue = value;
+        _previousValue = _value;
 
         Time += deltaTime;
 
-        value = curve.Evaluate(Time);
+        _value = _curve.Evaluate(Time);
     }
 
     public void Reset()
     {
-        previousValue = 0;
-        value = 0;
+        _previousValue = 0;
+        _value = 0;
 
-        LastKeyTime = curve.keys[curve.keys.Length - 1].time;
+        LastKeyTime = _curve.keys[_curve.keys.Length - 1].time;
         Time = 0;
     }
 }

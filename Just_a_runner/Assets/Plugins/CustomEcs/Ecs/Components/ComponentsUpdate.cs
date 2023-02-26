@@ -1,14 +1,11 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace Ecs
+﻿namespace Ecs
 {
     public class ComponentsUpdate : ITickable
     {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Tick(float deltaTime)
         {
-            foreach (var entity in World.Entities)
-                entity.ComponentsUpdate();
+            for (var i = 0; i < World.Entities.Count; i++)
+                World.Entities[i].ComponentsUpdate();
         }
     }
 }

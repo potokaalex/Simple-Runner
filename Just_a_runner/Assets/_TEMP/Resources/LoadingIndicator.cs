@@ -5,7 +5,7 @@ using Zenject;
 public class LoadingIndicator : MonoBehaviour
 {
     [SerializeField] private RectTransform _indicator;
-    [SerializeField] [Tooltip("Angle per second")] private float _velocity;
+    [SerializeField][Tooltip("Angle per second")] private float _velocity;
 
     private SceneLoader _sceneLoader;
 
@@ -14,13 +14,12 @@ public class LoadingIndicator : MonoBehaviour
     {
         _sceneLoader = sceneLoader;
 
-        Debug.Log("132");
-
         _sceneLoader.OnLoadingStart += StartAnimation;
         _sceneLoader.OnLoadingEnd += StopAnimation;
     }
 
-    private void StartAnimation() => StartCoroutine(Animation());
+    private void StartAnimation() 
+        => StartCoroutine(Animation());
 
     private void StopAnimation()
     {

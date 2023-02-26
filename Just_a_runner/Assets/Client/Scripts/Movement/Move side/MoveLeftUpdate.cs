@@ -1,6 +1,5 @@
-﻿using UnityEngine;
+﻿using Ecs;
 using InputSystem;
-using Ecs;
 
 namespace MovementSystem
 {
@@ -11,16 +10,16 @@ namespace MovementSystem
 
         public void Tick(float deltaTime)
         {
-            for (var i = 0; i < _movable.Count; i++)
-                Move(_movable[i].Get<MoveLeft>(), deltaTime);
+            foreach (var entity in _movable)
+                Move(entity.Get<MoveLeft>(), deltaTime);
         }
 
-        private void Move(MoveLeft component, float deltaTime)
+        public void Move(MoveSide component, float deltaTime)
         {
             if (_keys.Count > 0)
                 StartMove(component);
 
-            UpdateMove(component, Vector3.left, deltaTime);
+            UpdateMove(component, deltaTime);
         }
     }
 }

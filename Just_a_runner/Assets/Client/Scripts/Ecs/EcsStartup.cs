@@ -22,13 +22,9 @@ namespace Ecs
             _fixedUpdateSystems
                 .Add(new ComponentsUpdate())
                 .Add(new EventsRemove())
+                //.Add(new RaycastersUpdate())
 
                 .Add(Movement());
-
-                
-                //.Add(new RemoveComponentsInFilters());
-
-
 
             _updateSystems
                 .Add(new InputUpdate());
@@ -71,7 +67,7 @@ namespace Ecs
 
         private Systems Movement()
             => new Systems()
-            //.Add(new MoveRightUpdate())
+            .Add(new MoveRightUpdate())
             .Add(new MoveLeftUpdate())
             .Add(new RunUpdate());
 
