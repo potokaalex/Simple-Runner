@@ -15,7 +15,7 @@ namespace Ecs
             if (TryGetEntity(out _entity))
                 _entity.Add(this);
             else
-                World.Entities.Add(_entity = new(this, gameObject));
+                _entity = new(this, gameObject);
         }
 
         public virtual void OnDisable()

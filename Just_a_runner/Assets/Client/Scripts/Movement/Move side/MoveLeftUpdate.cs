@@ -10,8 +10,8 @@ namespace MovementSystem
 
         public void Tick(float deltaTime)
         {
-            foreach (var entity in _movable)
-                Move(entity.Get<MoveLeft>(), deltaTime);
+            for (var i = 0; i < _movable.Count; i++)
+                Move(_movable[i].Get<MoveLeft>(), deltaTime);
         }
 
         public void Move(MoveSide component, float deltaTime)

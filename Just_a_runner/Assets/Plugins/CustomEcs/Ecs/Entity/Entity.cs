@@ -11,6 +11,7 @@ namespace Ecs
         private List<IComponent> _getComponentsBuffer = new();
         private List<IComponent> _components = new();
         private GameObject _gameObject;
+        private bool _isDestroyed;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal Entity()
@@ -87,10 +88,25 @@ namespace Ecs
         public void Remove(IComponent component)
             => _removedComponents.Add(component);
 
-        internal void ComponentsUpdate()
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Destroy()
+        {
+            foreach (var component in _components)
+                _removedComponents.Add(component);
+
+            _isDestroyed = true;
+        }
+
+        internal void Update()
         {
             UpdateAdditions();
             UpdateDeletions();
+
+            if (_isDestroyed)
+            {
+                World.Entities.Remove(this);
+                Object.Destroy(_gameObject);
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

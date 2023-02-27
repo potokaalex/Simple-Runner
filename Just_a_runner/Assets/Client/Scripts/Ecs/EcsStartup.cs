@@ -20,9 +20,9 @@ namespace Ecs
         private void Awake()
         {
             _fixedUpdateSystems
-                .Add(new ComponentsUpdate())
+                .Add(new EntitiesUpdate())
                 .Add(new EventsRemove())
-                //.Add(new RaycastersUpdate())
+                .Add(new DeathDetection())
 
                 .Add(Movement());
 
