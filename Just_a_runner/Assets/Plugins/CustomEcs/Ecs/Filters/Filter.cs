@@ -17,7 +17,6 @@ namespace Ecs
     {
         private List<Entity> _entities = new();
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Filter()
         {
             foreach (var entity in World.Entities)
@@ -32,7 +31,6 @@ namespace Ecs
         public Entity this[int index]
             => _entities[index];
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public IEnumerator<Entity> GetEnumerator()
             => _entities.GetEnumerator();
 

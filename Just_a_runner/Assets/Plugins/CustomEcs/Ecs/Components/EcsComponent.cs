@@ -21,7 +21,6 @@ namespace Ecs
         public virtual void OnDisable()
             => _entity.Remove(this);
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private bool TryGetEntity(out Entity entity)
         {
             foreach (var savedEntity in World.Entities)

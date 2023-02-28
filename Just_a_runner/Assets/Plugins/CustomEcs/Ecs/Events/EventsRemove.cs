@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using UnityEngine;
 
 namespace Ecs
 {
@@ -7,12 +8,11 @@ namespace Ecs
         public void Tick(float deltaTime)
             => Update();
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void Update()
         {
             var events = World.Events;
 
-            if(events.Count<IComponent>() < 1)
+            if (!events.Contains<IComponent>())
                 return;
 
             events.Get<IComponent>(out var components);

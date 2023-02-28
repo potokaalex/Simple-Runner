@@ -1,52 +1,41 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 //using Ecs.Systems;
 using MovementSystem;
 using InputSystem;
 //using InputSystem;
 //using CollisionSystem;
 //using MapGeneration;
+using DeathSystem;
+using Zenject;
+using RoadGeneration;
 
 namespace Ecs
 {
-    public class EcsStartup : MonoBehaviour
+    public class GameStartup : MonoBehaviour //временно управляет updata`ми, в будущем - состояние
     {
-        //[SerializeField] private InfiniteRoad _infiniteRoad;
+        public CharacterMarker CharacterMarker;
+        public RoadData RoadData;
 
         private Systems _updateSystems = new();
         private Systems _fixedUpdateSystems = new();
+
+        //[Inject]
+        //private void Constructor()
+        //{
+        //}
 
         private void Awake()
         {
             _fixedUpdateSystems
                 .Add(new EntitiesUpdate())
                 .Add(new EventsRemove())
-                .Add(new DeathDetection())
+                .Add(new RoadGenerator(CharacterMarker, RoadData))
+                .Add(new Death(CharacterMarker))
 
                 .Add(Movement());
 
             _updateSystems
                 .Add(new InputUpdate());
-
-            /*
-        _systems
-            //senders:
-            .Add(new FiltersUpdate())
-            //.Add(new InputUpdate()) //[Core]
-            .Add(new CharacterDeathDetector())
-            //.Add(new CollisionDetectors())
-
-            //handlers:
-            //.Add(new EventUpdate(_world)) //[Core]
-            //.Add(new ComponentUpdate()) //[Core]
-
-            //.Add(new Spawner())
-            //.Add(new ChunksGeneration())
-            //.Add(new SingletonChecker())
-
-            .Add(Movement());
-            */
         }
 
         private void Update()
@@ -70,16 +59,5 @@ namespace Ecs
             .Add(new MoveRightUpdate())
             .Add(new MoveLeftUpdate())
             .Add(new RunUpdate());
-
-        //private Systems Collision() //?!?!
-        //   => new Systems()
-        //   .Add(new CollisionDetectors());
-
-
-        //private void OnDisable()
-        //{
-        //    _world.Components.Clear();
-        //    _world.Events.Clear();
-        //}
     }
 }

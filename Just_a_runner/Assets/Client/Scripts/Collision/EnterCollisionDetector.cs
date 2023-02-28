@@ -3,7 +3,7 @@ using Ecs;
 
 namespace CollisionSystem
 {
-    public class EnterCollisionDetector : EcsComponent, ICollisionDetector
+    public class EnterCollisionDetector : EcsComponent
     {
         public LayerMask IgnoreMask;
         public EnterCollisionEvent LastEventSent;
@@ -13,11 +13,12 @@ namespace CollisionSystem
             if ((IgnoreMask.value & (1 << collision.gameObject.layer)) != 0)
                 return;
 
-            LastEventSent.CollisionInfo = collision;
+            if (LastEventSent == null)
+                LastEventSent = new(this, collision);
+            else
+                LastEventSent.CollisionInfo = collision;
 
-            //EcsWorld.AddEvent(LastEventSent);
+            World.Events.Add(LastEventSent);
         }
     }
-
-    public interface ICollisionDetector { }
 }

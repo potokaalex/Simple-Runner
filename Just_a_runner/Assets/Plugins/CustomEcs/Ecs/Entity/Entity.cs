@@ -13,13 +13,11 @@ namespace Ecs
         private GameObject _gameObject;
         private bool _isDestroyed;
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal Entity()
         {
             World.Entities.Add(this);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Entity(IComponent component, GameObject gameObject) : this()
         {
             _gameObject = gameObject;
@@ -29,11 +27,9 @@ namespace Ecs
         public GameObject GameObject
             => _gameObject;
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int Count()
             => _components.Count;
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int Count<ComponentType>() where ComponentType : IComponent
         {
             var count = 0;
@@ -45,7 +41,6 @@ namespace Ecs
             return count;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Contains<ComponentType>() where ComponentType : IComponent
         {
             for (var i = 0; i < _components.Count; i++)
@@ -55,7 +50,6 @@ namespace Ecs
             return false;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ComponentType Get<ComponentType>() where ComponentType : IComponent
         {
             for (var i = 0; i < _components.Count; i++)
@@ -80,15 +74,12 @@ namespace Ecs
                     _getComponentsBuffer.Add(desiredComponent);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Add(IComponent component)
             => _addedComponents.Add(component);
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Remove(IComponent component)
             => _removedComponents.Add(component);
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Destroy()
         {
             foreach (var component in _components)
@@ -109,7 +100,6 @@ namespace Ecs
             }
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void UpdateAdditions()
         {
             if (_addedComponents.Count < 1)
@@ -126,7 +116,6 @@ namespace Ecs
             _addedComponents.Clear();
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void UpdateDeletions()
         {
             if (_removedComponents.Count < 1)

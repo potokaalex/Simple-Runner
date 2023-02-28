@@ -2,7 +2,7 @@
 using Ecs;
 using CollisionSystem;
 
-public class EnterCollisionEvent :  IComponent
+public class EnterCollisionEvent : IComponent
 {
     public EcsComponent Sender;
     public Collision CollisionInfo;
@@ -13,5 +13,6 @@ public class EnterCollisionEvent :  IComponent
         CollisionInfo = collision;
     }
 
-    public Entity Entity { get; }
+    public Entity Entity
+         => World.Events;
 }

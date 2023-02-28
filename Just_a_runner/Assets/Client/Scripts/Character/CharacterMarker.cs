@@ -1,3 +1,3 @@
-﻿using Ecs;
+﻿using UnityEngine;
 
-public class CharacterMarker : EcsComponent { }
+public class CharacterMarker : MonoBehaviour { }

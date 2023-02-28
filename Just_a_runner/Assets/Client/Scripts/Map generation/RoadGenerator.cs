@@ -5,11 +5,34 @@ using System.Threading.Tasks;
 using Ecs;
 using UnityEngine;
 
-namespace MapGeneration
+namespace RoadGeneration
 {
-    public class RoadGenerator
+    public class RoadGenerator : ITickable
     {
-        public void GenerateChunkAhead(Chunk[] presetChunks, List<Chunk> activeChunks)
+        private Transform _character;
+        private RoadData _roadData;
+
+        public RoadGenerator(CharacterMarker characterMarker, RoadData roadData)
+        {
+            _character = characterMarker.transform;
+            _roadData = roadData;
+        }
+
+        public void Tick(float deltaTime)
+        {
+            if ((_roadData.LastChunkPosition - _character.position).magnitude < _roadData.DistanceToGenerateNewChunk)
+                Generate(_roadData, _character.position, _roadData.FirstChunkPosition, _roadData.LastChunkPosition);
+        }
+
+        private void Generate(RoadData roadData, Vector3 characterPosition, Vector3 firstChunkPosition, Vector3 lastChunkPosition)
+        {
+            GenerateChunkAhead(roadData.PresetChunks, roadData.ActiveChunks);
+
+            if ((characterPosition - firstChunkPosition).magnitude > roadData.DistanceToRemoveOldChunk)
+                RemoveFirstChunk(roadData.ActiveChunks);
+        }
+
+        private void GenerateChunkAhead(Chunk[] presetChunks, List<Chunk> activeChunks)
         {
             if (presetChunks.Length < 1)
                 return;
@@ -20,20 +43,18 @@ namespace MapGeneration
             activeChunks.Add(Object.Instantiate(chunk, chunkPosition, Quaternion.identity));
         }
 
-        public void RemoveOldChunk(List<Chunk> activeChunks)
+        private void RemoveFirstChunk(List<Chunk> activeChunks)
         {
             if (activeChunks.Count < 1)
                 return;
 
-            var oldChunk = activeChunks[0];
+            var firstChunk = activeChunks[0];
 
-            activeChunks.Remove(oldChunk);
-            Object.Destroy(oldChunk.gameObject);
+            activeChunks.Remove(firstChunk);
+            firstChunk.Entity.Destroy();
         }
 
         private Chunk GetRandomChunk(Chunk[] chunks)
-        {
-            return chunks[Random.Range(0, chunks.Length)];
-        }
+            => chunks[Random.Range(0, chunks.Length)];
     }
 }
