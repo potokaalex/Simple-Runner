@@ -1,18 +1,20 @@
 ﻿using UnityEngine;
 using Ecs;
-using CollisionSystem;
 
-public class EnterCollisionEvent : IComponent
+namespace CollisionSystem
 {
-    public EcsComponent Sender;
-    public Collision CollisionInfo;
-
-    public EnterCollisionEvent(EcsComponent sender, Collision collision)
+    public class EnterCollisionEvent : IComponent
     {
-        Sender = sender;
-        CollisionInfo = collision;
-    }
+        public EcsComponent Sender;
+        public Collision CollisionInfo;
 
-    public Entity Entity
-         => World.Events;
+        public EnterCollisionEvent(EcsComponent sender, Collision collision)
+        {
+            Sender = sender;
+            CollisionInfo = collision;
+        }
+
+        public Entity Entity
+             => World.Events;
+    }
 }

@@ -74,3 +74,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c39b237c73913ba4997917babc1293bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _bootstrapState:
+    MainMenuScene:
+      m_AssetGUID: e7234da8a17641a4a93a2fa9907ecde9
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0

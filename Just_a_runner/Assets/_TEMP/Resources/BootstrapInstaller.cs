@@ -2,36 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
-using UnityEngine.SceneManagement;
-//using Ecs;
-using System.Linq;
 
 public class BootstrapInstaller : MonoInstaller
 {
+    [SerializeField] private BootstrapState.Settings _bootstrapState;
+
     public override void InstallBindings()
     {
-        Debug.Log(Container.AllContracts.Count());
         BindSceneLoader();
-        Debug.Log(Container.AllContracts.Count());
-
+        BindStateFactory();
         BindGlobalStateMachine();
 
-        BindStateFactory();
+        BindBootstrapStateSettings();
     }
 
     private void BindSceneLoader()
     {
         Container
             .Bind<SceneLoader>()
-            .FromInstance(new SceneLoader())
-            .AsSingle();
-    }
-
-    private void BindGlobalStateMachine()
-    {
-        Container
-            .Bind(typeof(IInitializable), typeof(IGlobalStateMachine))
-            .To<GlobalStateMachine>()
             .AsSingle();
     }
 
@@ -43,9 +31,19 @@ public class BootstrapInstaller : MonoInstaller
             .AsSingle();
     }
 
-    private void BindGlobalStates()
+    private void BindGlobalStateMachine()
     {
-        //Container
-        //  .Bind<BootstrapState>().AsSingle();
+        Container
+            .Bind(typeof(IInitializable), typeof(IGlobalStateMachine))
+            .To<GlobalStateMachine>()
+            .AsSingle();
+    }
+
+    private void BindBootstrapStateSettings()
+    {
+        Container
+            .Bind<BootstrapState.Settings>()
+            .FromInstance(_bootstrapState)
+            .AsSingle();
     }
 }

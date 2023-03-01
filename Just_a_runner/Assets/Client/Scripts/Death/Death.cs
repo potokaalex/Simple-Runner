@@ -35,17 +35,3 @@ namespace DeathSystem
         }
     }
 }
-
-public class EnterTriggerEvent : IComponent //рудимент
-{
-    public EcsComponent Sender;
-    public Collider Collider;
-
-    public EnterTriggerEvent(EcsComponent sender, Collider collider)
-    {
-        Sender = sender;
-        Collider = collider;
-    }
-
-    public Entity Entity { get; }
-}

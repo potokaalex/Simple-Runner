@@ -12,13 +12,6 @@ using System;
 using System.Collections.Generic;
 using Ecs;
 
-
-//нужна factory.
-public interface IFactory
-{
-
-}
-
 public interface IStateFactory
 {
     public StateType Create<StateType>() where StateType : IState;
@@ -47,17 +40,18 @@ public class GlobalStateMachine : IGlobalStateMachine, Zenject.IInitializable//�
 
     public GlobalStateMachine(IStateFactory factory)
     {
-        Debug.Log("Machine CREATED");
 
         _factory = factory;
     }
 
     public void Initialize()
     {
-        _states.Add(typeof(BootstrapState), _factory.Create<BootstrapState>());
+        _states.Add(typeof(BootstrapState), _currentState = _factory.Create<BootstrapState>());
+        _states.Add(typeof(LoadingState), _factory.Create<LoadingState>());
+
         //
 
-        _currentState = _states[typeof(BootstrapState)];
+        _currentState.Enter();
     }
 
     public void SwitchTo<StateType>() where StateType : IState
