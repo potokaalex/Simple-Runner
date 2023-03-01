@@ -10,119 +10,126 @@ using Zenject;
 using RoadGeneration;
 using System;
 using System.Collections.Generic;
+using Ecs;
 
 
-namespace Ecs
+//нужна factory.
+public interface IFactory
 {
-    //нужна factory.
-    public interface IFactory
-    {
 
+}
+
+public interface IStateFactory
+{
+    public StateType Create<StateType>() where StateType : IState;
+}
+
+public class StateFactory : IStateFactory
+{
+    private IInstantiator _instantiator;
+
+    public StateFactory(IInstantiator instantiator)
+    {
+        _instantiator = instantiator;
     }
 
-    public interface IStateFactory
+    public StateType Create<StateType>() where StateType : IState
     {
-        public void Create<StateType>() where StateType : IState;
+        return _instantiator.Instantiate<StateType>();
+    }
+}
+
+public class GlobalStateMachine : IGlobalStateMachine, Zenject.IInitializable//сервис (bind)
+{
+    private Dictionary<Type, IState> _states = new();
+    IStateFactory _factory;
+    private IState _currentState;
+
+    public GlobalStateMachine(IStateFactory factory)
+    {
+        Debug.Log("Machine CREATED");
+
+        _factory = factory;
     }
 
-    public class StateFactory : IStateFactory
+    public void Initialize()
     {
-        private IInstantiator _instantiator;
+        _states.Add(typeof(BootstrapState), _factory.Create<BootstrapState>());
+        //
 
-        public StateFactory(IInstantiator instantiator)
-        {
-            _instantiator = instantiator;
-        }
-
-        public void Create<StateType>() where StateType : IState
-        {
-            _instantiator.Instantiate<StateType>();
-        }
+        _currentState = _states[typeof(BootstrapState)];
     }
 
-    public class GlobalStateMachine : IGlobalStateMachine//сервис (bind)
+    public void SwitchTo<StateType>() where StateType : IState
     {
-        private Dictionary<Type, IState> _states = new();
-        private IState _currentState;
+        _currentState?.Exit();
+        _currentState = _states[typeof(StateType)];
+        _currentState.Enter();
+    }
+}
 
-        public GlobalStateMachine(BootstrapState bootstrap)
-        {
-            Debug.Log("StateMachine - CREATED");
+public interface IGlobalStateMachine : IStateMachine { }
 
-            _states.Add(bootstrap.GetType(), bootstrap);
-        }
 
-        public void SwitchTo<StateType>() where StateType : IState
-        {
-            _currentState?.Exit();
-            _currentState = _states[typeof(StateType)];
-            _currentState.Enter();
-        }
+public interface IStateMachine
+{
+    public void SwitchTo<StateType>() where StateType : IState;
+}
+
+public interface IState
+{
+    public void Enter();
+
+    public void Exit();
+}
+
+
+public class GameStartup : MonoBehaviour //временно управляет updata`ми, в будущем - состояние
+{
+    public CharacterMarker CharacterMarker;
+    public RoadData RoadData;
+
+    private Systems _updateSystems = new();
+    private Systems _fixedUpdateSystems = new();
+
+    //[Inject]
+    //private void Constructor()
+    //{
+    //}
+
+    private void Awake()
+    {
+        _fixedUpdateSystems
+            .Add(new EntitiesUpdate())
+            .Add(new EventsRemove())
+            .Add(new RoadGenerator(CharacterMarker, RoadData))
+            .Add(new Death(CharacterMarker))
+
+            .Add(Movement());
+
+        _updateSystems
+            .Add(new InputUpdate());
     }
 
-    public interface IGlobalStateMachine : IStateMachine { }
-
-
-    public interface IStateMachine
+    private void Update()
     {
-        public void SwitchTo<StateType>() where StateType : IState;
+        //if (PauseManager.IsPaused)
+        //    return;
+
+        _updateSystems.Update(Time.deltaTime);
     }
 
-    public interface IState
+    private void FixedUpdate()
     {
-        public void Enter();
+        //if (PauseManager.IsPaused)
+        //    return;
 
-        public void Exit();
+        _fixedUpdateSystems.Update(Time.fixedDeltaTime);
     }
 
-
-    public class GameStartup : MonoBehaviour //временно управляет updata`ми, в будущем - состояние
-    {
-        public CharacterMarker CharacterMarker;
-        public RoadData RoadData;
-
-        private Systems _updateSystems = new();
-        private Systems _fixedUpdateSystems = new();
-
-        //[Inject]
-        //private void Constructor()
-        //{
-        //}
-
-        private void Awake()
-        {
-            _fixedUpdateSystems
-                .Add(new EntitiesUpdate())
-                .Add(new EventsRemove())
-                .Add(new RoadGenerator(CharacterMarker, RoadData))
-                .Add(new Death(CharacterMarker))
-
-                .Add(Movement());
-
-            _updateSystems
-                .Add(new InputUpdate());
-        }
-
-        private void Update()
-        {
-            //if (PauseManager.IsPaused)
-            //    return;
-
-            _updateSystems.Update(Time.deltaTime);
-        }
-
-        private void FixedUpdate()
-        {
-            //if (PauseManager.IsPaused)
-            //    return;
-
-            _fixedUpdateSystems.Update(Time.fixedDeltaTime);
-        }
-
-        private Systems Movement()
-            => new Systems()
-            .Add(new MoveRightUpdate())
-            .Add(new MoveLeftUpdate())
-            .Add(new RunUpdate());
-    }
+    private Systems Movement()
+        => new Systems()
+        .Add(new MoveRightUpdate())
+        .Add(new MoveLeftUpdate())
+        .Add(new RunUpdate());
 }

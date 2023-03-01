@@ -3,21 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 using UnityEngine.SceneManagement;
-using Ecs;
+//using Ecs;
+using System.Linq;
 
-public class BootstrapInstaller : MonoInstaller, Zenject.IInitializable
+public class BootstrapInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
+        Debug.Log(Container.AllContracts.Count());
         BindSceneLoader();
+        Debug.Log(Container.AllContracts.Count());
 
         BindGlobalStateMachine();
 
         BindStateFactory();
-
-        BindGlobalStates();
-
-        Container.BindInterfacesTo<GlobalStatesInitializer>().AsSingle();
     }
 
     private void BindSceneLoader()
@@ -31,7 +30,7 @@ public class BootstrapInstaller : MonoInstaller, Zenject.IInitializable
     private void BindGlobalStateMachine()
     {
         Container
-            .Bind<IGlobalStateMachine>()
+            .Bind(typeof(IInitializable), typeof(IGlobalStateMachine))
             .To<GlobalStateMachine>()
             .AsSingle();
     }
@@ -47,33 +46,6 @@ public class BootstrapInstaller : MonoInstaller, Zenject.IInitializable
     private void BindGlobalStates()
     {
         //Container
-        //  .Bind<BootstrapState>()
-    }
-
-    public void Initialize()
-    {
-        Container.Resolve<IGlobalStateMachine>();
-    }
-}
-
-public class GlobalStatesInitializer : Zenject.IInitializable
-{
-    private IStateFactory _stateFactory;
-    private GlobalStateMachine _stateMachine;
-
-    public GlobalStatesInitializer(IStateFactory stateFactory, GlobalStateMachine stateMachine)
-    {
-        _stateFactory = stateFactory;
-        _stateMachine = stateMachine;
-    }
-
-    public void Initialize()//кидаем в 1-е состояние
-    {
-        Debug.Log("Initialize");
-
-        _stateFactory.Create<BootstrapState>();
-
-        //ets
-        _stateMachine.SwitchTo<BootstrapState>();
+        //  .Bind<BootstrapState>().AsSingle();
     }
 }
