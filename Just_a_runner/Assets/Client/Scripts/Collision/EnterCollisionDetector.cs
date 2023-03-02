@@ -5,8 +5,8 @@ namespace CollisionSystem
 {
     public class EnterCollisionDetector : EcsComponent
     {
-        public LayerMask IgnoreMask;
         public EnterCollisionEvent LastEventSent;
+        public LayerMask IgnoreMask;
 
         private void OnCollisionEnter(Collision collision)
         {
@@ -14,7 +14,7 @@ namespace CollisionSystem
                 return;
 
             if (LastEventSent == null)
-                LastEventSent = new(this, collision);
+                LastEventSent = new(Entity, collision);
             else
                 LastEventSent.CollisionInfo = collision;
 

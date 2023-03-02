@@ -96,8 +96,9 @@ public class GameStartup : MonoBehaviour //временно управляет u
         _fixedUpdateSystems
             .Add(new EntitiesUpdate())
             .Add(new EventsRemove())
+
             .Add(new RoadGenerator(CharacterMarker, RoadData))
-            .Add(new Death(CharacterMarker))
+            .Add(new DeathHandler(CharacterMarker))
 
             .Add(Movement());
 

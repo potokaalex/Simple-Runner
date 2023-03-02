@@ -5,13 +5,13 @@ namespace CollisionSystem
 {
     public class EnterCollisionEvent : IComponent
     {
-        public EcsComponent Sender;
         public Collision CollisionInfo;
+        public Entity Sender;
 
-        public EnterCollisionEvent(EcsComponent sender, Collision collision)
+        public EnterCollisionEvent(Entity sender, Collision collision)
         {
-            Sender = sender;
             CollisionInfo = collision;
+            Sender = sender;
         }
 
         public Entity Entity
