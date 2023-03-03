@@ -177,11 +177,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _aboutAnimation: {fileID: 745003586}
-  _gameScene:
-    m_AssetGUID: d1c3109bdb54ad54c8a2b2838528e640
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
 --- !u!1 &246064504
 GameObject:
   m_ObjectHideFlags: 0
@@ -1909,7 +1904,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a396d693732ab5c43bcff33e0342cb90, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ff8232cb028fa364cadcff39f883bd27, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
