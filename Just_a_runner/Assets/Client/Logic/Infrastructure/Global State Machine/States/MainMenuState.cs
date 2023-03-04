@@ -2,7 +2,7 @@
 
 using StateMachine;
 
-namespace GlobalStateMachine
+namespace StateMachine
 {
     public class MainMenuState : IState
     {

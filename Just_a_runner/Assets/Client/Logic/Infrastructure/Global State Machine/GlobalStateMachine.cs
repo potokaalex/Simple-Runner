@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using StateMachine;
 
-namespace GlobalStateMachine
+namespace StateMachine
 {
     public class GlobalStateMachine : IGlobalStateMachine, Zenject.IInitializable
     {

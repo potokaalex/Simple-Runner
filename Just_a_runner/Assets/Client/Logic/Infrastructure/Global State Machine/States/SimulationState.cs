@@ -6,7 +6,7 @@ using InputSystem;
 using DeathSystem;
 using Ecs;
 
-namespace GlobalStateMachine
+namespace StateMachine
 {
     public class SimulationState : IState
     {

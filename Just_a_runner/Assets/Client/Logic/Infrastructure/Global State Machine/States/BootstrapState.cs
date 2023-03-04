@@ -5,7 +5,7 @@ using Ecs;
 using System;
 using StateMachine;
 
-namespace GlobalStateMachine
+namespace StateMachine
 {
     public class BootstrapState : IState
     {

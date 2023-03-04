@@ -7,7 +7,6 @@ using DeathSystem;
 using RoadGeneration;
 using Ecs;
 
-
 public class GameStartup : MonoBehaviour
 {
     public CharacterMarker CharacterMarker;

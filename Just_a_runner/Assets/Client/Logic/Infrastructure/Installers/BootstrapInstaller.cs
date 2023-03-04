@@ -1,14 +1,10 @@
-using GlobalStateMachine; // is it necessary namespace? Why isn`t simple StateMachine?
 using StateMachine;
 using Zenject;
-
-using UnityEngine;
 
 public class BootstrapInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-        Debug.Log("123");
         BindGlobalStateMachine();
         BindStateFactory();
         BindSceneLoader();
@@ -18,7 +14,7 @@ public class BootstrapInstaller : MonoInstaller
     {
         Container
             .Bind(typeof(IInitializable), typeof(IGlobalStateMachine))
-            .To<GlobalStateMachine.GlobalStateMachine>()
+            .To<GlobalStateMachine>()
             .AsSingle();
     }
 

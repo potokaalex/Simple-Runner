@@ -2,7 +2,7 @@
 using UnityEngine;
 using Zenject;
 using UnityEditor;
-using GlobalStateMachine;
+using StateMachine;
 
 public class MainMenu : MonoBehaviour
 {

@@ -1,6 +1,6 @@
 ﻿using StateMachine;
 
-namespace GlobalStateMachine
+namespace StateMachine
 {
     public class DefeatState : IState //меню поражения ?
     {
