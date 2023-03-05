@@ -17,19 +17,18 @@ namespace StateMachine
 
         public void Initialize()
         {
-            _states.Add(typeof(BootstrapState), _factory.Create<BootstrapState>());
             _states.Add(typeof(MainMenuState), _factory.Create<MainMenuState>());
             _states.Add(typeof(SimulationState), _factory.Create<SimulationState>());
             _states.Add(typeof(PauseState), _factory.Create<PauseState>());
             _states.Add(typeof(DefeatState), _factory.Create<DefeatState>());
 
-            _currentState = _states[typeof(BootstrapState)];
+            _currentState = _states[typeof(MainMenuState)];
             _currentState.Enter();
         }
 
         public void SwitchTo<StateType>() where StateType : IState
         {
-            _currentState?.Exit();
+            _currentState?.Exit(); // 
             _currentState = _states[typeof(StateType)];
             _currentState.Enter();
         }

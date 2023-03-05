@@ -1,12 +1,10 @@
 ﻿using UnityEngine.SceneManagement;
 
-using StateMachine;
-
 namespace StateMachine
 {
     public class MainMenuState : IState
     {
-        private const string GameScene = "Game";
+        private const string MainMenuScene = "MainMenu";
 
         private IGlobalStateMachine _stateMachine;
         private ISceneLoader _sceneLoader;
@@ -17,12 +15,12 @@ namespace StateMachine
             _sceneLoader = sceneLoader;
         }
 
-        public void Enter() { }
-
-        public void Exit()
+        public void Enter()
         {
-            //_sceneLoader.LoadSceneAsync(GameScene, LoadSceneMode.Single,
-            //    _stateMachine.SwitchTo<MainMenuState>);
+            _sceneLoader.LoadScene(MainMenuScene, LoadSceneMode.Single);
+            _stateMachine.SwitchTo<SimulationState>();
         }
+
+        public void Exit() { }
     }
 }

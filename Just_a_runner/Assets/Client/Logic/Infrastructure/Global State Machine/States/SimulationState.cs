@@ -1,4 +1,5 @@
-﻿using MovementSystem;
+﻿using UnityEngine.SceneManagement;
+using MovementSystem;
 using RoadGeneration;
 using StateMachine;
 using UnityEngine;
@@ -10,14 +11,24 @@ namespace StateMachine
 {
     public class SimulationState : IState
     {
-        public CharacterMarker CharacterMarker;
-        public RoadData RoadData;
+        private const string SimulationScene = "Simulation";
 
-        private Systems _updateSystems = new();
-        private Systems _fixedUpdateSystems = new();
+        private IGlobalStateMachine _stateMachine;
+        private ISceneLoader _sceneLoader;
+
+        public SimulationState(IGlobalStateMachine stateMachine, ISceneLoader sceneLoader)
+        {
+            _stateMachine = stateMachine;
+            _sceneLoader = sceneLoader;
+        }
 
         public void Enter()
         {
+            //загрузка игрового уровня
+            _sceneLoader.LoadScene(SimulationScene, LoadSceneMode.Single);
+            _stateMachine.SwitchTo<SimulationState>();
+
+
             _fixedUpdateSystems
             .Add(Core())
 

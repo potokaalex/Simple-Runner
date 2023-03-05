@@ -9,7 +9,7 @@ using Zenject;
 
 namespace Ecs
 {
-    public class GameStartupInstaller : MonoInstaller//занимается биндингами
+    public class GameInstaller : MonoInstaller//занимается биндингами
     {
         [SerializeField] private GameStartup _gameStartup;
 
