@@ -4,15 +4,15 @@ namespace Ecs
 {
     public class Systems
     {
-        private List<IInitializable> _initializables = new();
+        //private List<IInitializable> _initializables = new();
         private List<ITickable> _tickables = new();
         private List<IDestroyable> _destroyables = new();
 
-        public void Initialize()
-        {
-            foreach (var system in _initializables)
-                system.Initialize();
-        }
+        //public void Initialize()
+        //{
+        //   foreach (var system in _initializables)
+        //        system.Initialize();
+        //}
 
         public void Update(float deltaTime)
         {
@@ -28,8 +28,8 @@ namespace Ecs
 
         public Systems Add(Systems systems)
         {
-            foreach (var system in systems._initializables)
-                _initializables.Add(system);
+            //foreach (var system in systems._initializables)
+            //  _initializables.Add(system);
 
             foreach (var system in systems._tickables)
                 _tickables.Add(system);
@@ -42,10 +42,10 @@ namespace Ecs
 
         public Systems Add(ISystem system)
         {
-            if (system is IInitializable initializable)
-                _initializables.Add(initializable);
+            // if (system is IInitializable initializable)
+            //   _initializables.Add(initializable);else
 
-            else if (system is ITickable tickable)
+            if (system is ITickable tickable)
                 _tickables.Add(tickable);
 
             else if (system is IDestroyable destroyable)
@@ -56,10 +56,10 @@ namespace Ecs
 
         public bool TryRemove(ISystem system)
         {
-            if (system is IInitializable initializable)
-                return _initializables.Remove(initializable);
+            //if (system is IInitializable initializable)
+            //   return _initializables.Remove(initializable);else
 
-            else if (system is ITickable tickable)
+            if (system is ITickable tickable)
                 return _tickables.Remove(tickable);
 
             else if (system is IDestroyable destroyable)

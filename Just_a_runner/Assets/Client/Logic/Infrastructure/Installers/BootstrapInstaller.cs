@@ -8,6 +8,7 @@ public class BootstrapInstaller : MonoInstaller
         BindGlobalStateMachine();
         BindStateFactory();
         BindSceneLoader();
+        BindGameCycle();
     }
 
     private void BindGlobalStateMachine()
@@ -31,6 +32,14 @@ public class BootstrapInstaller : MonoInstaller
         Container
             .Bind<ISceneLoader>()
             .To<SceneLoader>()
+            .AsSingle();
+    }
+
+    private void BindGameCycle()
+    {
+        Container
+            .Bind<GameCycle>()
+            .FromNewComponentOnNewGameObject()
             .AsSingle();
     }
 }

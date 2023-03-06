@@ -2,10 +2,10 @@
 {
     public interface ISystem { }
 
-    public interface IInitializable : ISystem
-    {
-        public void Initialize();
-    }
+    //public interface IInitializable : ISystem
+    //{
+    //    public void Initialize();
+    //}
 
     public interface ITickable : ISystem
     {

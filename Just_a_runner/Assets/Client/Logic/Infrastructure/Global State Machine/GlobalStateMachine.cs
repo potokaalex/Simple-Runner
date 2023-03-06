@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using StateMachine;
+using UnityEngine;
 
 namespace StateMachine
 {
@@ -17,20 +18,29 @@ namespace StateMachine
 
         public void Initialize()
         {
-            _states.Add(typeof(MainMenuState), _factory.Create<MainMenuState>());
-            _states.Add(typeof(SimulationState), _factory.Create<SimulationState>());
-            _states.Add(typeof(PauseState), _factory.Create<PauseState>());
-            _states.Add(typeof(DefeatState), _factory.Create<DefeatState>());
+            _states.Add(typeof(MainMenuState), _currentState = _factory.Create<MainMenuState>());
 
-            _currentState = _states[typeof(MainMenuState)];
             _currentState.Enter();
         }
 
         public void SwitchTo<StateType>() where StateType : IState
         {
-            _currentState?.Exit(); // 
-            _currentState = _states[typeof(StateType)];
+            _currentState?.Exit();
+            _currentState = GetState<StateType>();
             _currentState.Enter();
+        }
+
+        private IState GetState<StateType>() where StateType : IState
+        {
+            var stateType = typeof(StateType);
+
+            if (typeof(GameLevelState) == stateType)
+                Debug.Log("GameLevelState CREATED");
+
+            if (!_states.ContainsKey(stateType))
+                _states.Add(stateType, _factory.Create<StateType>());
+
+            return _states[stateType];
         }
     }
 }

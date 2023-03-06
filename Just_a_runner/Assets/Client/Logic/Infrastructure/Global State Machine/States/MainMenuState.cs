@@ -6,19 +6,16 @@ namespace StateMachine
     {
         private const string MainMenuScene = "MainMenu";
 
-        private IGlobalStateMachine _stateMachine;
         private ISceneLoader _sceneLoader;
 
-        public MainMenuState(IGlobalStateMachine stateMachine, ISceneLoader sceneLoader)
+        public MainMenuState(ISceneLoader sceneLoader)
         {
-            _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
         }
 
         public void Enter()
         {
             _sceneLoader.LoadScene(MainMenuScene, LoadSceneMode.Single);
-            _stateMachine.SwitchTo<SimulationState>();
         }
 
         public void Exit() { }

@@ -15,7 +15,7 @@ public class MainMenu : MonoBehaviour
         => _stateMachine = stateMachine;
 
     public void Play()
-        => _stateMachine.SwitchTo<SimulationState>();
+        => _stateMachine.SwitchTo<GameLevelLoadingState>();
 
     public void AboutToggle()
         => _aboutAnimation.AnimationToggle();
