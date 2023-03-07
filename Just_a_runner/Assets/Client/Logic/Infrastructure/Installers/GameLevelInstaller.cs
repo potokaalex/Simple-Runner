@@ -12,10 +12,11 @@ using RoadGeneration;
 //убрать вездесущее GAME !
 public class GameLevelInstaller : MonoInstaller
 {
-    [SerializeField] private GameLevelSettings _settings;
+    [SerializeField] private GameLevelSettings _settings = new();
 
     public override void InstallBindings()
     {
+        BindStateFactory();
         BindGameLevelInitializing();
         BindGameLevelSettings(_settings);
     }
@@ -32,9 +33,16 @@ public class GameLevelInstaller : MonoInstaller
     {
         Container
             .Bind<GameLevelSettings>()
-            .FromInstance(settings)
-            .AsSingle()
-            .NonLazy();
+            .FromInstance(settings);
+        //  .AsSingle();
+    }
+
+    private void BindStateFactory()// ?
+    {
+        Container
+            .Bind<IStateFactory>()
+            .To<StateFactory>()
+            .AsSingle();
     }
 }
 
@@ -53,17 +61,19 @@ public class GameLevelInitializing : Zenject.IInitializable
 // Красиво перекидывает состояние игры.
 
 {
-    private IGlobalStateMachine _stateMachine;
+    private GlobalStateMachine _stateMachine;
 
     private GameLevelSettings _settings;
+    private IStateFactory _factory;
     DiContainer _container;
 
-    public GameLevelInitializing(IGlobalStateMachine stateMachine, GameLevelSettings levelSettings, DiContainer container)
+    public GameLevelInitializing(GlobalStateMachine stateMachine, GameLevelSettings levelSettings, IStateFactory factory)
     {
         _stateMachine = stateMachine;
         _settings = levelSettings;
 
-        _container = container;//.Create<GameLevelState>();
+        _factory = factory;
+        //_container = container;//.Create<GameLevelState>();
     }
 
     public void Initialize()
@@ -79,10 +89,12 @@ public class GameLevelInitializing : Zenject.IInitializable
         _settings.TickableSystems
             .Add(new InputUpdate());
 
+        _stateMachine.Add(_factory.Create<GameLevelState>());
+        _stateMachine.SwitchTo<GameLevelState>();
+
         //_container.Instantiate<GameLevelState>();
         //Debug.Log("SwitchTo");
         //Debug.Log(_container.GetDependencyContracts<>());
-        _stateMachine.SwitchTo<GameLevelState>();
     }
 
 

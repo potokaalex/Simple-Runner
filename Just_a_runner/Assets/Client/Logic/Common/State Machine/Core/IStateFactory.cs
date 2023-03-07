@@ -1,4 +1,6 @@
-﻿namespace StateMachine
+﻿//using ;
+
+namespace StateMachine
 {
     public interface IStateFactory
     {

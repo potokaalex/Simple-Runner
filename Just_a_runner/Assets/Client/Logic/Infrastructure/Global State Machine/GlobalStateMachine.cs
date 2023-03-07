@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace StateMachine
 {
-    public class GlobalStateMachine : IGlobalStateMachine, Zenject.IInitializable
+    public class GlobalStateMachine
     {
         private Dictionary<Type, IState> _states = new();
         private IStateFactory _factory;
@@ -16,31 +16,19 @@ namespace StateMachine
             _factory = factory;
         }
 
-        public void Initialize()
-        {
-            _states.Add(typeof(MainMenuState), _currentState = _factory.Create<MainMenuState>());
+        //public void Initialize()
+        //   => SwitchTo<MainMenuState>();
 
-            _currentState.Enter();
+        public void Add(IState state)
+        {
+            _states.Add(state.GetType(), state);
         }
 
         public void SwitchTo<StateType>() where StateType : IState
         {
             _currentState?.Exit();
-            _currentState = GetState<StateType>();
+            _currentState = _states[typeof(StateType)];
             _currentState.Enter();
-        }
-
-        private IState GetState<StateType>() where StateType : IState
-        {
-            var stateType = typeof(StateType);
-
-            if (typeof(GameLevelState) == stateType)
-                Debug.Log("GameLevelState CREATED");
-
-            if (!_states.ContainsKey(stateType))
-                _states.Add(stateType, _factory.Create<StateType>());
-
-            return _states[stateType];
         }
     }
 }

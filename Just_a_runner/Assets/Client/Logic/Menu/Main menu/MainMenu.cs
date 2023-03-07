@@ -8,10 +8,10 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] private AboutAnimation _aboutAnimation;
 
-    private IGlobalStateMachine _stateMachine;
+    private GlobalStateMachine _stateMachine;
 
     [Inject]
-    private void Construcor(IGlobalStateMachine stateMachine)
+    private void Construcor(GlobalStateMachine stateMachine)
         => _stateMachine = stateMachine;
 
     public void Play()

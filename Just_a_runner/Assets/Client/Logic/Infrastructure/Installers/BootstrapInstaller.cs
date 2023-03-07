@@ -1,4 +1,5 @@
 using StateMachine;
+using System;
 using Zenject;
 
 public class BootstrapInstaller : MonoInstaller
@@ -9,17 +10,27 @@ public class BootstrapInstaller : MonoInstaller
         BindStateFactory();
         BindSceneLoader();
         BindGameCycle();
+
+        BindBootstrapInitialization();
+    }
+
+    private void BindBootstrapInitialization()
+    {
+        Container
+            .Bind<IInitializable>()
+            .To<BootstrapInitialization>()
+            .AsSingle();
     }
 
     private void BindGlobalStateMachine()
     {
         Container
-            .Bind(typeof(IInitializable), typeof(IGlobalStateMachine))
-            .To<GlobalStateMachine>()
+            .Bind<GlobalStateMachine>()
+            //.To<GlobalStateMachine>()
             .AsSingle();
     }
 
-    private void BindStateFactory()
+    private void BindStateFactory()// ?
     {
         Container
             .Bind<IStateFactory>()
@@ -41,5 +52,34 @@ public class BootstrapInstaller : MonoInstaller
             .Bind<GameCycle>()
             .FromNewComponentOnNewGameObject()
             .AsSingle();
+    }
+}
+
+public class BootstrapInitialization : IInitializable
+{
+    private GlobalStateMachine _stateMachine;
+    private IStateFactory _stateFactory;
+
+    public BootstrapInitialization(GlobalStateMachine stateMachine, IStateFactory stateFactory)
+    {
+        _stateFactory = stateFactory;
+        _stateMachine = stateMachine;
+    }
+
+    public void Initialize()
+    {
+        StateMachineInitialize();
+
+    }
+
+    private void StateMachineInitialize()
+    {
+        _stateMachine.Add(_stateFactory.Create<MainMenuState>());
+        _stateMachine.Add(_stateFactory.Create<GameLevelLoadingState>());
+        //_stateMachine.Add(_stateFactory.Create<GameLevelState>());
+        _stateMachine.Add(_stateFactory.Create<PauseState>());
+        _stateMachine.Add(_stateFactory.Create<DefeatState>());
+
+        _stateMachine.SwitchTo<MainMenuState>();
     }
 }
