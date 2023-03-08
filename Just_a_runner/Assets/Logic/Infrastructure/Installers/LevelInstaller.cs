@@ -9,6 +9,7 @@ namespace Infrastructure.Installers
     public class LevelInstaller : MonoInstaller
     {
         [SerializeField] private CharacterMarker _characterMarker;
+        [SerializeField] private DefeatMenu _defeatMenu;
         [SerializeField] private RoadData _roadData;
 
         public override void InstallBindings()
@@ -45,6 +46,10 @@ namespace Infrastructure.Installers
 
             Container
                 .Bind<Systems>()
+                .AsSingle();
+
+            Container.Bind<DefeatMenu>()
+                .FromInstance(_defeatMenu)
                 .AsSingle();
         }
 

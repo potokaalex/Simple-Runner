@@ -32,7 +32,7 @@ namespace Infrastructure
         public void Initialize()
         {
             SystemsCompilation();
-            StartingLevelState();
+            LoadingStates();
         }
 
         private Systems Core
@@ -45,6 +45,7 @@ namespace Infrastructure
             .Add(_systemsFactory.Create<RoadGenerator>())
             .Add(_systemsFactory.Create<DeathHandler>())
 
+            .Add(_systemsFactory.Create<MovePositionUpdate>())
             .Add(_systemsFactory.Create<MoveRightUpdate>())
             .Add(_systemsFactory.Create<MoveLeftUpdate>())
             .Add(_systemsFactory.Create<RunUpdate>());
@@ -56,9 +57,11 @@ namespace Infrastructure
                 .Add(Gameplay);
         }
 
-        private void StartingLevelState()
+        private void LoadingStates()
         {
+            _stateMachine.Add(_stateFactory.Create<DefeatState>());
             _stateMachine.Add(_stateFactory.Create<LevelState>());
+
             _stateMachine.SwitchTo<LevelState>();
         }
     }

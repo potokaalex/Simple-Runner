@@ -2,9 +2,19 @@
 
 namespace Infrastructure.StateMachine
 {
-    public class DefeatState : IState //меню поражения ?
+    public class DefeatState : IState
     {
-        public void Enter() { }
+        private DefeatMenu _defeatMenu;
+
+        public DefeatState(DefeatMenu defeatMenu) 
+        {
+            _defeatMenu = defeatMenu;
+        }
+
+        public void Enter()
+        {
+            _defeatMenu.Open();
+        }
 
         public void Exit() { }
     }

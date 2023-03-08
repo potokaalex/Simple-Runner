@@ -1,46 +1,53 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using Zenject;
 using Ecs;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Infrastructure.StateMachine;
 
 public class DefeatMenu : MonoBehaviour //mediator
 {
-    [SerializeField] private Image _background;
-    [SerializeField] private TextMeshProUGUI _score;
-    [SerializeField] private Image _replay;
-    [SerializeField] private Image _home;
-    [SerializeField] private Image _share;
+    //[SerializeField] private Image _background;
+    //[SerializeField] private TextMeshProUGUI _score;
+    //[SerializeField] private Image _replay;
+    //[SerializeField] private Image _home;
+    //[SerializeField] private Image _share;
+    [SerializeField] private GameObject Window;
 
-    public static DefeatMenu Instance => FindObjectOfType<DefeatMenu>();
+    private GlobalStateMachine _stateMachine;
 
-    public void Active(bool isActive)
+    [Inject]
+    private void Construcor(GlobalStateMachine stateMachine)
+        => _stateMachine = stateMachine;
+
+    public void Open()
     {
-        _background.enabled = isActive;
-        _score.enabled = isActive;
-        _replay.enabled = isActive;
-        _home.enabled = isActive;
-        _share.enabled = isActive;
+        Window.SetActive(true);
     }
 
-    public void Replay() //=> Game.Replay 
+    public void Close()
     {
-        //перезагрузка сцены
-
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
-        //PauseManager.IsPaused = false;
-
-        //Singleton<Level>.Instance.Pause(false);
+        Window.SetActive(false);
     }
+
+    public void Restart()
+    {
+        _stateMachine.SwitchTo<LevelLoadingState>();
+    }
+
+    public void Menu()
+    {
+        _stateMachine.SwitchTo<MainMenuState>();
+    }
+
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
-            Replay();
+            Restart();
     }
 }

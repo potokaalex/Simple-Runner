@@ -18,10 +18,8 @@ namespace Infrastructure.StateMachine
 
         public void Initialize()
         {
-            _stateMachine.Add(_stateFactory.Create<MainMenuState>());
             _stateMachine.Add(_stateFactory.Create<LevelLoadingState>());
-            _stateMachine.Add(_stateFactory.Create<PauseState>());
-            _stateMachine.Add(_stateFactory.Create<DefeatState>());
+            _stateMachine.Add(_stateFactory.Create<MainMenuState>());
 
             _stateMachine.SwitchTo<MainMenuState>();
         }

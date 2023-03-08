@@ -11,7 +11,12 @@ namespace Infrastructure.StateMachine
 
         public void Add(IState state)
         {
-            _states.Add(state.GetType(), state);
+            var stateType = state.GetType();
+
+            if (_states.ContainsKey(stateType))
+                _states[stateType] = state;
+            else
+                _states.Add(stateType, state);
         }
 
         public void SwitchTo<StateType>() where StateType : IState

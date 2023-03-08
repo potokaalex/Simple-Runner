@@ -1,4 +1,5 @@
-﻿using CollisionSystem;
+﻿using Infrastructure.StateMachine;
+using CollisionSystem;
 using UnityEngine;
 using Ecs;
 
@@ -7,25 +8,19 @@ namespace DeathSystem
     public class DeathHandler : IFixedTickable
     {
         private Filter<EnterCollisionEvent> _events = new();
+        private GlobalStateMachine _stateMachine;
         private GameObject _character;
 
-        public DeathHandler(CharacterMarker characterMarker)
-            => _character = characterMarker.gameObject;
+        public DeathHandler(CharacterMarker characterMarker, GlobalStateMachine stateMachine)
+        {
+            _character = characterMarker.gameObject;
+            _stateMachine = stateMachine;
+        }
 
         public void FixedTick(float deltaTime)
         {
             foreach (var entity in _events.Entities)
                 Handle(entity.Get<EnterCollisionEvent>());
-        }
-
-        private void Handle(EnterCollisionEvent @event)
-        {
-            if (IsContainsObstacleMarker(@event.CollisionInfo.gameObject))
-                if (@event.Sender.Contains<DeathMarker>())
-                    if (@event.Sender.GameObject == _character)
-                        CharacterDeath(@event.Sender);
-                    else
-                        DefaultDeath(@event.Sender);
         }
 
         private bool IsContainsObstacleMarker(GameObject gameObject)
@@ -37,12 +32,23 @@ namespace DeathSystem
             return false;
         }
 
-        private void CharacterDeath(Entity entity)
+        private void Handle(EnterCollisionEvent @event)
         {
-            //смерть персонажа
-            //
+            if (!IsContainsObstacleMarker(@event.CollisionInfo.gameObject))
+                return;
 
-            Debug.Log("Character death");
+            if (!@event.Sender.Contains<DeathMarker>())
+                return;
+
+            if (@event.Sender.GameObject == _character)
+                CharacterDeath();
+            else
+                DefaultDeath(@event.Sender);
+        }
+
+        private void CharacterDeath()
+        {
+            _stateMachine.SwitchTo<DefeatState>();
         }
 
         private void DefaultDeath(Entity entity)
