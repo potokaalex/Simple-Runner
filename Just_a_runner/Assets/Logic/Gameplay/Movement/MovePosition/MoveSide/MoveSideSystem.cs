@@ -14,7 +14,7 @@ namespace MovementSystem
             if (IsStartMove)
                 StartMove(component, isWallCheck);
 
-            UpdatePosition(component, deltaTime);
+            Update(component, deltaTime);
         }
 
         private void StartMove(MovePositionPattern component, bool isWallCheck)

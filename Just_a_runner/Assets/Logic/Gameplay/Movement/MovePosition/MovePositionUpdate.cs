@@ -16,7 +16,7 @@ namespace MovementSystem
         {
             component.PositionReader ??= new(component.Position);
 
-            UpdatePosition(component, deltaTime);
+            Update(component, deltaTime);
         }
     }
 }

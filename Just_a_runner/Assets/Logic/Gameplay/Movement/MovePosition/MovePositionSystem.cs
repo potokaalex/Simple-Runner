@@ -6,7 +6,7 @@ namespace MovementSystem
     {
         public abstract void FixedTick(float deltaTime);
 
-        private protected void UpdatePosition(MovePositionPattern component, float deltaTime)
+        private protected void Update(MovePositionPattern component, float deltaTime)
         {
             if (component.PositionReader == null)
                 return;

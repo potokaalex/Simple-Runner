@@ -3,17 +3,17 @@ using Ecs;
 
 namespace MovementSystem
 {
-    public class RunUpdate : IFixedTickable
+    public class MoveDirectionUpdate : IFixedTickable
     {
-        private Filter<Run> _running = new();
+        private Filter<MoveDirection> _running = new();
 
         public void FixedTick(float deltaTime)
         {
             foreach (var entity in _running.Entities)
-                UpdateMove(entity.Get<Run>(), deltaTime);
+                UpdateMove(entity.Get<MoveDirection>(), deltaTime);
         }
 
-        private void UpdateMove(Run component, float deltaTime)
+        private void UpdateMove(MoveDirection component, float deltaTime)
         {
             component.AccelerationReader ??= new(component.Acceleration);
 
