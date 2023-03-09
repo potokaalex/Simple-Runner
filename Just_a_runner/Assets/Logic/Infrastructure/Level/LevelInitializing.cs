@@ -44,10 +44,14 @@ namespace Infrastructure
             => new Systems()
             .Add(_systemsFactory.Create<RoadGenerator>())
             .Add(_systemsFactory.Create<DeathHandler>())
+            .Add(Movement);
 
+        private Systems Movement
+            => new Systems()
             .Add(_systemsFactory.Create<MovePositionUpdate>())
             .Add(_systemsFactory.Create<MoveRightUpdate>())
             .Add(_systemsFactory.Create<MoveLeftUpdate>())
+
             .Add(_systemsFactory.Create<RunUpdate>());
 
         private void SystemsCompilation()

@@ -2,6 +2,8 @@
 
 namespace Ecs
 {
+    // можно вынести компоненты в отдельный список, для избежания entity.Get<T>();
+
     public class Filter<ComponentType1>
         : Filter<ComponentType1, IComponent, IComponent>
         where ComponentType1 : IComponent
