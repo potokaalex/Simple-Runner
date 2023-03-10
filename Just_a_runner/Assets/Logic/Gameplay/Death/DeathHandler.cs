@@ -19,22 +19,16 @@ namespace DeathSystem
 
         public void FixedTick(float deltaTime)
         {
-            foreach (var entity in _events.Entities)
-                Handle(entity.Get<EnterCollisionEvent>());
-        }
-
-        private bool IsContainsObstacleMarker(GameObject gameObject)
-        {
-            foreach (var savedEntity in World.Entities)
-                if (savedEntity.GameObject == gameObject)
-                    return savedEntity.Contains<ObstacleMarker>();
-
-            return false;
+            foreach (var @event in _events.Components)
+                Handle(@event);
         }
 
         private void Handle(EnterCollisionEvent @event)
         {
-            if (!IsContainsObstacleMarker(@event.CollisionInfo.gameObject))
+            if (!World.TryGetEntity(@event.CollisionInfo.gameObject, out var entity))
+                return;
+
+            if (!entity.Contains<ObstacleMarker>())
                 return;
 
             if (!@event.Sender.Contains<DeathMarker>())

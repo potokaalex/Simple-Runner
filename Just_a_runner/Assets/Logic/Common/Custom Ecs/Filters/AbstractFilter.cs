@@ -2,8 +2,8 @@
 {
     public abstract class Filter
     {
-        public abstract void Add(Entity entity);
+        public abstract void Add(IComponent component);
 
-        public abstract void Remove(Entity entity);
+        public abstract void Remove(IComponent component);
     }
 }

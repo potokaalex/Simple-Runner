@@ -48,11 +48,10 @@ namespace Infrastructure
 
         private Systems Movement
             => new Systems()
+            .Add(_systemsFactory.Create<MoveDirectionUpdate>())
             .Add(_systemsFactory.Create<MovePositionUpdate>())
             .Add(_systemsFactory.Create<MoveRightUpdate>())
-            .Add(_systemsFactory.Create<MoveLeftUpdate>())
-
-            .Add(_systemsFactory.Create<RunUpdate>());
+            .Add(_systemsFactory.Create<MoveLeftUpdate>());
 
         private void SystemsCompilation()
         {

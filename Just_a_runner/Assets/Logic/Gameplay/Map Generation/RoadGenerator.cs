@@ -6,6 +6,8 @@ namespace RoadGeneration
 {
     public class RoadGenerator : IFixedTickable
     {
+        //чанки можно найти через фильтры! зачем их хранить в roadData ?
+
         private Transform _character;
         private RoadData _data;
 

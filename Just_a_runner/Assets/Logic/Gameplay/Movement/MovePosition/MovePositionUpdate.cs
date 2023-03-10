@@ -8,8 +8,8 @@ namespace MovementSystem
 
         public override void FixedTick(float deltaTime)
         {
-            foreach (var entity in _movable.Entities)
-                Move(entity.Get<MovePosition>(), deltaTime);
+            foreach (var component in _movable.Components)
+                Move(component, deltaTime);
         }
 
         private void Move(MovePosition component, float deltaTime)

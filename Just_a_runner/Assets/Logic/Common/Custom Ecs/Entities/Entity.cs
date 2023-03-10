@@ -110,12 +110,12 @@ namespace Ecs
             if (_addedComponents.Count < 1)
                 return;
 
-            for (var a = 0; a < _addedComponents.Count; a++)
+            foreach (var component in _addedComponents)
             {
-                _components.Add(_addedComponents[a]);
+                _components.Add(component);
 
-                for (var b = 0; b < World.Filters.Count; b++)
-                    World.Filters[b].Add(_addedComponents[a].Entity);
+                foreach (var filter in World.Filters)
+                    filter.Add(component);
             }
 
             _addedComponents.Clear();
@@ -126,12 +126,12 @@ namespace Ecs
             if (_removedComponents.Count < 1)
                 return;
 
-            for (var a = 0; a < _removedComponents.Count; a++)
+            foreach (var component in _removedComponents)
             {
-                _components.Remove(_removedComponents[a]);
+                _components.Remove(component);
 
-                for (var b = 0; b < World.Filters.Count; b++)
-                    World.Filters[b].Remove(_removedComponents[a].Entity);
+                foreach (var filter in World.Filters)
+                    filter.Remove(component);
             }
 
             _removedComponents.Clear();

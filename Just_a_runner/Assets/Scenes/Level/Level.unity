@@ -194,7 +194,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 95971182}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14bc34c127c9ec443b88a8cf92ade64e, type: 3}
+  m_Script: {fileID: 11500000, guid: 663734865ee67024492b513abdf3336f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Position:
@@ -203,20 +203,20 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 34
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.33333334
+      outWeight: 0
     - serializedVersion: 3
-      time: 5
-      value: 10
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 34
+      time: 3
+      value: 30
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -306,7 +306,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh65352
+  m_Name: pb_Mesh110632
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1019,6 +1019,7 @@ GameObject:
   - component: {fileID: 321500512}
   - component: {fileID: 321500511}
   - component: {fileID: 321500510}
+  - component: {fileID: 321500513}
   m_Layer: 0
   m_Name: Obstacle (3)
   m_TagString: Untagged
@@ -1104,6 +1105,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 321500507}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &321500513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 321500507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55b1da6354bdbc148b4c451c7c4766e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &368164439
 GameObject:
   m_ObjectHideFlags: 0
@@ -1644,6 +1657,7 @@ GameObject:
   - component: {fileID: 579590181}
   - component: {fileID: 579590180}
   - component: {fileID: 579590179}
+  - component: {fileID: 579590182}
   m_Layer: 0
   m_Name: Obstacle (1)
   m_TagString: Untagged
@@ -1729,6 +1743,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 579590176}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &579590182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579590176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55b1da6354bdbc148b4c451c7c4766e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &653260035
 GameObject:
   m_ObjectHideFlags: 0
@@ -1784,7 +1810,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-160694
+  m_Name: pb_Mesh-284866
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2082,7 +2108,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-160710
+  m_Name: pb_Mesh-284882
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2921,6 +2947,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  Direction: {x: 0, y: 0, z: 1}
   Velocity: 10
 --- !u!114 &1227340073
 MonoBehaviour:
@@ -4693,6 +4720,7 @@ GameObject:
   - component: {fileID: 2383611495834713596}
   - component: {fileID: 2383611495834713599}
   - component: {fileID: 2383611495834713598}
+  - component: {fileID: 2383611495834713600}
   m_Layer: 0
   m_Name: Obstacle
   m_TagString: Untagged
@@ -4778,6 +4806,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2383611495834713600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2383611495834713592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55b1da6354bdbc148b4c451c7c4766e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4437606664201655502
 PrefabInstance:
   m_ObjectHideFlags: 0

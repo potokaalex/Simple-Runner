@@ -20,16 +20,13 @@ namespace Ecs
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void EventsUpdate() 
         {
-            var events = World.Events;
-
-            if (!events.Contains<IComponent>())
+            if (!World.Events.Contains<IComponent>())
                 return;
 
-            events.Get<IComponent>(out var components);
-            var componentsLength = components.Count;
+            World.Events.Get<IComponent>(out var components);
 
-            for (var i = 0; i < componentsLength; i++)
-                events.Remove(components[i]);
+            for (var i = 0; i < components.Count; i++)
+                World.Events.Remove(components[i]);
         }
     }
 }

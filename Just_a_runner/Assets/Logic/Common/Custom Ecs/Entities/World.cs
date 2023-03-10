@@ -9,9 +9,6 @@ namespace Ecs
         private static List<Filter> _filters = new();
         private static Entity _events = new(null, null);
 
-        static World()
-            => _entities.Add(_events);
-
         public static List<Entity> Entities
             => _entities;
 

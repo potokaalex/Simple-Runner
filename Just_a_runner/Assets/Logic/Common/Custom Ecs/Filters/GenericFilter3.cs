@@ -12,7 +12,12 @@ namespace Ecs
         public Filter()
         {
             foreach (var entity in World.Entities)
-                Add(entity);
+            {
+                entity.Get<IComponent>(out var components);
+
+                foreach (var component in components)
+                    Add(component);
+            }
 
             World.Filters.Add(this);
         }
@@ -20,28 +25,28 @@ namespace Ecs
         public List<Entity> Entities
             => _entities;
 
-        public override void Add(Entity entity)
+        public override void Add(IComponent component)
         {
-            if (_entities.Contains(entity))
+            if (_entities.Contains(component.Entity))
                 return;
 
-            if (entity.Contains<ComponentType1>()
-                && entity.Contains<ComponentType2>()
-                && entity.Contains<ComponentType3>())
-                _entities.Add(entity);
+            if (component.Entity.Contains<ComponentType1>()
+                && component.Entity.Contains<ComponentType2>()
+                && component.Entity.Contains<ComponentType3>())
+                _entities.Add(component.Entity);
         }
 
-        public override void Remove(Entity entity)
+        public override void Remove(IComponent component)
         {
-            if (!_entities.Contains(entity))
+            if (!_entities.Contains(component.Entity))
                 return;
 
-            if (entity.Contains<ComponentType1>()
-                && entity.Contains<ComponentType2>()
-                && entity.Contains<ComponentType3>())
+            if (component.Entity.Contains<ComponentType1>()
+                && component.Entity.Contains<ComponentType2>()
+                && component.Entity.Contains<ComponentType3>())
                 return;
 
-            _entities.Remove(entity);
+            _entities.Remove(component.Entity);
         }
     }
 }

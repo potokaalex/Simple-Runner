@@ -2,27 +2,35 @@
 
 namespace Ecs
 {
-    // можно вынести компоненты в отдельный список, для избежания entity.Get<T>();
-
     public class Filter<ComponentType1>
         : Filter<ComponentType1, IComponent, IComponent>
         where ComponentType1 : IComponent
     {
-        public override void Add(Entity entity)
+        private List<ComponentType1> _components = new();
+
+        public List<ComponentType1> Components
+            => _components;
+
+        public override void Add(IComponent component)
         {
-            if (Entities.Contains(entity))
+            if (component is not ComponentType1 desiredComponent)
                 return;
 
-            if (entity.Contains<ComponentType1>())
-                Entities.Add(entity);
+            _components.Add(desiredComponent);
+
+            if(!Entities.Contains(desiredComponent.Entity))
+                Entities.Add(desiredComponent.Entity);
         }
 
-        public override void Remove(Entity entity)
+        public override void Remove(IComponent component)
         {
-            if (entity.Contains<ComponentType1>())
+            if (component is not ComponentType1 desiredComponent)
                 return;
 
-            Entities.Remove(entity);
+            _components.Remove(desiredComponent);
+
+            if (!desiredComponent.Entity.Contains<ComponentType1>())
+                Entities.Remove(desiredComponent.Entity);
         }
     }
 }

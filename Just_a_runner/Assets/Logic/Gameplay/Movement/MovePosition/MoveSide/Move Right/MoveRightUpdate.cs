@@ -10,12 +10,8 @@ namespace MovementSystem
 
         public override void FixedTick(float deltaTime)
         {
-            foreach (var entity in _movable.Entities)
-            {
-                var component = entity.Get<MoveRight>();
-
-                Move(component, deltaTime, _keys.Entities.Count > 0, component.IsWallCheck);
-            }
+            foreach (var component in _movable.Components)
+                Move(component, deltaTime, _keys.Components.Count > 0, component.IsWallCheck);
         }
     }
 }
