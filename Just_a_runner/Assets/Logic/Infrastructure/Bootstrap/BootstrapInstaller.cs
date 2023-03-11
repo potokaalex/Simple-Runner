@@ -1,6 +1,4 @@
-using Infrastructure.StateMachine;
-using UnityEngine.SceneManagement;
-using StateMachine;
+﻿using StateMachine;
 using Zenject;
 
 namespace Infrastructure.Installers
@@ -9,24 +7,14 @@ namespace Infrastructure.Installers
     {
         public override void InstallBindings()
         {
-            BindGlobalStateMachineInitialization();
-            BindGlobalStateMachine();
+            BindBootstrapInitializing();
             BindStateFactory();
-            BindSceneLoader();
-            BindGameCycle();
         }
 
-        private void BindGlobalStateMachineInitialization()
+        private void BindBootstrapInitializing()
         {
             Container
-                .BindInterfacesAndSelfTo<GlobalStateMachineInitialization>()
-                .AsSingle();
-        }
-
-        private void BindGlobalStateMachine()
-        {
-            Container
-                .Bind<GlobalStateMachine>()
+                .BindInterfacesAndSelfTo<BootstrapInitializing>()
                 .AsSingle();
         }
 
@@ -34,22 +22,6 @@ namespace Infrastructure.Installers
         {
             Container
                 .Bind<StateFactory>()
-                .AsSingle();
-        }
-
-        private void BindSceneLoader()
-        {
-            Container
-                .Bind<ISceneLoader>()
-                .To<SceneLoader>()
-                .AsSingle();
-        }
-
-        private void BindGameCycle()
-        {
-            Container
-                .Bind<GameCycle>()
-                .FromNewComponentOnNewGameObject()
                 .AsSingle();
         }
     }

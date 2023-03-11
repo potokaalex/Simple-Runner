@@ -11,6 +11,11 @@ namespace RoadGeneration
         [SerializeField] private float _distanceToGenerateNewChunk; //= 100
         [SerializeField] private float _distanceToRemoveOldChunk; //= 25
 
+        private void OnEnable()
+        {
+            
+        }
+
         public Chunk FirstChunkPosition
                 => (ActiveChunks.Count < 1) ? null : ActiveChunks[0];
 

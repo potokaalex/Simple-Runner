@@ -1,16 +1,15 @@
-﻿using StateMachine;
+﻿using Infrastructure.StateMachine;
+using StateMachine;
 using Zenject;
 
-namespace Infrastructure.StateMachine
+namespace Infrastructure
 {
-    public class GlobalStateMachineInitialization : IInitializable
+    public class BootstrapInitializing : IInitializable
     {
         private GlobalStateMachine _stateMachine;
         private StateFactory _stateFactory;
 
-        public GlobalStateMachineInitialization(
-            GlobalStateMachine stateMachine,
-            StateFactory stateFactory)
+        public BootstrapInitializing(GlobalStateMachine stateMachine, StateFactory stateFactory)
         {
             _stateFactory = stateFactory;
             _stateMachine = stateMachine;

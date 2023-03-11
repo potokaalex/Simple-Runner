@@ -7,6 +7,7 @@ namespace RoadGeneration
     public class RoadGenerator : IFixedTickable
     {
         //чанки можно найти через фильтры! зачем их хранить в roadData ?
+        //отв: в roadData чанки храняться упорядоченно, хранение там, позволяет найти дальний и ближний чанки
 
         private Transform _character;
         private RoadData _data;
@@ -42,8 +43,8 @@ namespace RoadGeneration
 
             var chunkPosition = data.LastChunk == null ? Vector3.zero
                 : data.LastChunk.transform.position + data.LastChunk.Length * Vector3.forward;
-
-            data.ActiveChunks.Add(Object.Instantiate(chunk, chunkPosition, Quaternion.identity));
+            
+            data.ActiveChunks.Add(CreateChunk(chunk, chunkPosition, data.transform));
         }
 
         private void RemoveFirstChunk(List<Chunk> activeChunks)
@@ -59,5 +60,10 @@ namespace RoadGeneration
 
         private Chunk GetRandomChunk(Chunk[] chunks)
             => chunks[Random.Range(0, chunks.Length)];
+
+        private Chunk CreateChunk(Chunk chunk, Vector3 position, Transform parent) //factory !
+        {
+            return Object.Instantiate(chunk, position, Quaternion.identity, parent);
+        }
     }
 }
