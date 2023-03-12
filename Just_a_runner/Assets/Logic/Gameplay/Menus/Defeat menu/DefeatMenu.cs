@@ -12,7 +12,7 @@ using Infrastructure.StateMachine;
 public class DefeatMenu : MonoBehaviour //mediator
 {
     //[SerializeField] private Image _background;
-    //[SerializeField] private TextMeshProUGUI _score;
+    [SerializeField] private TextMeshProUGUI _score;
     //[SerializeField] private Image _replay;
     //[SerializeField] private Image _home;
     //[SerializeField] private Image _share;
@@ -23,6 +23,11 @@ public class DefeatMenu : MonoBehaviour //mediator
     [Inject]
     private void Construcor(GlobalStateMachine stateMachine)
         => _stateMachine = stateMachine;
+
+    public void SetScore(int value)
+    {
+        _score.SetText("Score: " + value.ToString());
+    }
 
     public void Open()
     {

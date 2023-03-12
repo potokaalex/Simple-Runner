@@ -25,6 +25,8 @@ namespace DeathSystem
 
         private void Handle(EnterCollisionEvent @event)
         {
+            //return;
+
             if (!World.TryGetEntity(@event.CollisionInfo.gameObject, out var entity))
                 return;
 

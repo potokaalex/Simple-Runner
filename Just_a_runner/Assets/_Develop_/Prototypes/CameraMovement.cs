@@ -7,6 +7,9 @@ namespace UnityTemplateProjects
     {
         [SerializeField] private CharacterMarker _character;
         [SerializeField] private Vector3 _distance;
+        public bool IsXConstraint;
+        public bool IsYConstraint;
+        public bool IsZConstraint;
 
         private void Start()
         {
@@ -18,10 +21,16 @@ namespace UnityTemplateProjects
             if (_character == null)
                 return;
 
-            transform.position = new Vector3(
-                _character.transform.position.x + _distance.x,
-                transform.position.y,
-                _character.transform.position.z + _distance.z);
+            var different = transform.position - (_character.transform.position + _distance);
+
+            if (!IsXConstraint)
+                transform.position -= Vector3.right * different.x;
+
+            if (!IsYConstraint)
+                transform.position -= Vector3.up * different.y;
+
+            if (!IsZConstraint)
+                transform.position -= Vector3.forward * different.z;
         }
     }
 }
