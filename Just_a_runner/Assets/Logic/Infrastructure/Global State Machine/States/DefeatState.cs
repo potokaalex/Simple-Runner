@@ -15,7 +15,7 @@ namespace Infrastructure.StateMachine
 
         public void Enter()
         {
-            _defeatMenu.SetScore((int)_character.transform.position.z - 20);
+            _defeatMenu.SetScore((int)_character.transform.position.z); // ?
             _defeatMenu.Open();
         }
 
