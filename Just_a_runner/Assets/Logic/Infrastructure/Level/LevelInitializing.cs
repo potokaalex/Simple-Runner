@@ -4,6 +4,7 @@ using MovementSystem;
 using StateMachine;
 using InputSystem;
 using DeathSystem;
+using Statistics;
 using Zenject;
 using Ecs;
 
@@ -42,6 +43,7 @@ namespace Infrastructure
 
         private Systems Gameplay
             => new Systems()
+            .Add(_systemsFactory.Create<CharacterScoreCounter>())
             .Add(_systemsFactory.Create<RoadGenerator>())
             .Add(_systemsFactory.Create<DeathHandler>())
             .Add(Movement);

@@ -1,24 +1,29 @@
 ﻿using StateMachine;
+using Statistics;
 
 namespace Infrastructure.StateMachine
 {
     public class DefeatState : IState
     {
-        private CharacterMarker _character;
         private DefeatMenu _defeatMenu;
+        private CharacterScore _score;
 
-        public DefeatState(CharacterMarker character, DefeatMenu defeatMenu)
+        public DefeatState(DefeatMenu defeatMenu,CharacterScore score)
         {
-            _character = character;
             _defeatMenu = defeatMenu;
+            _score = score;
         }
 
         public void Enter()
         {
-            _defeatMenu.SetScore((int)_character.transform.position.z); // ?
+            _defeatMenu.SetCurrentScore(_score.Score);
+            //_defeatMenu.SetMaxScore(_score.Score);
+
             _defeatMenu.Open();
         }
 
         public void Exit() { }
     }
+
+    //нужно написатб плагин сохранения 
 }

@@ -12,7 +12,8 @@ using Infrastructure.StateMachine;
 public class DefeatMenu : MonoBehaviour //mediator
 {
     //[SerializeField] private Image _background;
-    [SerializeField] private TextMeshProUGUI _score;
+    [SerializeField] private TextMeshProUGUI _currentScore;
+    [SerializeField] private TextMeshProUGUI _maxScore;
     //[SerializeField] private Image _replay;
     //[SerializeField] private Image _home;
     //[SerializeField] private Image _share;
@@ -24,10 +25,11 @@ public class DefeatMenu : MonoBehaviour //mediator
     private void Construcor(GlobalStateMachine stateMachine)
         => _stateMachine = stateMachine;
 
-    public void SetScore(int value)
-    {
-        _score.SetText("Score: " + value.ToString());
-    }
+    public void SetCurrentScore(uint score)
+        => _currentScore.text = score.ToString();
+
+    public void SetMaxScore(uint score)
+        => _maxScore.text = score.ToString();
 
     public void Open()
     {

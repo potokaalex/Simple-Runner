@@ -3,6 +3,7 @@ using StateMachine;
 using UnityEngine;
 using Zenject;
 using Ecs;
+using System;
 
 namespace Infrastructure.Installers
 {
@@ -16,6 +17,7 @@ namespace Infrastructure.Installers
         {
             BindLevelInitializing();
             BindSystemsFactory();
+            BindCharacterScore();
             BindLevelSettings();
             BindStateFactory();
         }
@@ -31,6 +33,13 @@ namespace Infrastructure.Installers
         {
             Container
                 .Bind<SystemsFactory>()
+                .AsSingle();
+        }
+
+        private void BindCharacterScore()
+        {
+            Container
+                .Bind<Statistics.CharacterScore>()
                 .AsSingle();
         }
 

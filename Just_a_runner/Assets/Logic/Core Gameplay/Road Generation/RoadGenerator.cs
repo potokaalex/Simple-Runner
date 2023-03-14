@@ -20,7 +20,8 @@ namespace RoadGeneration
 
         public void FixedTick(float deltaTime)
         {
-            if ((_data.LastChunk.transform.position - _character.position)
+            if (_data.LastChunk == null ||
+                (_data.LastChunk.transform.position - _character.position)
                 .magnitude < _data.DistanceToGenerateNewChunk)
                 Generate(_data, _character.position);
         }
@@ -29,7 +30,7 @@ namespace RoadGeneration
         {
             GenerateChunkAhead(data);
 
-            if ((characterPosition - data.FirstChunkPosition.transform.position)
+            if ((characterPosition - data.FirstChunk.transform.position)
                 .magnitude > data.DistanceToRemoveOldChunk)
                 RemoveFirstChunk(data.ActiveChunks);
         }
@@ -43,7 +44,7 @@ namespace RoadGeneration
 
             var chunkPosition = data.LastChunk == null ? Vector3.zero
                 : data.LastChunk.transform.position + data.LastChunk.Length * Vector3.forward;
-            
+
             data.ActiveChunks.Add(CreateChunk(chunk, chunkPosition, data.transform));
         }
 
