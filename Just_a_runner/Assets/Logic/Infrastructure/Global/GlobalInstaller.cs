@@ -31,7 +31,7 @@ namespace Infrastructure.Installers
         private void BindGameCycle()
         {
             Container
-                .Bind<GameCycle>()
+                .Bind<GameLoop>()
                 .FromNewComponentOnNewGameObject()
                 .AsSingle();
         }

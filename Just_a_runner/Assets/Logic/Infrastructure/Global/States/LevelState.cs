@@ -5,25 +5,25 @@ namespace Infrastructure.StateMachine
 {
     public class LevelState : IState
     {
-        private GameCycle _gameCycle;
+        private GameLoop _gameLoop;
         private Systems _systems;
 
-        public LevelState(Systems systems, GameCycle gameCycle)
+        public LevelState(Systems systems, GameLoop gameCycle)
         {
-            _gameCycle = gameCycle;
+            _gameLoop = gameCycle;
             _systems = systems;
         }
 
         public void Enter()
         {
-            _gameCycle.OnFixedTick += FixedTick;
-            _gameCycle.OnTick += Tick;
+            _gameLoop.OnFixedTick += FixedTick;
+            _gameLoop.OnTick += Tick;
         }
 
         public void Exit()
         {
-            _gameCycle.OnFixedTick -= FixedTick;
-            _gameCycle.OnTick -= Tick;
+            _gameLoop.OnFixedTick -= FixedTick;
+            _gameLoop.OnTick -= Tick;
         }
 
         private void FixedTick(float deltaTime)
