@@ -27,7 +27,7 @@ namespace Statistics
             if (score < 0)
                 return;
 
-            _score.Score = (uint)score;
+            _score.CurrentScore = new((uint)score);
         }
     }
 }

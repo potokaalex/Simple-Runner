@@ -1,14 +1,34 @@
-﻿namespace Statistics
+﻿using DataManagement;
+using System;
+
+namespace Statistics
 {
     public class CharacterScore
     {
-        public System.Action<uint> OnScoreChanging;
-        public uint _score;
+        private const string StorageKey = "a0Hxglwcjk3u4i9vok4oanDEak$m0c";
 
-        public uint Score
+        public Action<uint> OnScoreChanging;
+        private SafeUInt32 _currentScore;
+
+        public SafeUInt32 CurrentScore
         {
-            get => _score;
-            set => OnScoreChanging?.Invoke(_score = value);
+            get => _currentScore;
+            set => OnScoreChanging?.Invoke(_currentScore = value);
+        }
+
+        public uint GetMaxScore()
+        {
+            if (SafeDataStorage.Contains(StorageKey))
+            {
+                var deserializedScore = SafeUInt32.Deserialize(SafeDataStorage.Load(StorageKey));
+
+                if (deserializedScore >= _currentScore)
+                    return deserializedScore;
+            }
+
+            SafeDataStorage.Save(StorageKey, _currentScore.Serialize());
+
+            return _currentScore;
         }
     }
 }

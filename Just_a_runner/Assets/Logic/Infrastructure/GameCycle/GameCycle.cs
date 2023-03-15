@@ -3,7 +3,7 @@ using System;
 
 namespace Infrastructure
 {
-    public class GameCycle : MonoBehaviour
+    public class GameCycle : MonoBehaviour //GameLoop ?
     {
         public event Action<float> OnFixedTick;
         public event Action<float> OnTick;

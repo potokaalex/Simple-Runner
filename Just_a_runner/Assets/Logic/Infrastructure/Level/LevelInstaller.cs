@@ -4,22 +4,34 @@ using UnityEngine;
 using Zenject;
 using Ecs;
 using System;
+using Statistics;
 
 namespace Infrastructure.Installers
 {
     public class LevelInstaller : MonoInstaller
     {
         [SerializeField] private CharacterMarker _characterMarker;
+        [SerializeField] private ScoreIndicator _scoreIndicator;
         [SerializeField] private DefeatMenu _defeatMenu;
         [SerializeField] private RoadData _roadData;
 
         public override void InstallBindings()
         {
             BindLevelInitializing();
+            BindLevelData();
+
             BindSystemsFactory();
-            BindCharacterScore();
-            BindLevelSettings();
             BindStateFactory();
+
+            BindCharacterScore();
+            BindScoreIndicator();
+        }
+
+        private void BindScoreIndicator()
+        {
+            Container.Bind<ScoreIndicator>()
+                .FromInstance(_scoreIndicator)
+                .AsSingle();
         }
 
         private void BindLevelInitializing()
@@ -39,11 +51,11 @@ namespace Infrastructure.Installers
         private void BindCharacterScore()
         {
             Container
-                .Bind<Statistics.CharacterScore>()
+                .Bind<CharacterScore>()
                 .AsSingle();
         }
 
-        private void BindLevelSettings()
+        private void BindLevelData() //-
         {
             Container.Bind<CharacterMarker>()
                 .FromInstance(_characterMarker)
