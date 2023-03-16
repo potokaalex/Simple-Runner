@@ -25,5 +25,10 @@ namespace Infrastructure.StateMachine
             _currentState = _states[typeof(StateType)];
             _currentState.Enter();
         }
+
+        private IState GetState<StateType>() where StateType : IState
+        {
+
+        }
     }
 }

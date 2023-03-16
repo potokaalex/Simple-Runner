@@ -10,7 +10,7 @@ namespace Infrastructure.Installers
         {
             BindGlobalStateMachine();
             BindSceneLoader();
-            BindGameCycle();
+            BindGameLoop();
         }
 
         private void BindGlobalStateMachine()
@@ -28,7 +28,7 @@ namespace Infrastructure.Installers
                 .AsSingle();
         }
 
-        private void BindGameCycle()
+        private void BindGameLoop()
         {
             Container
                 .Bind<GameLoop>()
