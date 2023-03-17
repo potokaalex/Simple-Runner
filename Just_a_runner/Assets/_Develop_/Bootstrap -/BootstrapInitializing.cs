@@ -17,8 +17,8 @@ namespace Infrastructure
 
         public void Initialize()
         {
-            _stateMachine.Add(_stateFactory.Create<LevelLoadingState>());
-            _stateMachine.Add(_stateFactory.Create<MainMenuState>());
+            //_stateMachine.Add(_stateFactory.Create<LevelLoadingState>());
+            //_stateMachine.Add(_stateFactory.Create<MainMenuState>());
 
             _stateMachine.SwitchTo<MainMenuState>();
         }

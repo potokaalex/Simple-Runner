@@ -21,7 +21,7 @@ namespace Infrastructure.Installers
             BindLevelData();
 
             BindSystemsFactory();
-            BindStateFactory();
+            //BindStateFactory();
 
             BindCharacterScore();
             BindScoreIndicator();

@@ -1,6 +1,7 @@
 using Infrastructure.StateMachine;
 using UnityEngine.SceneManagement;
 using Zenject;
+using StateMachine;
 
 namespace Infrastructure.Installers
 {
@@ -9,6 +10,7 @@ namespace Infrastructure.Installers
         public override void InstallBindings()
         {
             BindGlobalStateMachine();
+            BindStateFactory();
             BindSceneLoader();
             BindGameLoop();
         }
@@ -18,6 +20,14 @@ namespace Infrastructure.Installers
             Container
                 .Bind<GlobalStateMachine>()
                 .AsSingle();
+        }
+
+        private void BindStateFactory()
+        {
+            Container
+                .Bind<StateFactory>()
+                .AsSingle()
+                .NonLazy();
         }
 
         private void BindSceneLoader()

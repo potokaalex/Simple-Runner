@@ -8,7 +8,7 @@ namespace Infrastructure.Installers
         public override void InstallBindings()
         {
             BindBootstrapInitializing();
-            BindStateFactory();
+            //BindStateFactory();
         }
 
         private void BindBootstrapInitializing()

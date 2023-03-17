@@ -64,8 +64,8 @@ namespace Infrastructure
 
         private void LoadingStates()
         {
-            _stateMachine.Add(_stateFactory.Create<DefeatState>());
-            _stateMachine.Add(_stateFactory.Create<LevelState>());
+            //_stateMachine.Add(_stateFactory.Create<DefeatState>());
+            //_stateMachine.Add(_stateFactory.Create<LevelState>());
 
             _stateMachine.SwitchTo<LevelState>();
         }
