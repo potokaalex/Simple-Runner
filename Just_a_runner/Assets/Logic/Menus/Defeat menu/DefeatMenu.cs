@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
-using Infrastructure.StateMachine;
+using Infrastructure;
 
 public class DefeatMenu : MonoBehaviour //mediator
 {

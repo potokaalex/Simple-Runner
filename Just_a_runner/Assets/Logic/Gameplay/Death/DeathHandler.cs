@@ -1,4 +1,4 @@
-﻿using Infrastructure.StateMachine;
+﻿using Infrastructure;
 using CollisionSystem;
 using UnityEngine;
 using Ecs;

@@ -1,13 +1,12 @@
-using Infrastructure.StateMachine;
 using UnityEngine.SceneManagement;
-using Zenject;
 using StateMachine;
+using Zenject;
 
 namespace Infrastructure.Installers
 {
     public class GlobalInstaller : MonoInstaller
     {
-        public override void InstallBindings()
+        public override void InstallBindings() //INPUT
         {
             BindGlobalStateMachine();
             BindStateFactory();
@@ -25,9 +24,9 @@ namespace Infrastructure.Installers
         private void BindStateFactory()
         {
             Container
-                .Bind<StateFactory>()
-                .AsSingle()
-                .NonLazy();
+                .Bind<IStateFactory>()
+                .To<StateFactory>()
+                .AsSingle();
         }
 
         private void BindSceneLoader()

@@ -2,15 +2,12 @@
 
 namespace StateMachine
 {
-    public class StateFactory
+    public class StateFactory : IStateFactory
     {
         private IInstantiator _instantiator;
 
-        public StateFactory(DiContainer instantiator)
-        {
-            _instantiator = instantiator;
-            UnityEngine.Debug.Log("Factory created");
-        }
+        public StateFactory(IInstantiator instantiator)
+            => _instantiator = instantiator;
 
         public StateType Create<StateType>() where StateType : IState
             => _instantiator.Instantiate<StateType>();

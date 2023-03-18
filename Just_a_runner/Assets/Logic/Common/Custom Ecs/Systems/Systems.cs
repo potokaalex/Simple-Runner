@@ -7,8 +7,6 @@ namespace Ecs
         private List<IFixedTickable> _fixedTickables = new();
         private List<ITickable> _tickables = new();
 
-        public int COUNT => _fixedTickables.Count;
-
         public void FixedTick(float deltaTime)
         {
             foreach (var system in _fixedTickables)

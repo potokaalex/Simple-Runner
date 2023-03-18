@@ -6,14 +6,13 @@ namespace RoadGeneration
 {
     public class RoadGenerator : IFixedTickable
     {
-        //чанки можно найти через фильтры! зачем их хранить в roadData ?
-        //отв: в roadData чанки храняться упорядоченно, хранение там, позволяет найти дальний и ближний чанки
-
         private Transform _character;
         private RoadData _data;
 
         public RoadGenerator(CharacterMarker characterMarker, RoadData roadData)
         {
+            Debug.Log(characterMarker);
+
             _character = characterMarker.transform;
             _data = roadData;
         }

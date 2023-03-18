@@ -1,6 +1,6 @@
 ﻿using StateMachine;
 
-namespace Infrastructure.StateMachine
+namespace Infrastructure
 {
     public class PauseState : IState //меню паузы ?
     {

@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using Zenject; 
+using Zenject;
 
 namespace UnityEngine.SceneManagement
 {
@@ -14,8 +14,12 @@ namespace UnityEngine.SceneManagement
 
         [Inject]
         private void Construcor(ISceneLoader sceneLoader)
+            => _sceneLoader = sceneLoader;
+
+        private void OnEnable()
         {
-            _sceneLoader = sceneLoader;
+            if (_sceneLoader == null)
+                return;
 
             _sceneLoader.OnLoadingStart += StartAnimation;
             _sceneLoader.OnLoadingEnd += StopAnimation;
@@ -23,6 +27,9 @@ namespace UnityEngine.SceneManagement
 
         private void OnDisable()
         {
+            if (_sceneLoader == null)
+                return;
+
             _sceneLoader.OnLoadingStart -= StartAnimation;
             _sceneLoader.OnLoadingEnd -= StopAnimation;
         }

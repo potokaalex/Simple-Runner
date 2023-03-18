@@ -1,4 +1,4 @@
-﻿using Infrastructure.StateMachine;
+﻿using Infrastructure;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using Zenject;

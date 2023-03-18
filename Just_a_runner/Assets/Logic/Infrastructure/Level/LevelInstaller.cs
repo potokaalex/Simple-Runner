@@ -1,10 +1,9 @@
 using RoadGeneration;
 using StateMachine;
 using UnityEngine;
+using Statistics;
 using Zenject;
 using Ecs;
-using System;
-using Statistics;
 
 namespace Infrastructure.Installers
 {
@@ -17,34 +16,29 @@ namespace Infrastructure.Installers
 
         public override void InstallBindings()
         {
-            BindLevelInitializing();
-            BindLevelData();
-
             BindSystemsFactory();
-            //BindStateFactory();
+            BindStateFactory();
 
             BindCharacterScore();
             BindScoreIndicator();
-        }
 
-        private void BindScoreIndicator()
-        {
-            Container.Bind<ScoreIndicator>()
-                .FromInstance(_scoreIndicator)
-                .AsSingle();
-        }
-
-        private void BindLevelInitializing()
-        {
-            Container
-                .BindInterfacesAndSelfTo<LevelInitializing>()
-                .AsSingle();
+            BindCharacterMarker();
+            BindDefeatMenu();
+            BindRoadData();
         }
 
         private void BindSystemsFactory()
         {
             Container
                 .Bind<SystemsFactory>()
+                .AsSingle();
+        }
+
+        private void BindStateFactory()
+        {
+            Container
+                .Bind<IStateFactory>()
+                .To<StateFactory>()
                 .AsSingle();
         }
 
@@ -55,29 +49,34 @@ namespace Infrastructure.Installers
                 .AsSingle();
         }
 
-        private void BindLevelData() //-
+        private void BindScoreIndicator()
         {
-            Container.Bind<CharacterMarker>()
+            Container
+                .Bind<ScoreIndicator>()
+                .FromInstance(_scoreIndicator)
+                .AsSingle();
+        }
+
+        private void BindCharacterMarker()
+        {
+            Container
+                .Bind<CharacterMarker>()
                 .FromInstance(_characterMarker)
                 .AsSingle();
+        }
 
-            Container.Bind<RoadData>()
-                .FromInstance(_roadData)
-                .AsSingle();
-
+        private void BindDefeatMenu()
+        {
             Container
-                .Bind<Systems>()
-                .AsSingle();
-
-            Container.Bind<DefeatMenu>()
+                .Bind<DefeatMenu>()
                 .FromInstance(_defeatMenu)
                 .AsSingle();
         }
 
-        private void BindStateFactory()
+        private void BindRoadData()
         {
-            Container
-                .Bind<StateFactory>()
+            Container.Bind<RoadData>()
+                .FromInstance(_roadData)
                 .AsSingle();
         }
     }

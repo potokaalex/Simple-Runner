@@ -1,7 +1,7 @@
 ﻿using StateMachine;
 using Statistics;
 
-namespace Infrastructure.StateMachine
+namespace Infrastructure
 {
     public class DefeatState : IState
     {
@@ -9,7 +9,10 @@ namespace Infrastructure.StateMachine
         private CharacterScore _score;
         private ScoreIndicator _scoreIndicator;
 
-        public DefeatState(DefeatMenu defeatMenu, CharacterScore score, ScoreIndicator scoreIndicator)
+        public DefeatState(
+            DefeatMenu defeatMenu,
+            CharacterScore score,
+            ScoreIndicator scoreIndicator)
         {
             _defeatMenu = defeatMenu;
             _score = score;
@@ -23,11 +26,6 @@ namespace Infrastructure.StateMachine
             _defeatMenu.Open();
 
             _scoreIndicator.Hide();
-        }
-
-        public void Exit()
-        {
-            //_scoreIndicator.Show();
         }
     }
 }

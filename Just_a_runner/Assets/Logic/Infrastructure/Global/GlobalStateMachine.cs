@@ -2,41 +2,53 @@
 using StateMachine;
 using System;
 
-namespace Infrastructure.StateMachine
+namespace Infrastructure
 {
     public class GlobalStateMachine
     {
         private Dictionary<Type, IState> _states = new();
-        private StateFactory _stateFactory;
+        private List<IStateFactory> _factories = new();
         private IState _currentState;
 
-        public GlobalStateMachine(StateFactory stateFactory)
-        {
-            _stateFactory = stateFactory;
-            UnityEngine.Debug.Log("GlobalStateMachine created!");
-        }
+        public GlobalStateMachine(IStateFactory defaultFactory)
+            => AddFactory(defaultFactory);
 
-        public void Add(IState state)
+        public void AddFactory(IStateFactory factory)
         {
-            var stateType = state.GetType();
-
-            if (_states.ContainsKey(stateType))
-                _states[stateType] = state;
-            else
-                _states.Add(stateType, state);
+            if (!_factories.Contains(factory))
+                _factories.Add(factory);
         }
 
         public void SwitchTo<StateType>() where StateType : IState
         {
+            var stateType = typeof(StateType);
+
             _currentState?.Exit();
-            _currentState = GetState<StateType>(); //_states[typeof(StateType)];
+            //
+            if (!_states.ContainsKey(stateType))
+                _currentState = Create<StateType>();
+            else
+                _currentState = _states[stateType];
+            //
             _currentState.Enter();
         }
 
-        private IState GetState<StateType>() where StateType : IState
+        private StateType Create<StateType>() where StateType : IState
         {
-            return _stateFactory.Create<StateType>();
-            //return default;
+            foreach (var factory in _factories)
+            {
+                try
+                {
+                    return factory.Create<StateType>();
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+
+            throw new Exception($"The {typeof(StateType).Name}" +
+                "cannot be created by known factories, use AddFactory to avoid this.");
         }
     }
 }
