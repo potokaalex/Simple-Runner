@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using StateMachine;
 using System;
 
-namespace Infrastructure
+namespace StateMachines
 {
-    public class StateMachine
+    public class StateMachine : IStateMachine
     {
         private Dictionary<Type, IState> _states = new();
         private IStateFactory _factory;

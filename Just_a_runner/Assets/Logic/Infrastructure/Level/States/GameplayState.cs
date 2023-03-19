@@ -1,4 +1,4 @@
-﻿using StateMachine;
+﻿using StateMachines;
 using Ecs;
 
 namespace Infrastructure

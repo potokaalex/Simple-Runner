@@ -1,5 +1,5 @@
 ﻿using UnityEngine.SceneManagement;
-using StateMachine;
+using StateMachines;
 
 namespace Infrastructure.Menus
 {

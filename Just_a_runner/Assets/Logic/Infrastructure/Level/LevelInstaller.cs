@@ -1,6 +1,6 @@
 using Infrastructure.Menus;
 using RoadGeneration;
-using StateMachine;
+using StateMachines;
 using UnityEngine;
 using Statistics;
 using Zenject;
@@ -50,7 +50,7 @@ namespace Infrastructure.Installers
         private void BindStateMachine()
         {
             Container
-                .Bind<StateMachine>()
+                .Bind<IStateMachine>()
                 .FromInstance(new StateMachine(new StateFactory(Container)))
                 .AsSingle();
         }

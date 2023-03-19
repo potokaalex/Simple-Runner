@@ -1,13 +1,14 @@
 ﻿using Infrastructure;
+using StateMachines;
 using UnityEngine;
 using Zenject;
 
 public class AutoRestart : MonoBehaviour
 {
-    private Infrastructure.StateMachine _stateMachine;
+    private IStateMachine _stateMachine;
 
     [Inject]
-    private void Construcor(Infrastructure.StateMachine stateMachine)
+    private void Construcor(IStateMachine stateMachine)
         => _stateMachine = stateMachine;
 
     private void Update()

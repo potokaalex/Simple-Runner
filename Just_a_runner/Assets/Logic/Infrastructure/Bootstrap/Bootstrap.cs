@@ -1,6 +1,6 @@
 ﻿using UnityEngine.SceneManagement;
 using Infrastructure.Menus;
-using StateMachine;
+using StateMachines;
 using UnityEngine;
 using Zenject;
 

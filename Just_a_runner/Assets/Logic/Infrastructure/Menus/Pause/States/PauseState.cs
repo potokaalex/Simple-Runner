@@ -1,4 +1,4 @@
-﻿using StateMachine;
+﻿using StateMachines;
 
 namespace Infrastructure.Menus
 {

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using StateMachines;
+using UnityEngine;
 using Zenject;
 using TMPro;
 
@@ -9,10 +10,10 @@ namespace Infrastructure.Menus
         [SerializeField] private GameObject Window;
         [SerializeField] private TextMeshProUGUI _currentScore;
         [SerializeField] private TextMeshProUGUI _maxScore;
-        private StateMachine _stateMachine;
+        private IStateMachine _stateMachine;
 
         [Inject]
-        private void Construcor(StateMachine stateMachine)
+        private void Construcor(IStateMachine stateMachine)
             => _stateMachine = stateMachine;
 
         public void SetCurrentScore(uint score)

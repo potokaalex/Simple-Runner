@@ -1,17 +1,17 @@
 ﻿using Infrastructure.Menus;
 using CollisionSystem;
+using StateMachines; 
 using UnityEngine;
 using Ecs;
-
 namespace DeathSystem
 {
     public class DeathHandler : IFixedTickable
     {
         private Filter<EnterCollisionEvent> _events = new();
-        private Infrastructure.StateMachine _stateMachine;
+        private IStateMachine _stateMachine;
         private GameObject _character;
 
-        public DeathHandler(CharacterMarker characterMarker, Infrastructure.StateMachine stateMachine)
+        public DeathHandler(CharacterMarker characterMarker, IStateMachine stateMachine)
         {
             _character = characterMarker.gameObject;
             _stateMachine = stateMachine;

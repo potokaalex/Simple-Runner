@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using StateMachines;
+using UnityEngine;
 using Zenject;
 
 namespace Infrastructure.Menus
@@ -7,10 +8,10 @@ namespace Infrastructure.Menus
     {
         [SerializeField] private GameObject Window;
         [SerializeField] private GameObject ActivateButton;
-        private StateMachine _stateMachine;
+        private IStateMachine _stateMachine;
 
         [Inject]
-        private void Construcor(StateMachine stateMachine)
+        private void Construcor(IStateMachine stateMachine)
             => _stateMachine = stateMachine;
 
         public void Open()

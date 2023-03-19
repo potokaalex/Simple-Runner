@@ -1,6 +1,6 @@
 ﻿using Zenject;
 
-namespace StateMachine
+namespace StateMachines
 {
     public class StateFactory : IStateFactory
     {

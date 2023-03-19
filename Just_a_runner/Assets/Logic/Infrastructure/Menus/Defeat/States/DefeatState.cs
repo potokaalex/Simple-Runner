@@ -1,4 +1,4 @@
-﻿using StateMachine;
+﻿using StateMachines;
 using Statistics;
 
 namespace Infrastructure.Menus

@@ -1,4 +1,4 @@
-﻿namespace StateMachine
+﻿namespace StateMachines
 {
     public interface IStateMachine
     {
