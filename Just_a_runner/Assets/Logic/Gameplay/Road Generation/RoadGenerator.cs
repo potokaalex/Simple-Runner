@@ -11,8 +11,6 @@ namespace RoadGeneration
 
         public RoadGenerator(CharacterMarker characterMarker, RoadData roadData)
         {
-            Debug.Log(characterMarker);
-
             _character = characterMarker.transform;
             _data = roadData;
         }

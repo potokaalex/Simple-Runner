@@ -1,17 +1,20 @@
-﻿using UnityEngine;
+﻿using UnityEngine.SceneManagement;
+using StateMachine;
+using UnityEngine;
+using MainMenu;
 using Zenject;
 
 namespace Infrastructure
 {
     public class Bootstrap : MonoBehaviour
     {
-        private GlobalStateMachine _stateMachine;
+        private IState _initialState;
 
         [Inject]
-        private void Constructor(GlobalStateMachine stateMachine)
-            => _stateMachine = stateMachine;
+        private void Constructor(ISceneLoader sceneLoader)
+            => _initialState = new MainMenuLoadingState(sceneLoader);
 
-        private void Start()
-            => _stateMachine.SwitchTo<MainMenuState>();
+        public void Start()
+            => _initialState.Enter();
     }
 }

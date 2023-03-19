@@ -1,14 +1,14 @@
 ﻿using UnityEngine.SceneManagement;
 using StateMachine;
 
-namespace Infrastructure
+namespace MainMenu
 {
-    public class MainMenuState : IState
+    public class MainMenuLoadingState : IState
     {
         private const string MainMenuScene = "MainMenu";
         private ISceneLoader _sceneLoader;
 
-        public MainMenuState(ISceneLoader sceneLoader)
+        public MainMenuLoadingState(ISceneLoader sceneLoader)
             => _sceneLoader = sceneLoader;
 
         public void Enter()

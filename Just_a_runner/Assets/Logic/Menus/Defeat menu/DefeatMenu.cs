@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using Infrastructure;
+using MainMenu;
 
 public class DefeatMenu : MonoBehaviour //mediator
 {
@@ -19,10 +20,10 @@ public class DefeatMenu : MonoBehaviour //mediator
     //[SerializeField] private Image _share;
     [SerializeField] private GameObject Window;
 
-    private GlobalStateMachine _stateMachine;
+    private Infrastructure.StateMachine _stateMachine;
 
     [Inject]
-    private void Construcor(GlobalStateMachine stateMachine)
+    private void Construcor(Infrastructure.StateMachine stateMachine)
         => _stateMachine = stateMachine;
 
     public void SetCurrentScore(uint score)
@@ -43,12 +44,12 @@ public class DefeatMenu : MonoBehaviour //mediator
 
     public void Restart()
     {
-        _stateMachine.SwitchTo<LevelLoadingState>();
+        _stateMachine.SwitchTo<RestartingState>();
     }
 
     public void Menu()
     {
-        _stateMachine.SwitchTo<MainMenuState>();
+        _stateMachine.SwitchTo<MainMenuLoadingState>();
     }
 
 

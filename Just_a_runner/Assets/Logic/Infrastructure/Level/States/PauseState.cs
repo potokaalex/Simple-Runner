@@ -2,7 +2,7 @@
 
 namespace Infrastructure
 {
-    public class PauseState : IState //меню паузы ?
+    public class PauseState : IState
     {
         public void Enter() { }
 

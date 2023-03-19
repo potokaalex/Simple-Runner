@@ -16,15 +16,25 @@ namespace Infrastructure.Installers
 
         public override void InstallBindings()
         {
+            BindSystemsInitialization();
             BindSystemsFactory();
-            BindStateFactory();
+            BindStateMachine();
 
             BindCharacterScore();
             BindScoreIndicator();
 
+            //level data? (statistics)
             BindCharacterMarker();
             BindDefeatMenu();
             BindRoadData();
+            BindSystems();
+        }
+
+        private void BindSystemsInitialization()
+        {
+            Container
+                .BindInterfacesTo<SystemsInitialization>()
+                .AsSingle();
         }
 
         private void BindSystemsFactory()
@@ -34,11 +44,11 @@ namespace Infrastructure.Installers
                 .AsSingle();
         }
 
-        private void BindStateFactory()
+        private void BindStateMachine()
         {
             Container
-                .Bind<IStateFactory>()
-                .To<StateFactory>()
+                .Bind<StateMachine>()
+                .FromInstance(new StateMachine(new StateFactory(Container)))
                 .AsSingle();
         }
 
@@ -75,8 +85,16 @@ namespace Infrastructure.Installers
 
         private void BindRoadData()
         {
-            Container.Bind<RoadData>()
+            Container
+                .Bind<RoadData>()
                 .FromInstance(_roadData)
+                .AsSingle();
+        }
+
+        private void BindSystems()
+        {
+            Container
+                .Bind<Systems>()
                 .AsSingle();
         }
     }

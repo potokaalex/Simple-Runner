@@ -3,12 +3,12 @@ using StateMachine;
 
 namespace Infrastructure
 {
-    public class LevelLoadingState : IState
+    public class RestartingState : IState
     {
         private const string LevelScene = "Level";
         private ISceneLoader _sceneLoader;
 
-        public LevelLoadingState(ISceneLoader sceneLoader)
+        public RestartingState(ISceneLoader sceneLoader)
             => _sceneLoader = sceneLoader;
 
         public void Enter()

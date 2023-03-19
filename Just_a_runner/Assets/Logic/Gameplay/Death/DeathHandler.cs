@@ -8,10 +8,10 @@ namespace DeathSystem
     public class DeathHandler : IFixedTickable
     {
         private Filter<EnterCollisionEvent> _events = new();
-        private GlobalStateMachine _stateMachine;
+        private Infrastructure.StateMachine _stateMachine;
         private GameObject _character;
 
-        public DeathHandler(CharacterMarker characterMarker, GlobalStateMachine stateMachine)
+        public DeathHandler(CharacterMarker characterMarker, Infrastructure.StateMachine stateMachine)
         {
             _character = characterMarker.gameObject;
             _stateMachine = stateMachine;
