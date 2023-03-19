@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using Zenject;
 
-namespace MainMenu
+namespace Infrastructure.Menus
 {
     public class MainMenu : MonoBehaviour
     {

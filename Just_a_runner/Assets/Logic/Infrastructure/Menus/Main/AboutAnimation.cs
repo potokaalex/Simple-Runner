@@ -2,7 +2,7 @@
 using UnityEngine;
 using System;
 
-namespace MainMenu
+namespace Infrastructure.Menus
 {
     public class AboutAnimation : MonoBehaviour
     {

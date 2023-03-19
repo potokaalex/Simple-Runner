@@ -1,7 +1,7 @@
 ﻿using UnityEngine.SceneManagement;
 using StateMachine;
 
-namespace MainMenu
+namespace Infrastructure.Menus
 {
     public class LevelLoadingState : IState
     {

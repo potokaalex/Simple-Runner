@@ -1,3 +1,4 @@
+using Infrastructure.Menus;
 using RoadGeneration;
 using StateMachine;
 using UnityEngine;
@@ -12,6 +13,7 @@ namespace Infrastructure.Installers
         [SerializeField] private CharacterMarker _characterMarker;
         [SerializeField] private ScoreIndicator _scoreIndicator;
         [SerializeField] private DefeatMenu _defeatMenu;
+        [SerializeField] private PauseMenu _pauseMenu;
         [SerializeField] private RoadData _roadData;
 
         public override void InstallBindings()
@@ -26,6 +28,7 @@ namespace Infrastructure.Installers
             //level data? (statistics)
             BindCharacterMarker();
             BindDefeatMenu();
+            BindPauseMenu();
             BindRoadData();
             BindSystems();
         }
@@ -80,6 +83,14 @@ namespace Infrastructure.Installers
             Container
                 .Bind<DefeatMenu>()
                 .FromInstance(_defeatMenu)
+                .AsSingle();
+        }
+
+        private void BindPauseMenu()
+        {
+            Container
+                .Bind<PauseMenu>()
+                .FromInstance(_pauseMenu)
                 .AsSingle();
         }
 

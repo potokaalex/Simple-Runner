@@ -1,7 +1,7 @@
 ﻿using UnityEngine.SceneManagement;
+using Infrastructure.Menus;
 using StateMachine;
 using UnityEngine;
-using MainMenu;
 using Zenject;
 
 namespace Infrastructure
