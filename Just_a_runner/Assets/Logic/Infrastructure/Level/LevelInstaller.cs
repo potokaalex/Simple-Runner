@@ -1,49 +1,28 @@
-using Infrastructure.Menus;
-using RoadGeneration;
 using StateMachines;
 using UnityEngine;
-using Statistics;
 using Zenject;
-using Ecs;
 
 namespace Infrastructure.Installers
 {
     public class LevelInstaller : MonoInstaller
     {
-        [SerializeField] private CharacterMarker _characterMarker;
-        [SerializeField] private ScoreIndicator _scoreIndicator;
-        [SerializeField] private DefeatMenu _defeatMenu;
-        [SerializeField] private PauseMenu _pauseMenu;
-        [SerializeField] private RoadData _roadData;
+        [SerializeField] private LevelData _settings;
 
         public override void InstallBindings()
         {
             BindSystemsInitialization();
-            BindSystemsFactory();
             BindStateMachine();
+            BindLevelData();
 
-            BindCharacterScore();
-            BindScoreIndicator();
-
-            //level data? (statistics)
-            BindCharacterMarker();
-            BindDefeatMenu();
-            BindPauseMenu();
-            BindRoadData();
-            BindSystems();
+            Container.Bind<Statistics.ScoreIndicator>().FromInstance(_settings.ScoreIndicator).AsSingle();
+            Container.Bind<Statistics.CharacterScore>().FromInstance(_settings.CharacterScore).AsSingle();
+            Container.Bind<CharacterMarker>().FromInstance(_settings.CharacterMarker).AsSingle();
         }
 
         private void BindSystemsInitialization()
         {
             Container
                 .BindInterfacesTo<SystemsInitialization>()
-                .AsSingle();
-        }
-
-        private void BindSystemsFactory()
-        {
-            Container
-                .Bind<SystemsFactory>()
                 .AsSingle();
         }
 
@@ -55,57 +34,11 @@ namespace Infrastructure.Installers
                 .AsSingle();
         }
 
-        private void BindCharacterScore()
+        private void BindLevelData()
         {
             Container
-                .Bind<CharacterScore>()
-                .AsSingle();
-        }
-
-        private void BindScoreIndicator()
-        {
-            Container
-                .Bind<ScoreIndicator>()
-                .FromInstance(_scoreIndicator)
-                .AsSingle();
-        }
-
-        private void BindCharacterMarker()
-        {
-            Container
-                .Bind<CharacterMarker>()
-                .FromInstance(_characterMarker)
-                .AsSingle();
-        }
-
-        private void BindDefeatMenu()
-        {
-            Container
-                .Bind<DefeatMenu>()
-                .FromInstance(_defeatMenu)
-                .AsSingle();
-        }
-
-        private void BindPauseMenu()
-        {
-            Container
-                .Bind<PauseMenu>()
-                .FromInstance(_pauseMenu)
-                .AsSingle();
-        }
-
-        private void BindRoadData()
-        {
-            Container
-                .Bind<RoadData>()
-                .FromInstance(_roadData)
-                .AsSingle();
-        }
-
-        private void BindSystems()
-        {
-            Container
-                .Bind<Systems>()
+                .Bind<LevelData>()
+                .FromInstance(_settings)
                 .AsSingle();
         }
     }

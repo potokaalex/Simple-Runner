@@ -6,43 +6,46 @@ using Statistics;
 using Zenject;
 using Ecs;
 
+//using 
+// can i move LevelData to factory, and then resolve all data? 
+
+//level facking static (but non) data...
+
 namespace Infrastructure.Installers
 {
     public class SystemsInitialization : IInitializable
     {
-        private SystemsFactory _factory;
-        private Systems _systems;
+        private LevelData _data;
 
-        public SystemsInitialization(SystemsFactory factory, Systems systems)
+        public SystemsInitialization(LevelData data)
         {
-            _factory = factory;
-            _systems = systems;
+            _data = data;
         }
 
         public void Initialize()
         {
-            _systems
+            _data.Systems
                 .Add(Core)
                 .Add(Gameplay);
         }
 
         private Systems Core
             => new Systems()
-            .Add(_factory.Create<EntitiesUpdate>())
-            .Add(_factory.Create<InputUpdate>());
+            .Add(new EntitiesUpdate())
+            .Add(new InputUpdate());
 
         private Systems Gameplay
             => new Systems()
-            .Add(_factory.Create<CharacterScoreCounter>())
-            .Add(_factory.Create<RoadGenerator>())
-            .Add(_factory.Create<DeathHandler>())
+            //.Add(new CharacterScoreCounter())
+            .Add(new RoadGenerator())
+            //.Add(new DeathHandler())
             .Add(Movement);
 
         private Systems Movement
             => new Systems()
-            .Add(_factory.Create<MoveDirectionUpdate>())
-            .Add(_factory.Create<MovePositionUpdate>())
-            .Add(_factory.Create<MoveRightUpdate>())
-            .Add(_factory.Create<MoveLeftUpdate>());
+            .Add(new MoveDirectionUpdate())
+            .Add(new MovePositionUpdate())
+            .Add(new MoveRightUpdate())
+            .Add(new MoveLeftUpdate());
     }
 }

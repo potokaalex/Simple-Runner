@@ -6,7 +6,7 @@ namespace Statistics
 {
     public class CharacterScoreCounter : IFixedTickable
     {
-        private CharacterMarker _character;
+        private Filter<CharacterMarker> _characters = new();
         private CharacterScore _score;
         private Vector3 _startingPosition;
 
@@ -22,12 +22,22 @@ namespace Statistics
 
         public void FixedTick(float deltaTime)
         {
+            foreach (var character in _characters.Components)
+            {
+                Count();
+            }
+
             var score = (_character.transform.position - _startingPosition).z - 1;
 
             if (score < 0)
                 return;
 
             _score.CurrentScore = new((uint)score);
+        }
+
+        private void Count()
+        {
+
         }
     }
 }
