@@ -5,10 +5,11 @@ namespace RoadGeneration
 {
     public class Road : EcsComponent
     {
-        public List<Chunk> ActiveChunks;
+        public List<Chunk> EnabledChunks;
+        public List<Chunk> DisabledChunks;
         public Chunk[] PresetChunks;
 
-        public float DistanceToGenerateNewChunk; //= 100
-        public float DistanceToRemoveOldChunk; //= 25
+        public float DistanceToGenerateNewChunk;
+        public float DistanceToRemoveOldChunk;
     }
 }

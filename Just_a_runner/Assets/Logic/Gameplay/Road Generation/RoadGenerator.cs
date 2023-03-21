@@ -19,14 +19,14 @@ namespace RoadGeneration
 
         private void Generate(Road road, Vector3 characterPosition)
         {
-            var chunks = road.ActiveChunks;
+            var chunks = road.EnabledChunks;
 
             if (chunks.Count == 0)
                 GenerateChunkAhead(road);
             else if (DistanceToCharacter(chunks[chunks.Count - 1]) < road.DistanceToGenerateNewChunk)
                 GenerateChunkAhead(road);
             else if (DistanceToCharacter(chunks[0]) > road.DistanceToRemoveOldChunk)
-                RemoveFirstChunk(chunks);
+                RemoveFirstChunk(road);
 
             float DistanceToCharacter(Chunk chunk)
                 => (chunk.transform.position - characterPosition).magnitude;
@@ -37,39 +37,43 @@ namespace RoadGeneration
             if (road.PresetChunks.Length < 1)
                 return;
 
-            var chunk = GetRandomChunk(road.PresetChunks);
+            var chunk = GetChunk(road);
 
-            var lastChunk = road.ActiveChunks.Count == 0 ? null
-                : road.ActiveChunks[road.ActiveChunks.Count - 1];
+            var lastChunk = road.EnabledChunks.Count == 0 ? null
+                : road.EnabledChunks[road.EnabledChunks.Count - 1];
 
-            var lastChunkPosition = lastChunk == null ? Vector3.zero
+            var chunkPosition = lastChunk == null ? Vector3.zero
                 : lastChunk.transform.position + lastChunk.Length * Vector3.forward;
 
-            road.ActiveChunks.Add(_factory.Create(chunk, lastChunkPosition, road.transform)); //
+            chunk.transform.position = chunkPosition;
+            road.EnabledChunks.Add(chunk);
         }
 
-        private void RemoveFirstChunk(List<Chunk> activeChunks)
+        private void RemoveFirstChunk(Road road)
         {
-            if (activeChunks.Count < 1)
+            if (road.EnabledChunks.Count < 1)
                 return;
 
-            var firstChunk = activeChunks[0];
+            var firstChunk = road.EnabledChunks[0];
 
-            activeChunks.Remove(firstChunk);
-            firstChunk.Entity.Destroy();
+            road.DisabledChunks.Add(firstChunk);
+            road.EnabledChunks.Remove(firstChunk);
         }
 
-        private Chunk GetRandomChunk(Chunk[] chunks)
-            => chunks[Random.Range(0, chunks.Length)];
-    }
-
-    public class ChunkFactory // + pool ?
-    {
-
-
-        public Chunk Create(Chunk original, Vector3 position, Transform parent)
+        private Chunk GetChunk(Road road)
         {
-            return Object.Instantiate(original, position, Quaternion.identity, parent);
+            var randomChunk = road.PresetChunks[Random.Range(0, road.PresetChunks.Length)];
+
+            foreach (var chunk in road.DisabledChunks)
+            {
+                if (chunk.ID == randomChunk.ID)
+                {
+                    road.DisabledChunks.Remove(chunk);
+                    return chunk;
+                }
+            }
+
+            return _factory.Create(randomChunk, Vector3.zero, road.transform);
         }
     }
 }

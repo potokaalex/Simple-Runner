@@ -16,9 +16,9 @@ namespace Statistics
 
             _score = data.CharacterScore;
 
-            _startingPosition = (road == null || road.ActiveChunks.Count == 0)
+            _startingPosition = (road == null || road.EnabledChunks.Count == 0)
                 ? Vector3.zero
-                : road.ActiveChunks[0].transform.position;
+                : road.EnabledChunks[0].transform.position;
         }
 
         public void FixedTick(float deltaTime)
