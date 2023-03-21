@@ -8623,7 +8623,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 614985061}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e6b7e85fa14f0a469b84bba002471f5, type: 3}
   m_Name: 
@@ -18163,12 +18163,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0988c4051b0124498a491193177089a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _settings:
-    CharacterMarker: {fileID: 0}
-    ScoreIndicator: {fileID: 0}
-    DefeatMenu: {fileID: 0}
-    PauseMenu: {fileID: 0}
-    RoadData: {fileID: 0}
+  _scoreIndicator: {fileID: 1767551998}
+  _defeatMenu: {fileID: 1143097931}
+  _pauseMenu: {fileID: 410566026}
 --- !u!114 &1389166914
 MonoBehaviour:
   m_ObjectHideFlags: 0

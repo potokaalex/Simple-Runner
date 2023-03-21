@@ -10,9 +10,9 @@ namespace Infrastructure
     public class LevelData
     {
         public CharacterMarker CharacterMarker;
-        public ScoreIndicator ScoreIndicator;
-        public DefeatMenu DefeatMenu;
-        public PauseMenu PauseMenu;
+
+
+
         public RoadData RoadData;
 
         public CharacterScore CharacterScore = new();

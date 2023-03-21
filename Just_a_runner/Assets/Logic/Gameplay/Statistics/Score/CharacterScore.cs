@@ -6,7 +6,6 @@ namespace Statistics
     public class CharacterScore
     {
         private const string StorageKey = "a0Hxglwcjk3u4i9vok4oanDEak$m0c";
-
         public Action<uint> OnScoreChanging;
         private SafeUInt32 _currentScore;
 

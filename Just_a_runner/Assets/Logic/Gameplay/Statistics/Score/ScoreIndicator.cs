@@ -9,8 +9,8 @@ namespace Statistics
         [SerializeField] private TextMeshProUGUI _indicator;
 
         [Inject]
-        private void Constructor(CharacterScore score)
-            => score.OnScoreChanging += UpdateScore;
+        private void Constructor(StatisticsData data)
+            => data.CharacterScore.OnScoreChanging += UpdateScore;
 
         public void Show()
             => _indicator.gameObject.SetActive(true);

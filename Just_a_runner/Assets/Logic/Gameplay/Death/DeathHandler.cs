@@ -1,21 +1,17 @@
 ﻿using Infrastructure.Menus;
 using CollisionSystem;
 using StateMachines; 
-using UnityEngine;
 using Ecs;
+
 namespace DeathSystem
 {
     public class DeathHandler : IFixedTickable
     {
         private Filter<EnterCollisionEvent> _events = new();
         private IStateMachine _stateMachine;
-        private GameObject _character;
 
-        public DeathHandler(CharacterMarker characterMarker, IStateMachine stateMachine)
-        {
-            _character = characterMarker.gameObject;
-            _stateMachine = stateMachine;
-        }
+        public DeathHandler(IStateMachine stateMachine)
+            => _stateMachine = stateMachine;
 
         public void FixedTick(float deltaTime)
         {
@@ -23,10 +19,17 @@ namespace DeathSystem
                 Handle(@event);
         }
 
+        private CharacterMarker GetCharacter()
+        {
+            foreach (var entity in World.Entities)
+                if (entity.Contains<CharacterMarker>())
+                    return entity.Get<CharacterMarker>();
+
+            return null;
+        }
+
         private void Handle(EnterCollisionEvent @event)
         {
-            //return;
-
             if (!World.TryGetEntity(@event.CollisionInfo.gameObject, out var entity))
                 return;
 
@@ -36,20 +39,16 @@ namespace DeathSystem
             if (!@event.Sender.Contains<DeathMarker>())
                 return;
 
-            if (@event.Sender.GameObject == _character)
+            if (@event.Sender.GameObject == GetCharacter().gameObject)
                 CharacterDeath();
             else
                 DefaultDeath(@event.Sender);
         }
 
         private void CharacterDeath()
-        {
-            _stateMachine.SwitchTo<DefeatState>();
-        }
+            => _stateMachine.SwitchTo<DefeatState>();
 
         private void DefaultDeath(Entity entity)
-        {
-            entity.Destroy();
-        }
+            => entity.Destroy();
     }
 }

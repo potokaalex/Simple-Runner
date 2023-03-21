@@ -10,34 +10,40 @@ namespace Statistics
         private CharacterScore _score;
         private Vector3 _startingPosition;
 
-        public CharacterScoreCounter(CharacterMarker character, CharacterScore score, RoadData roadData)
+        public CharacterScoreCounter(StatisticsData data)
         {
-            _character = character;
-            _score = score;
+            var road = GetRoad();
 
-            _startingPosition = roadData.FirstChunk == null
+            _score = data.CharacterScore;
+
+            _startingPosition = (road == null || road.ActiveChunks.Count == 0)
                 ? Vector3.zero
-                : roadData.FirstChunk.transform.position;
+                : road.ActiveChunks[0].transform.position;
         }
 
         public void FixedTick(float deltaTime)
         {
             foreach (var character in _characters.Components)
-            {
-                Count();
-            }
+                Count(character.transform.position);
+        }
 
-            var score = (_character.transform.position - _startingPosition).z - 1;
+        private Road GetRoad()
+        {
+            foreach (var entity in World.Entities)
+                if (entity.Contains<Road>())
+                    return entity.Get<Road>();
+
+            return null;
+        }
+
+        private void Count(Vector3 characterPosition)
+        {
+            var score = (characterPosition - _startingPosition).z - 1;
 
             if (score < 0)
                 return;
 
             _score.CurrentScore = new((uint)score);
-        }
-
-        private void Count()
-        {
-
         }
     }
 }

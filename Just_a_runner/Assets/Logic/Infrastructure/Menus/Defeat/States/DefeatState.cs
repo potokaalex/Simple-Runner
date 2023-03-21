@@ -13,12 +13,12 @@ namespace Infrastructure.Menus
         public DefeatState(
             DefeatMenu defeatMenu,
             PauseMenu pauseMenu,
-            CharacterScore score,
+            StatisticsData statisticsData,
             ScoreIndicator scoreIndicator)
         {
             _defeatMenu = defeatMenu;
             _pauseMenu = pauseMenu;
-            _score = score;
+            _score = statisticsData.CharacterScore;
             _scoreIndicator = scoreIndicator;
         }
 

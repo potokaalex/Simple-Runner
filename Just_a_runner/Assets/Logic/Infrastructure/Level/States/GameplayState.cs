@@ -8,10 +8,10 @@ namespace Infrastructure
         private GameLoop _gameLoop;
         private Systems _systems;
 
-        public GameplayState(GameLoop gameLoop, LevelData data)
+        public GameplayState(GameLoop gameLoop, Systems systems)
         {
             _gameLoop = gameLoop;
-            _systems = data.Systems;
+            _systems = systems;
         }
 
         public void Enter()

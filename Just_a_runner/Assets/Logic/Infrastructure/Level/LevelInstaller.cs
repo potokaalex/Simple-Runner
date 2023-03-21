@@ -1,28 +1,49 @@
+using Infrastructure.Menus;
 using StateMachines;
 using UnityEngine;
+using Statistics;
 using Zenject;
+using Ecs;
 
 namespace Infrastructure.Installers
 {
     public class LevelInstaller : MonoInstaller
     {
-        [SerializeField] private LevelData _settings;
+        [SerializeField] private ScoreIndicator _scoreIndicator;
+        [SerializeField] private DefeatMenu _defeatMenu;
+        [SerializeField] private PauseMenu _pauseMenu;
 
         public override void InstallBindings()
         {
             BindSystemsInitialization();
+            BindSystemsFactory();
+            BindSystems();
             BindStateMachine();
-            BindLevelData();
+            BindStatisticsData();
 
-            Container.Bind<Statistics.ScoreIndicator>().FromInstance(_settings.ScoreIndicator).AsSingle();
-            Container.Bind<Statistics.CharacterScore>().FromInstance(_settings.CharacterScore).AsSingle();
-            Container.Bind<CharacterMarker>().FromInstance(_settings.CharacterMarker).AsSingle();
+            BindScoreIndicator();
+            BindDefeatMenu();
+            BindPauseMenu();
         }
 
         private void BindSystemsInitialization()
         {
             Container
                 .BindInterfacesTo<SystemsInitialization>()
+                .AsSingle();
+        }
+
+        private void BindSystemsFactory()
+        {
+            Container
+                .Bind<SystemsFactory>()
+                .AsSingle();
+        }
+
+        private void BindSystems()
+        {
+            Container
+                .Bind<Systems>()
                 .AsSingle();
         }
 
@@ -34,11 +55,34 @@ namespace Infrastructure.Installers
                 .AsSingle();
         }
 
-        private void BindLevelData()
+        private void BindStatisticsData()
         {
             Container
-                .Bind<LevelData>()
-                .FromInstance(_settings)
+                .Bind<StatisticsData>()
+                .AsSingle();
+        }
+
+        private void BindScoreIndicator()
+        {
+            Container
+                .Bind<ScoreIndicator>()
+                .FromInstance(_scoreIndicator)
+                .AsSingle();
+        }
+
+        private void BindDefeatMenu()
+        {
+            Container
+                .Bind<DefeatMenu>()
+                .FromInstance(_defeatMenu)
+                .AsSingle();
+        }
+
+        private void BindPauseMenu()
+        {
+            Container
+                .Bind<PauseMenu>()
+                .FromInstance(_pauseMenu)
                 .AsSingle();
         }
     }
