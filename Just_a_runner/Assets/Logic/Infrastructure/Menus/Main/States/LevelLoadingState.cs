@@ -12,6 +12,6 @@ namespace Infrastructure.Menus
             => _sceneLoader = sceneLoader;
 
         public void Enter()
-            => _sceneLoader.LoadScene(LevelScene, LoadSceneMode.Single);
+            => _sceneLoader.LoadSceneAsync(LevelScene, LoadSceneMode.Single, null);
     }
 }

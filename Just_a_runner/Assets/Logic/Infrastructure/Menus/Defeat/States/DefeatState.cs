@@ -31,5 +31,12 @@ namespace Infrastructure.Menus
             _pauseMenu.HideActivateButton();
             _scoreIndicator.Hide();
         }
+
+        public void Exit()
+        {
+            _defeatMenu.Close();
+            _scoreIndicator.Show();
+            _pauseMenu.ShowActivateButton();
+        }
     }
 }

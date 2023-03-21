@@ -29,7 +29,7 @@ namespace Infrastructure.Installers
         private void BindSystemsInitialization()
         {
             Container
-                .BindInterfacesTo<SystemsInitialization>()
+                .BindInterfacesAndSelfTo<SystemsInitialization>()
                 .AsSingle();
         }
 

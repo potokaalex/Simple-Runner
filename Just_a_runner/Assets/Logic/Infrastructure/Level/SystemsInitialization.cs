@@ -6,7 +6,7 @@ using Statistics;
 using Zenject;
 using Ecs;
 
-namespace Infrastructure.Installers
+namespace Infrastructure
 {
     public class SystemsInitialization : IInitializable
     {
@@ -21,6 +21,8 @@ namespace Infrastructure.Installers
 
         public void Initialize()
         {
+            _systems.Clear();
+
             _systems
                 .Add(Core)
                 .Add(Gameplay);
@@ -29,7 +31,7 @@ namespace Infrastructure.Installers
         private Systems Core
             => new Systems()
             .Add(_systemsFactory.Create<EntitiesUpdate>())
-            .Add(_systemsFactory.Create<InputUpdate>());
+            .Add(_systemsFactory.Create<InputUpdate>()); // SERVIS !
 
         private Systems Gameplay
             => new Systems()

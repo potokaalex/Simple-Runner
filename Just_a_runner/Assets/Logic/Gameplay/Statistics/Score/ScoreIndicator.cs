@@ -18,6 +18,9 @@ namespace Statistics
         public void Hide()
             => _indicator.gameObject.SetActive(false);
 
+        public void ClearScore()
+            => _indicator.text = "";
+
         private void UpdateScore(uint score)
             => _indicator.text = score.ToString();
     }

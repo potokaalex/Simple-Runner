@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Ecs;
 
 namespace RoadGeneration
@@ -32,6 +31,14 @@ namespace RoadGeneration
                 => (chunk.transform.position - characterPosition).magnitude;
         }
 
+        private void RemoveFirstChunk(Road road)
+        {
+            if (road.EnabledChunks.Count < 1)
+                return;
+
+            DisableChunk(road.EnabledChunks[0], road);
+        }
+
         private void GenerateChunkAhead(Road road)
         {
             if (road.PresetChunks.Length < 1)
@@ -39,25 +46,14 @@ namespace RoadGeneration
 
             var chunk = GetChunk(road);
 
-            var lastChunk = road.EnabledChunks.Count == 0 ? null
-                : road.EnabledChunks[road.EnabledChunks.Count - 1];
-
-            var chunkPosition = lastChunk == null ? Vector3.zero
-                : lastChunk.transform.position + lastChunk.Length * Vector3.forward;
-
-            chunk.transform.position = chunkPosition;
-            road.EnabledChunks.Add(chunk);
-        }
-
-        private void RemoveFirstChunk(Road road)
-        {
-            if (road.EnabledChunks.Count < 1)
+            if (road.EnabledChunks.Count < 2)
                 return;
 
-            var firstChunk = road.EnabledChunks[0];
+            var chunkBeforeLast = road.EnabledChunks[road.EnabledChunks.Count - 2];
+            var chunkPosition =
+                chunkBeforeLast.transform.position + chunkBeforeLast.Length * Vector3.forward;
 
-            road.DisabledChunks.Add(firstChunk);
-            road.EnabledChunks.Remove(firstChunk);
+            chunk.transform.position = chunkPosition;
         }
 
         private Chunk GetChunk(Road road)
@@ -65,15 +61,31 @@ namespace RoadGeneration
             var randomChunk = road.PresetChunks[Random.Range(0, road.PresetChunks.Length)];
 
             foreach (var chunk in road.DisabledChunks)
-            {
                 if (chunk.ID == randomChunk.ID)
-                {
-                    road.DisabledChunks.Remove(chunk);
-                    return chunk;
-                }
-            }
+                    return EnableChunk(chunk, road);
 
-            return _factory.Create(randomChunk, Vector3.zero, road.transform);
+            return EnableChunk(_factory.Create(randomChunk, Vector3.zero, road.transform), road);
+        }
+
+        private Chunk DisableChunk(Chunk chunk, Road road)
+        {
+            chunk.gameObject.SetActive(false);
+
+            road.EnabledChunks.Remove(chunk);
+            road.DisabledChunks.Add(chunk);
+
+            return chunk;
+        }
+
+        private Chunk EnableChunk(Chunk chunk, Road road)
+        {
+            chunk.gameObject.SetActive(true);
+            chunk.transform.position = Vector3.zero;
+
+            road.DisabledChunks.Remove(chunk);
+            road.EnabledChunks.Add(chunk);
+
+            return chunk;
         }
     }
 }

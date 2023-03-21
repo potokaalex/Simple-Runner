@@ -8,7 +8,5 @@ namespace UnityEngine.SceneManagement
         public event Action<AsyncOperation> OnLoadingEnd;
 
         public void LoadSceneAsync(string sceneName, LoadSceneMode loadMode, Action afterLoading);
-
-        public void LoadScene(string sceneName, LoadSceneMode loadMode);
     }
 }

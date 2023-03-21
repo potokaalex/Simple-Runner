@@ -32,5 +32,21 @@ namespace Ecs
             result = null;
             return false;
         }
+
+        public static bool TryGetComponent<ComponentType>(out ComponentType result)
+            where ComponentType : IComponent
+        {
+            foreach (var entity in _entities)
+            {
+                if (entity.Contains<ComponentType>())
+                {
+                    result = entity.Get<ComponentType>();
+                    return true;
+                }
+            }
+
+            result = default;
+            return false;
+        }
     }
 }

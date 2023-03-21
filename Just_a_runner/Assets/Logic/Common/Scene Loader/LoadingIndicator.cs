@@ -14,12 +14,8 @@ namespace UnityEngine.SceneManagement
 
         [Inject]
         private void Construcor(ISceneLoader sceneLoader)
-            => _sceneLoader = sceneLoader;
-
-        private void OnEnable()
         {
-            if (_sceneLoader == null)
-                return;
+            _sceneLoader = sceneLoader;
 
             _sceneLoader.OnLoadingStart += StartAnimation;
             _sceneLoader.OnLoadingEnd += StopAnimation;

@@ -16,10 +16,5 @@ namespace UnityEngine.SceneManagement
             asyncOperation.completed += (o) => OnLoadingEnd?.Invoke(o);
             asyncOperation.completed += (o) => afterLoading?.Invoke();
         }
-
-        public void LoadScene(string sceneName, LoadSceneMode loadMode)
-        {
-            SceneManager.LoadScene(sceneName, loadMode);
-        }
     }
 }
