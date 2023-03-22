@@ -1,9 +1,10 @@
 using UnityEngine;
 using Ecs;
+using Character;
 
 namespace UnityTemplateProjects
 {
-    public class CameraMovement : MonoBehaviour // скрипт слежения за объектом ?
+    public class CameraMovement : MonoBehaviour
     {
         [SerializeField] private CharacterMarker _character;
         [SerializeField] private Vector3 _distance;
@@ -14,6 +15,8 @@ namespace UnityTemplateProjects
         private void Start()
         {
             _distance = transform.position - _character.transform.position;
+
+            Debug.Log(_distance);
         }
 
         private void Update()

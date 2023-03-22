@@ -5,8 +5,8 @@ namespace Infrastructure.Installers
 {
     public class BootstrapInstaller : MonoInstaller
     {
-        public override void InstallBindings() 
-            //INPUT
+        public override void InstallBindings()
+        //INPUT
         {
             BindSceneLoader();
             BindGameLoop();
@@ -23,7 +23,8 @@ namespace Infrastructure.Installers
         private void BindGameLoop()
         {
             Container
-                .Bind<GameLoop>()
+                .Bind<IGameLoop>()
+                .To<GameLoop>()
                 .FromNewComponentOnNewGameObject()
                 .AsSingle();
         }

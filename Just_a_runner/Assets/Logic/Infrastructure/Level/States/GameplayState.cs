@@ -5,13 +5,13 @@ namespace Infrastructure
 {
     public class GameplayState : IState
     {
-        private GameLoop _gameLoop;
+        private IGameLoop _gameLoop;
         private Systems _systems;
 
-        public GameplayState(GameLoop gameLoop, Systems systems)
+        public GameplayState(IGameLoop gameLoop, DataProvider data)
         {
             _gameLoop = gameLoop;
-            _systems = systems;
+            _systems = data.Systems;
         }
 
         public void Enter()

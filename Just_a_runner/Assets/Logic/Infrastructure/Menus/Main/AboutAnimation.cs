@@ -8,10 +8,8 @@ namespace Infrastructure.Menus
     {
         [SerializeField] private RectTransform _mainMenuWindow;
         [SerializeField] private GameObject _aboutWindow;
-
         [SerializeField] private Vector2 _menuStartPosition;
         [SerializeField] private Vector2 _menuFinalPosition;
-
         [SerializeField] private float _animationTime;
 
         private bool isAboutWindowOpen;

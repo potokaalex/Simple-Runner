@@ -6,8 +6,8 @@ namespace Infrastructure.Menus
     {
         private PauseMenu _pauseMenu;
 
-        public PauseState(PauseMenu pauseMenu)
-            => _pauseMenu = pauseMenu;
+        public PauseState(DataProvider data)
+            => _pauseMenu = data.PauseMenu;
 
         public void Enter()
             => _pauseMenu.Open();

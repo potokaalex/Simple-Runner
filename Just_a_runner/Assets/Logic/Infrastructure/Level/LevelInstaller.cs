@@ -1,7 +1,5 @@
-using Infrastructure.Menus;
 using StateMachines;
 using UnityEngine;
-using Statistics;
 using Zenject;
 using Ecs;
 
@@ -9,27 +7,20 @@ namespace Infrastructure.Installers
 {
     public class LevelInstaller : MonoInstaller
     {
-        [SerializeField] private ScoreIndicator _scoreIndicator;
-        [SerializeField] private DefeatMenu _defeatMenu;
-        [SerializeField] private PauseMenu _pauseMenu;
+        [SerializeField] private DataProvider _data;
 
         public override void InstallBindings()
         {
             BindSystemsInitialization();
             BindSystemsFactory();
-            BindSystems();
             BindStateMachine();
-            BindStatisticsData();
-
-            BindScoreIndicator();
-            BindDefeatMenu();
-            BindPauseMenu();
+            BindDataProvider();
         }
 
         private void BindSystemsInitialization()
         {
             Container
-                .BindInterfacesAndSelfTo<SystemsInitialization>()
+                .Bind<SystemsInitialization>()
                 .AsSingle();
         }
 
@@ -37,13 +28,6 @@ namespace Infrastructure.Installers
         {
             Container
                 .Bind<SystemsFactory>()
-                .AsSingle();
-        }
-
-        private void BindSystems()
-        {
-            Container
-                .Bind<Systems>()
                 .AsSingle();
         }
 
@@ -55,34 +39,11 @@ namespace Infrastructure.Installers
                 .AsSingle();
         }
 
-        private void BindStatisticsData()
+        private void BindDataProvider()
         {
             Container
-                .Bind<StatisticsData>()
-                .AsSingle();
-        }
-
-        private void BindScoreIndicator()
-        {
-            Container
-                .Bind<ScoreIndicator>()
-                .FromInstance(_scoreIndicator)
-                .AsSingle();
-        }
-
-        private void BindDefeatMenu()
-        {
-            Container
-                .Bind<DefeatMenu>()
-                .FromInstance(_defeatMenu)
-                .AsSingle();
-        }
-
-        private void BindPauseMenu()
-        {
-            Container
-                .Bind<PauseMenu>()
-                .FromInstance(_pauseMenu)
+                .Bind<DataProvider>()
+                .FromInstance(_data)
                 .AsSingle();
         }
     }

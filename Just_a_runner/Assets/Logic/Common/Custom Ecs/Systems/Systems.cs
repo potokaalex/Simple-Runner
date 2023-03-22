@@ -41,7 +41,7 @@ namespace Ecs
             return this;
         }
 
-        public void Clear() 
+        public void Clear()
         {
             _fixedTickables.Clear();
             _tickables.Clear();

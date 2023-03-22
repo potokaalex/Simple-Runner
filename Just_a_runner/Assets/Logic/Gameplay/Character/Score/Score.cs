@@ -1,9 +1,9 @@
 ﻿using DataManagement;
 using System;
 
-namespace Statistics
+namespace Character
 {
-    public class CharacterScore
+    public class Score
     {
         private const string StorageKey = "a0Hxglwcjk3u4i9vok4oanDEak$m0c";
         public Action<uint> OnScoreChanging;

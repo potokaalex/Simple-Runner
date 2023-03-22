@@ -1,7 +1,10 @@
 using Ecs;
 
-public class Chunk : EcsComponent
+namespace RoadGeneration
 {
-    public int ID;
-    public float Length;
+    public class Chunk : EcsComponent
+    {
+        public int ID;
+        public float Length;
+    }
 }

@@ -1,5 +1,5 @@
 ﻿using StateMachines;
-using Statistics;
+using Character;
 
 namespace Infrastructure.Menus
 {
@@ -7,19 +7,13 @@ namespace Infrastructure.Menus
     {
         private DefeatMenu _defeatMenu;
         private PauseMenu _pauseMenu;
-        private CharacterScore _score;
-        private ScoreIndicator _scoreIndicator;
+        private Score _score;
 
-        public DefeatState(
-            DefeatMenu defeatMenu,
-            PauseMenu pauseMenu,
-            StatisticsData statisticsData,
-            ScoreIndicator scoreIndicator)
+        public DefeatState(DataProvider data)
         {
-            _defeatMenu = defeatMenu;
-            _pauseMenu = pauseMenu;
-            _score = statisticsData.CharacterScore;
-            _scoreIndicator = scoreIndicator;
+            _defeatMenu = data.DefeatMenu;
+            _pauseMenu = data.PauseMenu;
+            _score = data.CharacterData.Score;
         }
 
         public void Enter()
@@ -29,13 +23,12 @@ namespace Infrastructure.Menus
             _defeatMenu.Open();
 
             _pauseMenu.HideActivateButton();
-            _scoreIndicator.Hide();
+            _score.CurrentScore = new(0);
         }
 
         public void Exit()
         {
             _defeatMenu.Close();
-            _scoreIndicator.Show();
             _pauseMenu.ShowActivateButton();
         }
     }

@@ -1,7 +1,6 @@
-﻿using UnityEngine;
-using Ecs;
+﻿using Ecs;
 
-public class CharacterMarker : EcsComponent 
+namespace Character
 {
-    public Vector3 StartPosition;
+    public class CharacterMarker : EcsComponent { }
 }

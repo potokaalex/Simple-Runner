@@ -6,12 +6,11 @@ namespace DataManagement
     public static class DataStorage
     {
         private const string Extension = ".dat";
-        private static readonly string StoragePath;
+        private static readonly string StoragePath
+            = $"{Application.persistentDataPath}/DataStorage";
 
         static DataStorage()
         {
-            StoragePath = $"{Application.persistentDataPath}/DataStorage";
-
             if (!Directory.Exists(StoragePath))
                 Directory.CreateDirectory(StoragePath);
         }

@@ -1,13 +1,17 @@
 ﻿using Infrastructure.Menus;
 using CollisionSystem;
-using StateMachines; 
+using StateMachines;
+using Character;
 using Ecs;
+
+using UnityEngine;
 
 namespace DeathSystem
 {
     public class DeathHandler : IFixedTickable
     {
         private Filter<EnterCollisionEvent> _events = new();
+        private Filter<CharacterMarker> _characters = new();
         private IStateMachine _stateMachine;
 
         public DeathHandler(IStateMachine stateMachine)
@@ -19,13 +23,13 @@ namespace DeathSystem
                 Handle(@event);
         }
 
-        private CharacterMarker GetCharacter()
+        private bool IsCharacter(GameObject gameObject)
         {
-            foreach (var entity in World.Entities)
-                if (entity.Contains<CharacterMarker>())
-                    return entity.Get<CharacterMarker>();
+            foreach (var character in _characters.Components)
+                if (gameObject == character.gameObject)
+                    return true;
 
-            return null;
+            return false;
         }
 
         private void Handle(EnterCollisionEvent @event)
@@ -39,7 +43,7 @@ namespace DeathSystem
             if (!@event.Sender.Contains<DeathMarker>())
                 return;
 
-            if (@event.Sender.GameObject == GetCharacter().gameObject)
+            if (IsCharacter(@event.Sender.GameObject))
                 CharacterDeath();
             else
                 DefaultDeath(@event.Sender);

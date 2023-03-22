@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Character;
 using Ecs;
 
 namespace RoadGeneration

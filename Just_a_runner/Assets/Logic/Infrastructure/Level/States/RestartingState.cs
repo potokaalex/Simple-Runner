@@ -1,54 +1,64 @@
-﻿using System.Collections.Generic;
-using RoadGeneration;
+﻿using RoadGeneration;
 using StateMachines;
+using UnityEngine;
+using Character;
 using Ecs;
-using Statistics;
-using MovementSystem;
 
 namespace Infrastructure
 {
     public class RestartingState : IState
     {
-        private ScoreIndicator _scoreIndicator;
         private SystemsInitialization _systems;
-        private CharacterMarker _character;
-        private Road _road;
+        private GameObject _characterPrefab;
+        private Score _score;
 
         private IStateMachine _stateMachine;
 
         public RestartingState(
-            IStateMachine stateMachine,
             SystemsInitialization systems,
-            ScoreIndicator scoreIndicator)
+            IStateMachine stateMachine,
+            DataProvider data)
         {
-            _scoreIndicator = scoreIndicator;
-            _stateMachine = stateMachine;
+            _characterPrefab = data.CharacterData.Prefab;
+            _score = data.CharacterData.Score;
             _systems = systems;
 
-            World.TryGetComponent(out _character);
-            World.TryGetComponent(out _road);
+            _stateMachine = stateMachine;
         }
 
         public void Enter()
         {
-            DisableChunks();
+            World.TryGetComponent<Road>(out var road);
+            DisableChunks(road);
 
-            _character.transform.position = _character.StartPosition;
-            _character.Entity.Get<MoveDirection>().Reset();
-            _scoreIndicator.ClearScore();
+            World.TryGetComponent<CharacterMarker>(out var character);
+            RebuidCharacter(character);
+
+            _score.CurrentScore = new(0);
             _systems.Initialize();
             _stateMachine.SwitchTo<GameplayState>();
         }
 
-        private void DisableChunks()
+        private void RebuidCharacter(CharacterMarker character)
         {
-            foreach (var chunk in _road.EnabledChunks)
+            if (character != null)
+                character.Entity.Destroy();
+
+            Object.Instantiate(_characterPrefab);
+        }
+
+        private void DisableChunks(Road road)
+        {
+            if (road == null)
+                return;
+
+            foreach (var chunk in road.EnabledChunks)
             {
                 chunk.gameObject.SetActive(false);
-                _road.DisabledChunks.Add(chunk);
+                road.DisabledChunks.Add(chunk);
             }
 
-            _road.EnabledChunks.Clear();
+            road.EnabledChunks.Clear();
         }
     }
 }

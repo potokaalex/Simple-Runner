@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class Score
+namespace Assets.Logic.Gameplay.Camera
 {
-
+    public class CameraMarker
+    {
+    }
 }

@@ -1,3 +1,6 @@
 ﻿using Ecs;
 
-public class DeathMarker : EcsComponent { }
+namespace DeathSystem
+{
+    public class DeathMarker : EcsComponent { }
+}

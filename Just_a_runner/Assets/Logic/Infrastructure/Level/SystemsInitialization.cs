@@ -2,21 +2,20 @@
 using MovementSystem;
 using DeathSystem;
 using InputSystem;
-using Statistics;
-using Zenject;
+using Character;
 using Ecs;
 
 namespace Infrastructure
 {
-    public class SystemsInitialization : IInitializable
+    public class SystemsInitialization
     {
         private SystemsFactory _systemsFactory;
         private Systems _systems;
 
-        public SystemsInitialization(SystemsFactory systemsFactory, Systems systems)
+        public SystemsInitialization(SystemsFactory systemsFactory, DataProvider data)
         {
             _systemsFactory = systemsFactory;
-            _systems = systems;
+            _systems = data.Systems;
         }
 
         public void Initialize()
@@ -35,7 +34,7 @@ namespace Infrastructure
 
         private Systems Gameplay
             => new Systems()
-            .Add(_systemsFactory.Create<CharacterScoreCounter>())
+            .Add(_systemsFactory.Create<ScoreCounter>())
             .Add(_systemsFactory.Create<RoadGenerator>())
             .Add(_systemsFactory.Create<DeathHandler>())
             .Add(Movement);
@@ -45,6 +44,7 @@ namespace Infrastructure
             .Add(_systemsFactory.Create<MoveDirectionUpdate>())
             .Add(_systemsFactory.Create<MovePositionUpdate>())
             .Add(_systemsFactory.Create<MoveRightUpdate>())
-            .Add(_systemsFactory.Create<MoveLeftUpdate>());
+            .Add(_systemsFactory.Create<MoveLeftUpdate>())
+            .Add(_systemsFactory.Create<CameraFollowing>());
     }
 }
