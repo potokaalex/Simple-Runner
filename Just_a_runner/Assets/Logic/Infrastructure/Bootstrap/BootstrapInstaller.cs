@@ -6,7 +6,6 @@ namespace Infrastructure.Installers
     public class BootstrapInstaller : MonoInstaller
     {
         public override void InstallBindings()
-        //INPUT
         {
             BindSceneLoader();
             BindGameLoop();

@@ -1,7 +1,6 @@
 ﻿using RoadGeneration;
 using MovementSystem;
 using DeathSystem;
-using InputSystem;
 using Character;
 using Ecs;
 
@@ -29,8 +28,7 @@ namespace Infrastructure
 
         private Systems Core
             => new Systems()
-            .Add(_systemsFactory.Create<EntitiesUpdate>())
-            .Add(_systemsFactory.Create<InputUpdate>()); // SERVIS !
+            .Add(_systemsFactory.Create<EntitiesUpdate>());
 
         private Systems Gameplay
             => new Systems()
@@ -41,10 +39,10 @@ namespace Infrastructure
 
         private Systems Movement
             => new Systems()
+            .Add(_systemsFactory.Create<CameraFollowing>()) //
             .Add(_systemsFactory.Create<MoveDirectionUpdate>())
             .Add(_systemsFactory.Create<MovePositionUpdate>())
             .Add(_systemsFactory.Create<MoveRightUpdate>())
-            .Add(_systemsFactory.Create<MoveLeftUpdate>())
-            .Add(_systemsFactory.Create<CameraFollowing>());
+            .Add(_systemsFactory.Create<MoveLeftUpdate>());
     }
 }

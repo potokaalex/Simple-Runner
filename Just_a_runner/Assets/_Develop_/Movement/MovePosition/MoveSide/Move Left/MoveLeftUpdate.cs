@@ -1,4 +1,4 @@
-﻿using InputSystem;
+﻿using InputService;
 using Ecs;
 
 namespace MovementSystem

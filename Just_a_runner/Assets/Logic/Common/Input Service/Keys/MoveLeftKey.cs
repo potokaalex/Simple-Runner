@@ -1,6 +1,6 @@
 ﻿using Ecs;
 
-namespace InputSystem
+namespace InputService
 {
     public struct MoveLeftKey : IComponent
     {

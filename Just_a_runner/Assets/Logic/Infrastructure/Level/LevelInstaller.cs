@@ -1,4 +1,5 @@
 using StateMachines;
+using InputService;
 using UnityEngine;
 using Zenject;
 using Ecs;
@@ -15,6 +16,7 @@ namespace Infrastructure.Installers
             BindSystemsFactory();
             BindStateMachine();
             BindDataProvider();
+            BindInputService();
         }
 
         private void BindSystemsInitialization()
@@ -44,6 +46,13 @@ namespace Infrastructure.Installers
             Container
                 .Bind<DataProvider>()
                 .FromInstance(_data)
+                .AsSingle();
+        }
+
+        private void BindInputService()
+        {
+            Container
+                .BindInterfacesAndSelfTo<KeyboardInput>()
                 .AsSingle();
         }
     }
