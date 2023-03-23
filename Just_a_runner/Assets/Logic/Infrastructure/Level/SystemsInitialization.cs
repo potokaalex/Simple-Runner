@@ -39,7 +39,7 @@ namespace Infrastructure
 
         private Systems Movement
             => new Systems()
-            .Add(_systemsFactory.Create<CameraFollowing>()) //
+            .Add(_systemsFactory.Create<CameraTrackingUpdate>())
             .Add(_systemsFactory.Create<MoveDirectionUpdate>())
             .Add(_systemsFactory.Create<MovePositionUpdate>())
             .Add(_systemsFactory.Create<MoveRightUpdate>())
