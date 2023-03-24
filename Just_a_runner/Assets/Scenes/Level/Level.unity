@@ -3136,8 +3136,6 @@ GameObject:
   - component: {fileID: 1389166909}
   - component: {fileID: 1389166913}
   - component: {fileID: 1389166914}
-  - component: {fileID: 1389166916}
-  - component: {fileID: 1389166915}
   m_Layer: 0
   m_Name: Scene Context
   m_TagString: Untagged
@@ -3220,30 +3218,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d551d385a9ce6cb4e8a63de0189016c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1389166915
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1389166908}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b92b3ba860454b4f9674c664adbf795, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1389166916
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1389166908}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 146781521503f1445861cb4d733b3647, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1434417811
