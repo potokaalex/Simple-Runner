@@ -7,7 +7,7 @@ namespace DataManagement
     {
         private const string Extension = ".dat";
         private static readonly string StoragePath
-            = $"{Application.persistentDataPath}/DataStorage";
+            = $"{Application.dataPath}/DataStorage";
 
         static DataStorage()
         {
