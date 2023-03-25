@@ -17,6 +17,7 @@ namespace Infrastructure.Installers
             BindStateMachine();
             BindDataProvider();
             BindInputService();
+            EntitiesUpdateService();
         }
 
         private void BindSystemsInitialization()
@@ -53,6 +54,13 @@ namespace Infrastructure.Installers
         {
             Container
                 .BindInterfacesAndSelfTo<KeyboardInput>()
+                .AsSingle();
+        }
+
+        private void EntitiesUpdateService()
+        {
+            Container
+                .BindInterfacesAndSelfTo<EntitiesUpdate>()
                 .AsSingle();
         }
     }

@@ -1,9 +1,24 @@
 ﻿using System.Runtime.CompilerServices;
+using Infrastructure;
+using Zenject;
+using System;
 
 namespace Ecs
 {
-    public class EntitiesUpdate : IFixedTickable
+    public class EntitiesUpdate : IInitializable, IDisposable
     {
+        private IGameLoop _gameLoop;
+
+        [Inject]
+        public EntitiesUpdate(IGameLoop gameLoop)
+            => _gameLoop = gameLoop;
+
+        public void Initialize()
+            => _gameLoop.OnFixedTick += FixedTick;
+
+        public void Dispose()
+            => _gameLoop.OnFixedTick -= FixedTick;
+
         public void FixedTick(float deltaTime)
         {
             WorldEntitiesUpdate();

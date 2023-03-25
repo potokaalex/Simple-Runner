@@ -22,13 +22,8 @@ namespace Infrastructure
             _systems.Clear();
 
             _systems
-                .Add(Core)
                 .Add(Gameplay);
         }
-
-        private Systems Core
-            => new Systems()
-            .Add(_systemsFactory.Create<EntitiesUpdate>());
 
         private Systems Gameplay
             => new Systems()

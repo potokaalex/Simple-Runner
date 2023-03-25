@@ -1,5 +1,7 @@
 ﻿using StateMachines;
+using InputService;
 using Character;
+using Ecs;
 
 namespace Infrastructure.Menus
 {
@@ -9,11 +11,17 @@ namespace Infrastructure.Menus
         private PauseMenu _pauseMenu;
         private Score _score;
 
-        public DefeatState(DataProvider data)
+        private IStateMachine _stateMachine;
+        private IGameLoop _gameLoop;
+
+        public DefeatState(DataProvider data, IGameLoop gameLoop, IStateMachine stateMachine)
         {
             _defeatMenu = data.DefeatMenu;
             _pauseMenu = data.PauseMenu;
             _score = data.CharacterData.Score;
+
+            _stateMachine = stateMachine;
+            _gameLoop = gameLoop;
         }
 
         public void Enter()
@@ -24,12 +32,22 @@ namespace Infrastructure.Menus
 
             _pauseMenu.HideActivateButton();
             _score.CurrentScore = new(0);
+
+            _gameLoop.OnTick += FixedTick;
         }
 
         public void Exit()
         {
             _defeatMenu.Close();
             _pauseMenu.ShowActivateButton();
+
+            _gameLoop.OnTick -= FixedTick;
+        }
+
+        private void FixedTick(float deltaTime)
+        {
+            if (World.Events.Contains<RestartKey>())
+                _stateMachine.SwitchTo<RestartingState>();
         }
     }
 }
