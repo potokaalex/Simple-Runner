@@ -22,11 +22,14 @@ namespace InputService
 
         private void Tick(float deltaTime)
         {
-            if (Input.GetKeyDown(KeyCode.A))
+            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
                 World.Events.Add(new MoveLeftKey());
 
-            if (Input.GetKeyDown(KeyCode.D))
+            if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
                 World.Events.Add(new MoveRightKey());
+
+            if (Input.GetKeyDown(KeyCode.Space))
+                World.Events.Add(new RestartKey());
         }
     }
 }
