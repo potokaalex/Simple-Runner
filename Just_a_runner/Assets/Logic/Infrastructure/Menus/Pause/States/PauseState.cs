@@ -10,9 +10,15 @@ namespace Infrastructure.Menus
             => _pauseMenu = data.PauseMenu;
 
         public void Enter()
-            => _pauseMenu.Open();
+        {
+            _pauseMenu.HideActivateButton();
+            _pauseMenu.Open();
+        }
 
         public void Exit()
-            => _pauseMenu.Close();
+        {
+            _pauseMenu.ShowActivateButton();
+            _pauseMenu.Close();
+        }
     }
 }
