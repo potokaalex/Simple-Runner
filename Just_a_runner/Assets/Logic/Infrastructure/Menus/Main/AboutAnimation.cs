@@ -7,12 +7,15 @@ namespace Infrastructure.Menus
     public class AboutAnimation : MonoBehaviour
     {
         [SerializeField] private RectTransform _mainMenuWindow;
-        [SerializeField] private GameObject _aboutWindow;
-        [SerializeField] private Vector2 _menuStartPosition;
-        [SerializeField] private Vector2 _menuFinalPosition;
+        [SerializeField] private RectTransform _aboutWindow;
+        [SerializeField] private Vector2 _windowDistance;
         [SerializeField] private float _animationTime;
 
+        private Vector2 _menuStartPosition;
         private bool isAboutWindowOpen;
+
+        private void Awake()
+            => _menuStartPosition = _mainMenuWindow.anchoredPosition;
 
         public void AnimationToggle()
         {
@@ -29,19 +32,23 @@ namespace Infrastructure.Menus
 
         public IEnumerator OpeningAnimation()
         {
-            yield return RigidMove(_mainMenuWindow, _menuFinalPosition, _animationTime);
+            var mainMenuFinalPosition = _windowDistance / -2;
+            var aboutMenuFinalPosition = _windowDistance / 2;
 
-            _aboutWindow.SetActive(true);
+            yield return Move(_mainMenuWindow, mainMenuFinalPosition, _animationTime);
+
+            _aboutWindow.anchoredPosition = aboutMenuFinalPosition;
+            _aboutWindow.gameObject.SetActive(true);
         }
 
         public IEnumerator ClosingAnimation()
         {
-            _aboutWindow.SetActive(false);
+            _aboutWindow.gameObject.SetActive(false);
 
-            yield return RigidMove(_mainMenuWindow, _menuStartPosition, _animationTime);
+            yield return Move(_mainMenuWindow, _menuStartPosition, _animationTime);
         }
 
-        private IEnumerator RigidMove(RectTransform window, Vector2 position, float drivingTime)
+        private IEnumerator Move(RectTransform window, Vector2 position, float drivingTime)
         {
             if (drivingTime < 0)
                 throw new ArgumentException("The value of the argument must not be less than 0 !");
