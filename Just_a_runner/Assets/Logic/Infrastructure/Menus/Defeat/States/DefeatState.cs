@@ -33,7 +33,7 @@ namespace Infrastructure.Menus
             _pauseMenu.HideActivateButton();
             _score.CurrentScore = new(0);
 
-            _gameLoop.OnTick += FixedTick;
+            _gameLoop.OnFixedTick += FixedTick;
         }
 
         public void Exit()
@@ -41,7 +41,7 @@ namespace Infrastructure.Menus
             _defeatMenu.Close();
             _pauseMenu.ShowActivateButton();
 
-            _gameLoop.OnTick -= FixedTick;
+            _gameLoop.OnFixedTick -= FixedTick;
         }
 
         private void FixedTick(float deltaTime)
