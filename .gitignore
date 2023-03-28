@@ -2,20 +2,20 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
 #
-Just_a_runner/[Ll]ibrary/
-Just_a_runner/[Tt]emp/
-Just_a_runner/[Oo]bj/
-Just_a_runner/[Bb]uild/
-Just_a_runner/[Bb]uilds/
-Just_a_runner/[Ll]ogs/
-Just_a_runner/[Uu]ser[Ss]ettings/
+Simple-Runner/[Ll]ibrary/
+Simple-Runner/[Tt]emp/
+Simple-Runner/[Oo]bj/
+Simple-Runner/[Bb]uild/
+Simple-Runner/[Bb]uilds/
+Simple-Runner/[Ll]ogs/
+Simple-Runner/[Uu]ser[Ss]ettings/
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
-Just_a_runner/[Mm]emoryCaptures/
+Simple-Runner/[Mm]emoryCaptures/
 
 # Recordings can get excessive in size
-Just_a_runner/[Rr]ecordings/
+Simple-Runner/[Rr]ecordings/
 
 # Uncomment this line if you wish to ignore the asset store tools plugin
 # Just_a_runner/[Aa]ssets/AssetStoreTools*
@@ -62,5 +62,5 @@ sysinfo.txt
 crashlytics-build.properties
 
 # Temporary auto-generated Android Assets
-Just_a_runner/[Aa]ssets/[Ss]treamingAssets/aa.meta
-Just_a_runner/[Aa]ssets/[Ss]treamingAssets/aa/*
+Simple-Runner/[Aa]ssets/[Ss]treamingAssets/aa.meta
+Simple-Runner/[Aa]ssets/[Ss]treamingAssets/aa/*
