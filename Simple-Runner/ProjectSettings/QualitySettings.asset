@@ -42,7 +42,10 @@ QualitySettings:
     resolutionScalingFixedDPIFactor: 1
     customRenderPipeline: {fileID: 11400000, guid: d0e2fc18fe036412f8223b3b3d9ad574,
       type: 2}
-    excludedTargetPlatforms: []
+    excludedTargetPlatforms:
+    - Windows Store Apps
+    - Server
+    - Standalone
   - serializedVersion: 2
     name: Balanced
     pixelLightCount: 1
@@ -79,7 +82,10 @@ QualitySettings:
     resolutionScalingFixedDPIFactor: 1
     customRenderPipeline: {fileID: 11400000, guid: e1260c1148f6143b28bae5ace5e9c5d1,
       type: 2}
-    excludedTargetPlatforms: []
+    excludedTargetPlatforms:
+    - Windows Store Apps
+    - Server
+    - Standalone
   - serializedVersion: 2
     name: High Fidelity
     pixelLightCount: 2
@@ -114,9 +120,12 @@ QualitySettings:
     asyncUploadBufferSize: 16
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
-    customRenderPipeline: {fileID: 11400000, guid: 5ca06053afd01014b8792942f54ce920,
+    customRenderPipeline: {fileID: 11400000, guid: abea407f6d4ce0b47b320af601eacd2e,
       type: 2}
-    excludedTargetPlatforms: []
+    excludedTargetPlatforms:
+    - Windows Store Apps
+    - Server
+    - Standalone
   m_PerPlatformDefaultQuality:
     Android: 1
     CloudRendering: 2

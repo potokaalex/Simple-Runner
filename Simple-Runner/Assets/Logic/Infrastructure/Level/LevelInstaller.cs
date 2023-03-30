@@ -53,7 +53,7 @@ namespace Infrastructure.Installers
         private void BindInputService()
         {
             Container
-                .BindInterfacesAndSelfTo<KeyboardInput>()
+                .BindInterfacesAndSelfTo<TouchesInput>()
                 .AsSingle();
         }
 
