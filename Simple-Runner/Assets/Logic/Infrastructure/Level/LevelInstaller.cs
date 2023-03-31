@@ -8,13 +8,14 @@ namespace Infrastructure.Installers
 {
     public class LevelInstaller : MonoInstaller
     {
-        [SerializeField] private DataProvider _data;
+        [SerializeField] private DataProvider.SerializableData _data;
 
         public override void InstallBindings()
         {
             BindSystemsInitialization();
             BindSystemsFactory();
             BindStateMachine();
+            BindSerializableData();
             BindDataProvider();
             BindInputService();
             EntitiesUpdateService();
@@ -42,11 +43,18 @@ namespace Infrastructure.Installers
                 .AsSingle();
         }
 
+        private void BindSerializableData()
+        {
+            Container
+                .Bind<DataProvider.SerializableData>()
+                .FromInstance(_data)
+                .AsSingle();
+        }
+
         private void BindDataProvider()
         {
             Container
                 .Bind<DataProvider>()
-                .FromInstance(_data)
                 .AsSingle();
         }
 

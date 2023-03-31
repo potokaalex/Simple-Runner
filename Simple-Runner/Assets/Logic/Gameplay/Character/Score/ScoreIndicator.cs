@@ -11,7 +11,7 @@ namespace Character
 
         [Inject]
         private void Constructor(DataProvider data)
-            => data.CharacterData.Score.OnScoreChanging += UpdateScore;
+            => data.CharacterScore.OnScoreChanging += UpdateScore;
 
         private void UpdateScore(uint score)
             => _indicator.text = score <= 0 ? "" : score.ToString();

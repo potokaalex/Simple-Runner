@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2138677392}
-  m_IndirectSpecularColor: {r: 0.28502658, g: 0.37139305, b: 0.49600944, a: 1}
+  m_IndirectSpecularColor: {r: 0.28502697, g: 0.37139347, b: 0.49601266, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2785,9 +2785,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _data:
-    CharacterData:
-      Prefab: {fileID: 4862691061606017919, guid: d8db3d2092b05aa49b72580c6a9cb072,
-        type: 3}
+    CharacterPrefab: {fileID: 4862691061606017919, guid: d8db3d2092b05aa49b72580c6a9cb072,
+      type: 3}
     DefeatMenu: {fileID: 1143097931}
     PauseMenu: {fileID: 410566026}
 --- !u!114 &1389166914
@@ -4611,7 +4610,7 @@ Light:
     serializedVersion: 2
     m_Bits: 73
   m_RenderingLayerMask: 1
-  m_Lightmapping: 1
+  m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1

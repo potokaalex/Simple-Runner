@@ -19,8 +19,8 @@ namespace Infrastructure
             IStateMachine stateMachine,
             DataProvider data)
         {
-            _characterPrefab = data.CharacterData.Prefab;
-            _score = data.CharacterData.Score;
+            _characterPrefab = data.CharacterPrefab;
+            _score = data.CharacterScore;
             _systems = systems;
 
             _stateMachine = stateMachine;

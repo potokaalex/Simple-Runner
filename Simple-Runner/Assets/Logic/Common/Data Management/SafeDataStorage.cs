@@ -1,21 +1,25 @@
-﻿namespace DataManagement
+﻿using UnityEngine;
+using System.IO;
+using System;
+
+namespace DataManagement
 {
-    public static class SafeDataStorage
+    public class SafeDataStorage : DataStorage
     {
         private const int Salt = -1206528112;
 
-        public static bool Contains(string key)
-            => DataStorage.Contains(key.GetHashCode().ToString()) &&
-            DataStorage.Contains(GetSecondaryKey(key).GetHashCode().ToString());
+        public override bool Contains(string key)
+            =>base.Contains(key.GetHashCode().ToString()) &&
+            base.Contains(GetSecondaryKey(key).GetHashCode().ToString());
 
-        public static byte[] Load(string key, byte[] defaultValue = null)
+        public override byte[] Load(string key, byte[] defaultValue)
         {
             if (!Contains(key))
                 return defaultValue;
 
-            var saltedData = DataStorage.Load(GetSecondaryKey(key).GetHashCode().ToString());
+            var saltedData = base.Load(GetSecondaryKey(key).GetHashCode().ToString(), null);
             var keyHash = key.GetHashCode();
-            var data = DataStorage.Load(keyHash.ToString());
+            var data = base.Load(keyHash.ToString(), null);
 
             if (data.Length != saltedData.Length)
                 return defaultValue;
@@ -27,19 +31,19 @@
             return data;
         }
 
-        public static void Save(string key, byte[] data)
+        public override void Save(string key, byte[] data)
         {
             var keyHash = key.GetHashCode();
 
-            DataStorage.Save(keyHash.ToString(), data);
+            base.Save(keyHash.ToString(), data);
 
             for (var i = 0; i < data.Length; i++)
                 data[i] = (byte)((data[i] - keyHash) ^ Salt);
 
-            DataStorage.Save(GetSecondaryKey(key).GetHashCode().ToString(), data);
+            base.Save(GetSecondaryKey(key).GetHashCode().ToString(), data);
         }
 
-        private static string GetSecondaryKey(string key)
+        private string GetSecondaryKey(string key)
             => key + Salt;
     }
 }

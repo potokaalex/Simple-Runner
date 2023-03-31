@@ -3,31 +3,33 @@ using System.IO;
 
 namespace DataManagement
 {
-    public static class DataStorage
+    public class DataStorage : IDataStorage
     {
         private const string Extension = ".dat";
-        private static readonly string StoragePath
-            = $"{Application.dataPath}/DataStorage";
+        private readonly string StoragePath
+            = $"{Application.persistentDataPath}/DataStorage";
 
-        static DataStorage()
+        public DataStorage()
         {
             if (!Directory.Exists(StoragePath))
                 Directory.CreateDirectory(StoragePath);
         }
 
-        public static bool Contains(string fileName)
+        public virtual bool Contains(string fileName)
             => File.Exists(GetFilePath(fileName));
 
-        public static byte[] Load(string fileName)
-            => Contains(fileName) ? File.ReadAllBytes(GetFilePath(fileName)) : null;
+        public virtual byte[] Load(string fileName, byte[] defaultValue)
+            => File.Exists(GetFilePath(fileName)) ? File.ReadAllBytes(GetFilePath(fileName)) : defaultValue;
 
-        public static void Save(string fileName, byte[] data)
+        public virtual void Save(string fileName, byte[] data)
         {
+            PlayerPrefs.Save();
+
             using FileStream stream = new(GetFilePath(fileName), FileMode.Create);
             stream.Write(data);
         }
 
-        private static string GetFilePath(string fileName)
+        private string GetFilePath(string fileName)
             => $"{StoragePath}/{fileName + Extension}";
     }
 }

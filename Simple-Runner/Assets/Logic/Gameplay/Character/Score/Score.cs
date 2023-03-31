@@ -7,7 +7,12 @@ namespace Character
     {
         private const string StorageKey = "a0Hxglwcjk3u4i9vok4oanDEak$m0c";
         public Action<uint> OnScoreChanging;
+
+        private IDataStorage _dataStorage;
         private SafeUInt32 _currentScore;
+
+        public Score(IDataStorage dataStorage)
+            => _dataStorage = dataStorage;
 
         public SafeUInt32 CurrentScore
         {
@@ -17,15 +22,15 @@ namespace Character
 
         public uint GetMaxScore()
         {
-            if (SafeDataStorage.Contains(StorageKey))
+            if (_dataStorage.Contains(StorageKey))
             {
-                var deserializedScore = SafeUInt32.Deserialize(SafeDataStorage.Load(StorageKey));
+                var deserializedScore = SafeUInt32.Deserialize(_dataStorage.Load(StorageKey, Array.Empty<byte>()));
 
                 if (deserializedScore >= _currentScore)
                     return deserializedScore;
             }
 
-            SafeDataStorage.Save(StorageKey, _currentScore.Serialize());
+            _dataStorage.Save(StorageKey, _currentScore.Serialize());
 
             return _currentScore;
         }

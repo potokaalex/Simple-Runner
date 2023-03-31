@@ -1,7 +1,5 @@
 ﻿using StateMachines;
-using InputService;
 using Character;
-using Ecs;
 
 namespace Infrastructure.Menus
 {
@@ -15,7 +13,7 @@ namespace Infrastructure.Menus
         {
             _defeatMenu = data.DefeatMenu;
             _pauseMenu = data.PauseMenu;
-            _score = data.CharacterData.Score;
+            _score = data.CharacterScore;
         }
 
         public void Enter()

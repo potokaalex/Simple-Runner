@@ -1,4 +1,5 @@
 using UnityEngine.SceneManagement;
+using DataManagement;
 using Zenject;
 
 namespace Infrastructure.Installers
@@ -8,6 +9,7 @@ namespace Infrastructure.Installers
         public override void InstallBindings()
         {
             BindSceneLoader();
+            BindDataStorage();
             BindGameLoop();
         }
 
@@ -16,6 +18,14 @@ namespace Infrastructure.Installers
             Container
                 .Bind<ISceneLoader>()
                 .To<SceneLoader>()
+                .AsSingle();
+        }
+
+        private void BindDataStorage()
+        {
+            Container
+                .Bind<IDataStorage>()
+                .To<SafeDataStorage>()
                 .AsSingle();
         }
 

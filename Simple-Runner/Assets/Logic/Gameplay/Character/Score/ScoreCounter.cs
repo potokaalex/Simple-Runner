@@ -10,7 +10,7 @@ namespace Character
         private Score _score;
 
         public ScoreCounter(DataProvider data)
-            => _score = data.CharacterData.Score;
+            => _score = data.CharacterScore;
 
         public void FixedTick(float deltaTime)
         {
