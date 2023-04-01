@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731704, g: 0.13414727, b: 0.121078536, a: 1}
+  m_IndirectSpecularColor: {r: 0.1273174, g: 0.13414761, b: 0.12107885, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1852,17 +1852,18 @@ MonoBehaviour:
 
     Control:
 
-    Left arrow (or A) to move left.
+    Touch on the left screen side to move left.
 
-    Right arrow (or
-    D) to move right.
-
-
-    The goal of the game is to score as many points as possible
-    while avoiding the obstacles.
+    Touch
+    on the right screen side to move right.
 
 
-    Sounds easy ? Then play it !'
+    The goal of the game is to score
+    as many points as possible while avoiding the obstacles.
+
+
+    Sounds easy ?
+    Then play it !'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
