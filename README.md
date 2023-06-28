@@ -25,4 +25,4 @@ Level gameplay is based on Ecs. Level progress is controlled by the state machin
 See [here](https://github.com/Kot-Alenya/Simple-Runner/releases).
 
 ## License
-See [here](LICENSE).
+See [here](LICENSE.txt).
